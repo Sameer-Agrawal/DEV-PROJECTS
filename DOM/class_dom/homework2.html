@@ -149,12 +149,14 @@
     </p>
     <script>
       // Q Write a script which logs hello everytime a click is performed in the web page
+      // Jaise hi web document par koi click kare, console mai hello log kar diya jaaye
 
       // Solution:
-      let bodyTag = document.querySelector("body");
-      bodyTag.addEventListener("click",function(){
-        console.log("Hello")
+      const pTag = document.querySelector('p'); // We selected the paragraph using querySelector method
+      pTag.addEventListener('click', function(){ // The function with no name are called as anonymous functions. Here this function is a callback
+        console.log('Hello'); // Everytime, provided event happens, callback is triggered!
       })
+      
     </script>
   </body>
 </html>
