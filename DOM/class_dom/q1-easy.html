@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .balls {
+        margin-top: 4rem; 
+        display: flex;
+        justify-content: space-evenly;
+      }
+      .ball {
+        height: 4rem;
+        width: 4rem;
+        border-radius: 50%;
+        border: none;
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    Q1.1 Fix the mathematical problem using JS <br> 
+    <!-- we have to correct the solution of problem inside pTag -->
+    <p>2 + 2 = 22</p>
+
+    Q1.2 Make all the balls blue 
+
+    <div class="balls">
+      <div class="ball"></div>
+      <div class="ball"></div>
+      <div class="ball"></div>
+      <div class="ball"></div>
+      <div class="ball"></div>
+    </div>
+    <script>
+      const pTag = document.querySelector("p"); 
+      // document object contains querySelector method, using which we can select html element!
+      console.log(pTag); // This is an object which contains innerText attribute, and using that attribute we can access the content, of an element
+      console.log(pTag.innerText);  // We can see or modify the content of an element
+      pTag.innerText = "2 + 2 = 4";
+
+      const ballsArray = document.querySelectorAll('.ball');  // using ball class, we got an array of div elements, each element representing a ball
+      console.log(ballsArray); // This represents a list of nodes, where each node represents an document element
+      for(let i = 0 ; i < ballsArray.length ; i++) {
+        ballsArray[i].style.backgroundColor = "blue";  // Using backgroundColor attribute, we can get or set the background color of an element
+      }
+    </script>
+  </body>
+</html>
