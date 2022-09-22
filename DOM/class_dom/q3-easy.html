@@ -5,17 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+    </style>
   </head>
   <body>
     <button>sayHello</button>
     <script>
       // Q- On clicking the button append hello to the page
-      let btn = document.querySelector("button");
-      btn.addEventListener("click",function(){
-        let pTag = document.createElement("p");
-        pTag.innerText = "Hello";
-        let bodyTag = document.querySelector("body");
-        bodyTag.appendChild(pTag);
+      const btnElement = document.querySelector('button');
+      const bodyElement = document.querySelector('body');
+      console.log(btnElement); // This object represents a button object
+      const ulElement = document.createElement('ul'); // Dynamic creation on unordered list
+      ulElement.style.listStyle = "none"; // Removal of text decoration from unordered list element node and it's children
+      bodyElement.appendChild(ulElement); // Append ulElement node in body 
+      btnElement.addEventListener('click', function(){ // On clicking the button, We will append Hello into the document
+        console.log("Event Trigerred, Callback");
+        const childNodeElement = document.createElement('li'); // Dynamic creation of list item
+        childNodeElement.innerText = 'Hello';
+        console.log(ulElement);
+        // The appendChild() method of the Node element interface, adds a node to the end of the list of children of a specified parent node.
+        ulElement.appendChild(childNodeElement);
       })
     </script>
   </body>
