@@ -28,21 +28,32 @@
     </ul>
     <script>
       // Q- Make remove all button work  and make individual delete btn work 
+      // hume removeAllBtn aur remove-individual, buttons ko work karwana hai 
       //   Solution:
-      let removeAllBtn = document.querySelector("#all");
-      removeAllBtn.addEventListener("click",function(){
-        let ulTag = document.querySelector("ul");
-        ulTag.remove();
-      })
 
-      let allBtns = document.querySelectorAll("ul button");
-      for(let i=0;i<allBtns.length;i++){
-        allBtns[i].addEventListener("click",function(e){
-          console.log(e);
-          e.target.parentElement.remove();
+      const removeAllBtn = document.querySelector('#all'); // Represent 'Remove All' button
+      const deleteBtnArray = document.querySelectorAll('li > button'); // Represent 'Delete' buttons, which are immediate children of list item
+      const ulElement = document.querySelector('ul');
+      for(let idx = 0 ; idx < deleteBtnArray.length ; idx++){
+        const deleteBtn = deleteBtnArray[idx]; // Represent Individual 'Delete' button, corresponding each list item
+        // On individual delete event, remove corresponding list item from unordered list
+        deleteBtn.addEventListener('click', function(e){
+          // The removeChild() method in HTML DOM is used to remove a specified child node of the given element. It returns the removed node as a node object or null if the node doesn't exist.
+          console.log(deleteBtn.parentElement);
+          const btnParentElement = deleteBtn.parentElement; // Represent parent list item
+          ulElement.removeChild(btnParentElement);
         })
       }
 
+      removeAllBtn.addEventListener('click', function(){
+        // The remove() method removes an element (or node) from the document.
+        const liElementArray = document.querySelectorAll('li');
+        for(let idx = 0 ; idx < liElementArray.length ; idx++) {
+          const liElement = liElementArray[idx];
+          ulElement.removeChild(liElement); // One after one removal of list item element!
+        }
+        // One after one removal approach, will not remove unordered list element!
+      })
     </script>
   </body>
 </html>
