@@ -51,17 +51,28 @@
     <div class="card" data-color="blue"></div>
     <script>
       // Q Write a script which fetches the data-color attribute of the card on double clicking on them and attaches the fetched class to that card.
+      // hume div element ke data-color attribute ki value ko fetch karna hai, if we double click on that element which represents a card, and jo bhi value aayi usko respective element ke class list mai add karna hai and uske baad wo data color attribute ki value ko update karna hai to used
       // Also changes the data-color attribute to "used"
-      let allCards = document.querySelectorAll(".card");
-      for(let i=0;i<allCards.length;i++){
-        allCards[i].addEventListener('dblclick',function(e){
-          console.log(e);
-          let color = e.target.getAttribute("data-color");
-          e.target.setAttribute("data-color","used");
-          
-          e.target.classList.add(color);
+
+
+      const cards = document.querySelectorAll('.card'); // return-type --> Node-List of cards
+      for(let i = 0; i < cards.length; i++){
+        const documentElement = cards[i];
+        documentElement.addEventListener('dblclick', function(e){ // We attached event listner to every card
+          // We the callback is invoked inside addEventListner method, and argument is passed to it, which inturns represent the event invoker
+          console.log(e); // It contains an object target, which represents the document element on which an event is invoked
+          // getAttribute() method is used to get the value of the attribute of the element. 
+          // getAttribute, classList, setAttributes are entities inside an element object 
+          const attributeValue = documentElement.getAttribute('data-color');
+          // classList is a read-only property that returns a live DOMTokenList collection of the class attributes of the element. This can then be used to manipulate the class list
+          console.log(documentElement.classList); // This property, provides a collection of classes on an element
+          const elementClassList = documentElement.classList;
+          elementClassList.add(attributeValue); // Append the attribute-value in class list
+          documentElement.classList = elementClassList; // We modified the class-list of a document element
+          documentElement.setAttribute('data-color','used') // Using setAttribute() method, we modified the value of data-color to used
         })
       }
+
     </script>
   </body>
 </html>
