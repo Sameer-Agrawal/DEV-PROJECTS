@@ -7,6 +7,7 @@
     <title>Document</title>
   </head>
   <body>
+    <!-- Unordered List -->
     <ul>
       <li>1</li> <!-- 0th index -->
       <li>2</li> <!-- 1th index -->
@@ -20,12 +21,18 @@
     </ul>
     <script>
       //insertBefore
-      let liTag = document.createElement("li");
-      liTag.innerText = '7';
-      let allLi = document.querySelectorAll("li");
-      let relevantLi = allLi[6];
-      let parent = document.querySelector("ul");
-      parent.insertBefore(liTag,relevantLi);
+      // Task ye hai that humko list item with value 7 insert karna hai 6 and 8 ke bich maiii using dom manipulation
+      // The HTML DOM createElement() method is used for creating an HTML element dynamically using JavaScript. It takes the element name as the parameter and creates that element node.
+
+      const listItemElement = document.createElement('li'); // DOM contains createElement() method, which is used to create document element, provided element name as argument!
+      listItemElement.innerText = '7'; // Set the innerText value as 7
+      // div > p --> Select all p tags where, immediate parent is div tag
+      const liArray = document.querySelectorAll('ul > li');
+      // The insertBefore() method in HTML DOM is used to insert a new node, before the existing node which is specified by the user.
+      // node.insertBefore( newnode, existingnode )
+      const parentUL = document.querySelector('ul'); // This represents parent ul element
+      const afterLiELement = liArray[6]; // List item, holding value 8
+      console.log(parentUL.insertBefore(listItemElement,afterLiELement)); // This returns an object, which represents the node element which is inserted
 
     </script>
   </body>
