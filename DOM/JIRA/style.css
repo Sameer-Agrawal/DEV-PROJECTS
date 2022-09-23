@@ -68,3 +68,52 @@ body{
 }
 
 /* vw(viewport width) --> withhold entire width, with respect to screen */
+
+
+/* Floating container style enhancement */
+
+.floatingContainer{
+    position: absolute;
+    height: 50vh;
+    width: 50vw;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    margin: auto auto;
+    display: flex;
+}
+
+.textContainer, .textAreaElement{
+    height: 50vh;
+    width: 40vw;
+}
+
+.textAreaElement{
+    outline: none;
+    background-color: #EEF2E6;
+    border: none;
+    font-size: xx-large;
+    padding: 1rem 1rem;
+    resize: none;
+}
+
+/* The resize property specifies whether or not an element is resizable by the user */
+
+.floatingFilterContainer{
+    height: 50vh;
+    width: 10vw;
+    background-color: #3D8361;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.floatingFilterElement{
+    height: 3.5rem;
+    width: 6.5rem;
+}
+
+/* margin: auto auto --> Auto margin from top/bottom, left/right */
+
