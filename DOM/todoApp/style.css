@@ -1,0 +1,70 @@
+*{
+    margin:0px;
+    padding:0px;
+    box-sizing: border-box; 
+    /* Total dimension of an element includes content-size, padding, margin and border */
+    font-family: "Lucida Console", "Courier New", monospace;
+}
+
+body{
+    background-color: #B1B2FF;
+}
+/* div is a block element --> block an entire line */
+/* inline element --> Occupy only required space */
+/* input document element is an inline-block element --> Similar to inline element, but height, width, margin, padding manipulation is respected */
+/* To curve, vertex of a container, use border-radius property */
+#taskInputElement{
+    height: 55px;
+    width: 375px;
+    text-align: center;
+    font-size: larger;
+    background-color: #D2DAFF;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+}
+
+/* To remove border highlight from input text element --> outline:none */
+
+.mainContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inputContainer{
+    margin: 3rem 0px;
+}
+/* rem --> 1rem = 1 * html tag's font size...similarly 3rem = 3 * html tag's font size */
+
+/* padding : top right bottom left; --> padding short-hand */
+/* padding : y(top,bottom) x(left,right) --> Another short-hand for padding and margin */
+
+/* flex-direction : column --> Align children document element in a column */
+/* If flex direction is column, align-items property is used to horizontally center document elements */
+
+.taskElement{
+    display: flex;
+    font-size: larger;
+    justify-content: space-around;
+    width: 30rem;
+    margin: 1rem 0px;
+}
+
+.taskElement .taskValue{
+    width: 26rem;
+    word-wrap: break-word;
+}
+
+/* word-wrap: break-word --> Allow long words/sentences to break and wrap on next line */
+
+.ulElement{
+    list-style: none;
+}
+
+/* list-style: none --> Removal of bullets from list items */
+
+.ulContainer{
+    background-color: #AAC4FF;
+    width: 30rem;
+}

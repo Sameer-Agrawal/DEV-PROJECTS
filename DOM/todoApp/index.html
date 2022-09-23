@@ -7,13 +7,20 @@
     <title>Todo App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- CDN link of font awesome -->
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <input id="taskInput" type="text" placeholder="Enter Task!"> 
-    <!-- Input, which inturns holds up the value of provided task -->
-    <ul class="parentContainer">
-        <!-- Append Each Task, as list item, inside unordered list -->
-    </ul>
+    <div class="mainContainer">
+        <div class="inputContainer">
+            <input id="taskInputElement" type="text" placeholder="Enter Task!"> 
+            <!-- Input, which inturns holds up the value of provided task -->
+        </div>
+        <div class="ulContainer">
+            <ul class="ulElement">
+                <!-- Append Each Task, as list item, inside unordered list -->
+            </ul>
+        </div>
+    </div>
 </body>
 <script src="./script.js"></script> 
 </html>

@@ -1,5 +1,5 @@
-let inputElement = document.querySelector('#taskInput'); // Represent input document element 
-const ulElement = document.querySelector('.parentContainer'); // Represent unordered list
+let inputElement = document.querySelector('#taskInputElement'); // Represent input document element 
+const ulElement = document.querySelector('.ulElement'); // Represent unordered list
 inputElement.addEventListener('keydown', function(event){ // Callback trigger's, with a change in input document element
     console.log(inputElement.value); // Every time a key is triggered/down, callback fires up
     // Every time callback is triggered, input document element holds up different value
@@ -7,6 +7,7 @@ inputElement.addEventListener('keydown', function(event){ // Callback trigger's,
     if(event.key == 'Enter'){
         const task = inputElement.value; // Successfully fetched, the task value
         inputElement.value = ''; // Reset value of input element to empty string
+        if(task.length == 0) return; // Empty task element creation is prohibited
         const liTaskElement = document.createElement('li'); // Dynamic creation of list item
         // liTaskElement.innerText = task; // liTaskElement represent document element, which inturn holds up innerText attribute, used to get or set the inner text of document element
         liTaskElement.innerHTML = `<div class="taskElement">
