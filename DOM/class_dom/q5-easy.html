@@ -100,18 +100,22 @@
     </div>
     <script>
       // Q Make the filter work
-      let selectTag = document.querySelector("select");
-      selectTag.addEventListener("change",function(e){
-        // console.log(e.target.value);
-        let filter = e.target.value;
-        let allMovies = document.querySelectorAll(".movies");
-        for(let i=0;i<allMovies.length;i++){
-          let pTagCurrent = allMovies[i].querySelector("p");
-          let currentMovieFilter = pTagCurrent.getAttribute("data-category");
-          if(filter == 'none' || filter == currentMovieFilter){
-            allMovies[i].style.display = "block" //show 
+      // The JavaScript change event is an event type that gets executed when the focus on an element is changed.
+      const selectElement = document.querySelector('select'); // Represent 'select' document element
+      const movieTicketElement = document.querySelectorAll('.movies'); // 
+      selectElement.addEventListener('change', function(event){
+        console.log(event); // Represent an object, using which we can fetch filter name
+        const filterName = selectElement.value; // Holds, current value of select document element
+        console.log(filterName); // event.target, represents select document element
+        for(let idx = 0 ; idx < movieTicketElement.length ; idx++){
+          const movieElement = movieTicketElement[idx];
+          const paragraphElement = movieElement.querySelector('p'); // Represent paragraph element of each movie element
+          const movieCategory = paragraphElement.getAttribute('data-category');  // Collecting movie category for each movie element
+          if(filterName == 'none' || filterName == movieCategory){ // If filter name is 'none' or if filter name is equal to movie elements, movie category
+            movieElement.style.display = 'block'; // If filter name is none, every movie element should have block display
+            // if filter name is not none, movie element with movie category similar to filter name should have display block
           }else{
-            allMovies[i].style.display = "none"; //don't show
+            movieElement.style.display = 'none'; // If movie category of movie element is not equal to filter name, display should be none
           }
         }
       })
