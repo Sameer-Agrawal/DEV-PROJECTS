@@ -1,0 +1,134 @@
+Inline Element --> Ye element sirf utni hi jagah leta hai jitni element ki height, width hai
+Block Element --> Ye element puri line ko block kar deta hai
+
+DOM --> Document Object Model --> Ye ek (generic) tree like structure hota hai
+HTML Id --> ye ek unique identifier hota hai...Suppose ek element ko uniquely identify karna hai to id use karte hai
+HTML class --> ek element multiple class ko belong kar sakta hai and ek class ke andar multiple elements hote hai
+
+color property --> Jo text ka colour hota hai usko set karne ke liye hum color property use karte hai
+id, class ye sab tag ke attributes hote hai
+Hum css ko html mai 3 ways mai add karsakte hai --> style tag, inline css using style attribute and external stylesheet
+
+CSS selectors ka use karke hum, ek ya bahot saare html elements ko select kar sakte hai for styling
+Element selector --> ek element ya tag ko select karke uspar rules define karne ke liye
+Id selector --> ek element ko hum uske id ke basis par select karte hai, using #id
+
+Hum "," use karke selectors ko group kar sakte hai... e.g element1,element2{properties} --> curly brackets mai di hui saari properties dono element par apply hai
+tag.className --> all tag of class className will get a specific property
+*{} --> agar hum saare elements ko kuch common styling dena chahte hai, to uske liye hum universal selector use karte hai
+
+Inline style attribute ki priority jyada hoti hai compared to style tag and external style sheet
+Hum color name ki jagah rgb value bhi provide kar sakte hai
+More over hum hex code and hsl values ka use karke bhi color provide kar sakte hai
+
+background-image --> ye property background image set karne ke liye use karte hai
+Agar hum background image property ka use karke background set karte hai to possible hai that images repeat ho...repeatation ko control karne ke liye humare pass background-repeat property hoti hai
+repeat-x --> images ko sirf x-axis mai repeat karna hai to
+repeat-y --> images ko sirf y-axis mai repeat karna hai to
+no-repeat-agar hum chahte hai that images repeat na ho
+
+
+background-size property hum background ke size ko set karne ke liye use karte hai
+background-size : cover; --> image completely nahi dikhegi but wo parent ki puri space occupy kar lengi
+background-size : contain; --> image completely dikhegi but wo parent ke puri size nahi lenga and empty space bach jayegi
+background-size : auto; --> image ki jo original size hai wohi humko dikhegi
+
+### Hum new css properties ko experiement karke sikh sakte hai jaruri nahi that hum complete docs padhe
+
+background-position --> ye property parent container ke andar background ki position set karne ke liye hum use karte hai
+
+background-attachment: fixed; --> even agar hum scroll karte hai fir bhi background image ek position par fixed hojaayegi
+Iski aur bhi kaafi value hoti hai jo thode complex design mai use hoti hai uske liye...mdn docs check karenge
+
+vh,vw --> aapke screen size ki height and width, for responsiveness of websites
+...........................................................................................................................
+
+CSS Box-Model -->
+
+content --> padding --> border --> margin
+total height occupied by element --> content height + (top+bottom) padding + (top+bottom) border + (top+bottom) margin.
+
+padding : top right bottom left; --> padding short-hand
+padding : y(top,bottom) x(left,right) --> Another short-hand for padding and margin
+
+border-shorthand --> border : border-thickness border-style border-color
+Suppose if we want to curve the vertices of a container, we use border-radius property
+
+margin-collapse --> jab bhi do elements ke margin overlap karti hai to dono ki maximum margin select hoti and dono elements ke bich mai maximum margin set kardete hai
+
+box-sizing ke default value content-box hoti hai, i.e... 
+total height occupied by element --> content height + (top+bottom) padding + (top+bottom) border + (top+bottom) margin.
+
+box-sizing : border-box...agar width set karte hai to usme padding and border included hote hai
+
+Suppose agar hum "box-sizing: border-box" set kar dete hai then margin,element size and padding bhi element ke total size mai consider hote hai and padding mai additional changes element ki height ya width par koi effect nahi karte
+
+overflow --> Element ke andar pura content fit nahi aa raha hai
+
+text-align:center --> agar humko paragraph ke text ko center karna hai to
+
+..........................................................................................................................
+
+Fonts and Display --> 
+
+display: inline --> element ko jitni space require hoti hai utni hi leta hai..Setting height,width allow nahi hai
+top-bottom ki margin, padding bhi respect nahi ki jaayegi
+
+Block element --> even though block element ki width kaam hoti hai but ye puri width occupy karta hai and iske side mai koi bhi element nahi aa sakte
+
+display: inline-block --> ye value similar hoti hai inline se but isme elements ko height, width, margin, padding provide kar sakte hai
+
+display: none --> ye property, jo bhi element par hum set karenge wo dom se gayab ho jaayega and dusre elements uski jagah le lenge
+
+visibility: hidden --> ye property, jo bhi element par hum set karenge wo dom se gayab ho jaayega but dusre elements uski space occupy nahi karenge
+
+// Line break wala concept kya tha dekhna hai ekbaar, refer MDN.
+
+text-align --> text ko horizontally set karne ke liye use karte hai in block level elements
+
+text-decoration --> ye property use karke hum text ko decorate kar sakte hai...underline wagere de sakte hai
+text-transform --> ye property bhi hum mostly text ko style karne ke liye use karte hai...e.g uppercase and lower case karne ke liye text ko
+
+line-height --> paragraph of text mai, lines ke bich me, space/height dene ke liye, hum ye property use karte hai
+
+font --> text ki font sytling
+
+font-size --> ye property use karke hum text ka size set kar sakte hai
+font-family --> ye property use karke font style set kar sakte hai
+web safe fonts --> ye font sabhi browsers mai mil jayege humko
+
+font-weight --> ye property font ki boldness set karne ke liye use karte hai
+font-style --> font ko italic karne ke liye use kar sakte hai
+
+font-family --> ye hum specific font ko bolte hai 
+generic-font --> Isme broad classes of font aati hai and haar class mai bahot saari font-family hoti hai
+
+...........................................................................................................................
+
+Size, Position, Lists -->
+
+There are more units for describing size other than pixels...e.g rem, em, vh, vw, percentage etc
+
+relative lengths --> these lengths are relative to other lengths
+
+em --> 1em = 1 * parent's font size...similarly 3em = 3 * parent's font size
+rem --> 1rem = 1 * html tag's font size...similarly 3rem = 3 * html tag's font size
+vw --> 50vw = 50% of viewport width/device width in which the website is opened
+vh --> 50vh = 50% of viewport height/device height in which the website is opened
+% --> width : 50% = 50% of parent's width
+
+min-height/width --> Ensure karo, that is element ki height, min-height/width se chhoti na ho
+max-height/width --> Ensure karo, that is element ki height, max-height/width se jyada na ho
+
+block elements mai agar custom width de rakhi hai and agar margin, auto kar dete hai to container center mai aa jate hai
+
+position-property --> element ki position ko manipulate karne ke liye hum position property use karte hai
+
+static --> ye element ki default position hoti hai...top/right/left/bottom/z-index hum set nahi kar sakte
+relative --> element document ke flow ko follow karta hai...top/right/left/bottom/z-index hum set karsakte hai
+absolute --> element document ke flow se nikal jata hai...top/right/left/bottom/z-index hum set karsakte hai...element position hota hai, relative to first non-static ancestor
+fixed --> element document ke flow se nikal jaata hai...element position hota hai according to browser window
+sticky --> element document ke flow se nahi nikalta...according to observation sirf top property work karti hai
+
+z-index --> suppose do element overlap kar rahe hai...then hum jis bhi element ko upar dikhana chahte hai, usko hum higher value dete hai z-index ki
+list-style --> list ke bullet-style ke set karne ke liye hum list style use karte hai

@@ -68,3 +68,5 @@ body{
     background-color: #AAC4FF;
     width: 30rem;
 }
+
+/* The min-height property defines the minimum height of an element. If the content is smaller than the minimum height, the minimum height will be applied. */
