@@ -1,0 +1,70 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+/* box-sizing: border-box --> Represent, content size, padding, border is inclusive of element size */
+
+body{
+    background-color: #D6CDA4;
+}
+
+.headContainer{
+    width: 100vw;
+    height: 6rem;
+    background-color: #1C6758;
+    display: flex;
+    align-items: center;
+}
+
+.subHeadContainer{
+    display: flex;
+    justify-content: space-around;
+    width: 60vw;
+}
+
+.filterContainer, .actionContainer{
+    height: 4rem;
+    background-color: #EEF2E6;
+    border-radius: 0.6rem;
+}
+
+.filterContainer{
+    width: 24rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.actionContainer{
+    width: 12rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 2rem;
+}
+
+.lightPinkFilter, .lightBlueFilter, .lightGreenFilter, .blackFilter{
+    height: 2.5rem;
+    width: 4rem;
+    background-color: red;
+}
+
+.lightPinkFilter{
+    background-color: lightpink;
+}
+
+.lightBlueFilter{
+    background-color: lightblue;
+}
+
+.lightGreenFilter{
+    background-color: lightgreen;
+}
+
+.blackFilter{
+    background-color: black;
+}
+
+/* vw(viewport width) --> withhold entire width, with respect to screen */
