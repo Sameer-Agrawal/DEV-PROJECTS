@@ -2,6 +2,8 @@ const addBtnElement = document.querySelector('.addTaskContainer') // Represent a
 const floatingContainerElement = document.querySelector('.floatingContainer');
 let flag = false; // Represent, visiblity of floating container. By default false
 let slipFilter = 'blackFilter'; // By default slip filter, value
+let deleteFlag = false; // Represent, deletion capability. By default false
+
 addBtnElement.addEventListener('click', function(event) { // Trigger callback, with a click on add button
     if(flag == false){ // Request for floating container visiblity
         floatingContainerElement.style.display = 'flex';
@@ -41,6 +43,18 @@ for(let idx = 0 ; idx < floatingFilterElementArray.length ; idx++){
     })
 }
 
+// Slip Element Removal
+const deleteSlipElement = document.querySelector('.deleteTaskContainer');  // Represent delete icon, which inturn provide, delete slip functionality
+deleteSlipElement.addEventListener('click', function(){  // Trigger with click on delete icon element
+    if(deleteFlag == false){ // Request deletion capability
+        deleteSlipElement.style.color = 'red'; // Update delete icon element color to red, indicating, deletion possible
+    }else{  // Turnoff deletion capablity
+        deleteSlipElement.style.color = 'black'; // Update delete icon element color to black, indicating, deletion not possible
+    }
+    deleteFlag = !deleteFlag  // Maintain delete flag
+})
+
+
 // Method
 
 function maintainActiveClause(elementClassListToBeUpdated){
@@ -61,5 +75,15 @@ function generateSlip(textAreaElementValue, slipFilterColor){
     slipElement.innerHTML = `<div class="filter ${slipFilterColor}"></div>
                              <div class="credentials">#S014</div>
                              <div class="chore">${textAreaElementValue}</div>`
+    
+    slipElement.addEventListener('click', function(){  // Trigger with click on slip element 
+        if(deleteFlag){  // Deletion possible, only if delete flag is true
+            deleteSlip(slipElement);  // Abstract --> On click, slip deletion
+        }
+    })
     bodyContainer.appendChild(slipElement); // Append slip element into body container element
+}
+
+function deleteSlip(slipElement){
+    bodyContainer.removeChild(slipElement); // Removal of slip element from body container node list
 }
