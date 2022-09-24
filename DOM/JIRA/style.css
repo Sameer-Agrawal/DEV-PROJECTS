@@ -81,8 +81,10 @@ body{
     bottom: 0;
     top: 0;
     margin: auto auto;
-    display: flex;
+    display: none;
 }
+
+/* If non-static ancestor is absent, element is positioned relative to browser window */
 
 .textContainer, .textAreaElement{
     height: 50vh;
@@ -103,7 +105,7 @@ body{
 .floatingFilterContainer{
     height: 50vh;
     width: 10vw;
-    background-color: #3D8361;
+    background-color: #1C6758;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -117,3 +119,47 @@ body{
 
 /* margin: auto auto --> Auto margin from top/bottom, left/right */
 
+/* Slip element style enhancement */
+
+.bodyContainer{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    row-gap: 2.5rem;
+    column-gap: 2.5rem;
+    margin: 2rem;
+}
+
+/* The flex-wrap CSS property sets whether flex items are forced onto one line or can wrap onto multiple lines. */
+/* The row-gap property specifies the gap between the rows. */
+/* The column-gap property specifies the gap between the column. */
+
+.slipElement{
+    background-color: #EEF2E6;
+    width: 15rem;
+    height: 12rem;
+}
+
+.filter{
+    width: 15rem;
+    height: 1.8rem;
+}
+
+.credentials{
+    width: 15rem;
+    height: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chore{
+    background-color: #76BA99;
+    width: 15rem;
+    height: 9rem;
+    word-break: break-word;
+    padding: 0.5rem;
+    font-size: 1.25rem;
+}
+
+/*  word-break: break-word --> Allow long words to be able to break and wrap onto the next line */
