@@ -3,6 +3,7 @@ const floatingContainerElement = document.querySelector('.floatingContainer');
 let flag = false; // Represent, visiblity of floating container. By default false
 let slipFilter = 'blackFilter'; // By default slip filter, value
 let deleteFlag = false; // Represent, deletion capability. By default false
+const slipFilterPanelArray = ['blackFilter', 'lightPinkFilter', 'lightBlueFilter', 'lightGreenFilter'];
 
 addBtnElement.addEventListener('click', function(event) { // Trigger callback, with a click on add button
     if(flag == false){ // Request for floating container visiblity
@@ -76,12 +77,34 @@ function generateSlip(textAreaElementValue, slipFilterColor){
                              <div class="credentials">#S014</div>
                              <div class="chore">${textAreaElementValue}</div>`
     
+    // Deletion Functionality
     slipElement.addEventListener('click', function(){  // Trigger with click on slip element 
         if(deleteFlag){  // Deletion possible, only if delete flag is true
             deleteSlip(slipElement);  // Abstract --> On click, slip deletion
         }
     })
+
     bodyContainer.appendChild(slipElement); // Append slip element into body container element
+    const slipFilterPanelElement = slipElement.querySelector('.filter'); // Represent slip filter panel, in slip element
+    // Slip filter panel updation
+    slipFilterPanelElement.addEventListener('click', function(){ // Trigger with click on slip filter panel, provided deleteFlag is false
+        if(deleteFlag == false){
+            slipFilterPanelUpdation(slipFilterPanelElement);  // Abstract --> Provide slip filter panel updation 
+        }
+    })
+}
+
+function slipFilterPanelUpdation(slipFilterPanelElement){
+    const currentSlipFilter = slipFilterPanelElement.classList[1]; // Represent, slip filter panel element's, class clause, which inturn represent color
+    console.log(currentSlipFilter);
+    for(let idx = 0 ; idx < slipFilterPanelArray.length ; idx++){
+        const slipFilterPanel = slipFilterPanelArray[idx];
+        if(slipFilterPanel == currentSlipFilter){
+            slipFilterPanelElement.classList.remove(currentSlipFilter); // Removal of current slip filter class, from slip filter panel, to ease filter panel updation
+            const toBeSlipFilterPanel = slipFilterPanelArray[(idx+1) % slipFilterPanelArray.length]; // Represent to be slip filter panel element's, class clause, which inturn represent color
+            slipFilterPanelElement.classList.add(toBeSlipFilterPanel); // Update, slip filter panel
+        }
+    }
 }
 
 function deleteSlip(slipElement){
