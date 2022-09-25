@@ -156,15 +156,32 @@ body{
 .chore{
     background-color: #76BA99;
     width: 15rem;
-    height: 9rem;
+    height: 7.25rem;
     word-break: break-word;
     padding: 0.5rem;
     font-size: 1.25rem;
+    overflow: auto;
+    outline: none;
 }
+
+/* overflow: auto --> The overflow property specifies what should happen if content overflows an element's box. The auto value is similar to scroll , but it adds scrollbars only when necessary */
 
 .active{
     border: 0.3rem solid #76BA99;
 }
+
+.choreManipulation{
+    background-color: #76BA99;
+}
+
+.choreManipulation i{
+    position: relative;
+    top: -0.2rem;
+    right: -13.2rem;
+    font-size: 1.75rem;
+}
+
+/* position: relative --> Element go around with document flow. top, right, bottom, left, attribute are relevant with respect to native position */
 
 /* border-shorthand --> border : border-thickness border-style border-color */
 

@@ -3,6 +3,7 @@ const floatingContainerElement = document.querySelector('.floatingContainer');
 let flag = false; // Represent, visiblity of floating container. By default false
 let slipFilter = 'blackFilter'; // By default slip filter, value
 let deleteFlag = false; // Represent, deletion capability. By default false
+let manipulationFlag = false; // Represent, chore manipulation capability, default false
 const slipFilterPanelArray = ['blackFilter', 'lightPinkFilter', 'lightBlueFilter', 'lightGreenFilter'];
 
 addBtnElement.addEventListener('click', function(event) { // Trigger callback, with a click on add button
@@ -15,7 +16,6 @@ addBtnElement.addEventListener('click', function(event) { // Trigger callback, w
 })
 
 // Dynamic creation of tickets
-
 const textContainerElement = floatingContainerElement.querySelector('.textAreaElement');  // Represent text area element in floating container element
 const bodyContainer = document.querySelector('.bodyContainer');  // Represent parent body container
 textContainerElement.addEventListener('keydown', function(event){  // Trigger with keydown
@@ -32,7 +32,6 @@ textContainerElement.addEventListener('keydown', function(event){  // Trigger wi
 })
 
 // Slip filter functionality
-
 const floatingFilterElementArray = floatingContainerElement.querySelectorAll('.floatingFilterElement'); // Represent filter element's from floating filter container
 for(let idx = 0 ; idx < floatingFilterElementArray.length ; idx++){  
     const floatingFilterElement = floatingFilterElementArray[idx]; // Represent each floating filter element
@@ -75,8 +74,11 @@ function generateSlip(textAreaElementValue, slipFilterColor){
     slipElement.classList.add('slipElement'); // Append 'slipElement' class to slip element
     slipElement.innerHTML = `<div class="filter ${slipFilterColor}"></div>
                              <div class="credentials">#S014</div>
-                             <div class="chore">${textAreaElementValue}</div>`
+                             <div class="chore" contentEditable="false">${textAreaElementValue}</div>
+                             <div class="choreManipulation"><i class="fa fa-lock"></i></div>`
     
+    // By default, chore manipulation prohibited
+
     // Deletion Functionality
     slipElement.addEventListener('click', function(){  // Trigger with click on slip element 
         if(deleteFlag){  // Deletion possible, only if delete flag is true
@@ -84,8 +86,24 @@ function generateSlip(textAreaElementValue, slipFilterColor){
         }
     })
 
+    // Chore manipulation 
+    const choreElement = slipElement.querySelector('.chore')  // Represent, chore
+    const choreManipulationElement = slipElement.querySelector('.choreManipulation i');  // Dynamic lock-unlock entity, chore manipulation
+    choreManipulationElement.addEventListener('click', function(){  // Trigger, with click on chore manipulation element
+        if(manipulationFlag == false){ // Request, chore manipulation
+            choreManipulationElement.classList = "fa fa-unlock"  // Classlist updation, representing, chore manipulation possible
+            choreElement.setAttribute('contentEditable','true');  // Enable chore manipulation, div element
+        }else{  // Abort, chore manipulation
+            choreManipulationElement.classList = "fa fa-lock"  // Classlist updation, representing, chore manipulation not possible
+            choreElement.setAttribute('contentEditable','false');  // Disable chore manipulation, div element
+        }
+        manipulationFlag = !manipulationFlag  // Maintain manipulation flag 
+    })
+
+
     bodyContainer.appendChild(slipElement); // Append slip element into body container element
     const slipFilterPanelElement = slipElement.querySelector('.filter'); // Represent slip filter panel, in slip element
+
     // Slip filter panel updation
     slipFilterPanelElement.addEventListener('click', function(){ // Trigger with click on slip filter panel, provided deleteFlag is false
         if(deleteFlag == false){
