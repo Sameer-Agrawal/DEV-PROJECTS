@@ -5,6 +5,15 @@ let slipFilter = 'blackFilter'; // By default slip filter, value
 let deleteFlag = false; // Represent, deletion capability. By default false
 let manipulationFlag = false; // Represent, chore manipulation capability, default false
 const slipFilterPanelArray = ['blackFilter', 'lightPinkFilter', 'lightBlueFilter', 'lightGreenFilter'];
+const uid = new ShortUniqueId();  // When a function is called with the new keyword, the function will be used as a constructor
+// ShortUniqueId() is a constructor function, which inturn creates a blank, plain JavaScript object. For convenience, let's call it newInstance
+// uid instance, represent an object
+// console.log(uid()); // Abstract --> On invocation, generate unique identifier
+let uniqueIdentifier; // Unique identifier, slip credentials
+const staticFilterElementArray = document.querySelectorAll('.subHeadContainer .staticFilter'); // Represent, static filter element
+const textContainerElement = floatingContainerElement.querySelector('.textAreaElement');  // Represent text area element in floating container element
+const bodyContainer = document.querySelector('.bodyContainer');  // Represent parent body container
+const floatingFilterElementArray = floatingContainerElement.querySelectorAll('.floatingFilterElement'); // Represent filter element's from floating filter container
 
 addBtnElement.addEventListener('click', function(event) { // Trigger callback, with a click on add button
     if(flag == false){ // Request for floating container visiblity
@@ -15,9 +24,30 @@ addBtnElement.addEventListener('click', function(event) { // Trigger callback, w
     flag = !flag; // Maintainance of flag
 })
 
+// Filter slip, based slip filter panel
+// Slip Element, exist in document flow. Display mould!
+for(let idx = 0 ; idx < staticFilterElementArray.length ; idx++){
+    const staticFilterElement = staticFilterElementArray[idx];  // Represent, static filter element
+    staticFilterElement.addEventListener('click', function(event){  // Trigger, with click on filter element
+        // Faith --> Filter, respective slip, provided static filter element
+        const staticFilterElementIdentifier = staticFilterElement.classList[0];  // Represent filter identifier
+        console.log(staticFilterElementIdentifier);
+        const currentSlipElementArray = bodyContainer.querySelectorAll('.slipElement'); // Represent, current slip element in body container
+        for(let idx = 0 ; idx < currentSlipElementArray.length ; idx++){
+            const currentSlipElement = currentSlipElementArray[idx]; // Represent, slip element
+            const slipFilterPanel = currentSlipElement.querySelector('.filter');  // Represent, filter panel, current slip element
+            const slipFilterPanelIdentifier = slipFilterPanel.classList[1];  // Represent, slip filter panel identifier
+            if(staticFilterElementIdentifier != slipFilterPanelIdentifier){  // Hide slip
+                currentSlipElement.style.display = 'none'
+            }else{  // If hidden, mould slip visible!
+                currentSlipElement.style.display = 'block';
+            }
+        }
+    })
+}
+// div, is a block element
+
 // Dynamic creation of tickets
-const textContainerElement = floatingContainerElement.querySelector('.textAreaElement');  // Represent text area element in floating container element
-const bodyContainer = document.querySelector('.bodyContainer');  // Represent parent body container
 textContainerElement.addEventListener('keydown', function(event){  // Trigger with keydown
     console.log(textContainerElement.value);  // text container element, holds up value attribute, representing string value of text area element
     console.log(event.key); // key attribute represent, last key triggered
@@ -25,14 +55,15 @@ textContainerElement.addEventListener('keydown', function(event){  // Trigger wi
     if(key == 'Enter'){
         const textAreaElementValue = textContainerElement.value;
         textContainerElement.value = ''; // Reset text area container's, value to default
-        generateSlip(textAreaElementValue, slipFilter);  // Faith --> slip generation, provided 'textAreaElementValue' value
+        uniqueIdentifier = uid();  // Abstract --> Unique slip credentials
+        // Dynamic generation of slip, trigger, uid() method, inturn leading to generation of unique credentials, per slip
+        generateSlip(textAreaElementValue, slipFilter, uniqueIdentifier);  // Faith --> slip generation, provided 'textAreaElementValue' value
         floatingContainerElement.style.display = 'none'; // Request, to hide floating container
         flag = !flag; // Maintainance of flag
     }
 })
 
 // Slip filter functionality
-const floatingFilterElementArray = floatingContainerElement.querySelectorAll('.floatingFilterElement'); // Represent filter element's from floating filter container
 for(let idx = 0 ; idx < floatingFilterElementArray.length ; idx++){  
     const floatingFilterElement = floatingFilterElementArray[idx]; // Represent each floating filter element
     floatingFilterElement.addEventListener('click', function(){ // Update slip filter
@@ -69,15 +100,16 @@ function maintainActiveClause(elementClassListToBeUpdated){
 
 // classList.remove('class name') --> Removes one or more tokens from the list, provided argument(class name)
 
-function generateSlip(textAreaElementValue, slipFilterColor){ 
+function generateSlip(textAreaElementValue, slipFilterColor, uniqueIdentifier){ 
     const slipElement = document.createElement('div'); // Dynamic creation of div element
     slipElement.classList.add('slipElement'); // Append 'slipElement' class to slip element
     slipElement.innerHTML = `<div class="filter ${slipFilterColor}"></div>
-                             <div class="credentials">#S014</div>
+                             <div class="credentials">#${uniqueIdentifier}</div>
                              <div class="chore" contentEditable="false">${textAreaElementValue}</div>
                              <div class="choreManipulation"><i class="fa fa-lock"></i></div>`
     
     // By default, chore manipulation prohibited
+    // UniqueIdentifier, ease, unique identification, per slip
 
     // Deletion Functionality
     slipElement.addEventListener('click', function(){  // Trigger with click on slip element 
@@ -128,3 +160,4 @@ function slipFilterPanelUpdation(slipFilterPanelElement){
 function deleteSlip(slipElement){
     bodyContainer.removeChild(slipElement); // Removal of slip element from body container node list
 }
+
