@@ -51,7 +51,61 @@ addBtnElement.addEventListener('click', function(event) { // Trigger callback, w
 
 // Slip Element, document flow removal, slip recreation, slip data storage!
 
+for(let idx = 0 ; idx < staticFilterElementArray.length ; idx++){
+    const staticFilterElement = staticFilterElementArray[idx];  // Represent, static filter element
+    staticFilterElement.addEventListener('click', function(event){  // Trigger, with click on filter element
+        // Faith --> Filter, respective slip, provided static filter element
+        const staticFilterElementIdentifier = staticFilterElement.classList[0];  // Represent filter identifier
+        console.log(staticFilterElementIdentifier);
 
+        // Empty, body container!
+        const currentSlipElementArray = bodyContainer.querySelectorAll('.slipElement'); // Represent, current slip element in body container
+        for(let idx = 0 ; idx < currentSlipElementArray.length ; idx++){
+            const currentSlipElement = currentSlipElementArray[idx]; // Represent, slip element
+            bodyContainer.removeChild(currentSlipElement);  // Empty, body container
+        }
+
+        const filteredElementArray = [];  // Filtered slip element, provided static filter element identifier and slip filter panel identifier are same!
+
+        for(let idx = 0 ; idx < slipLocalStorage.length ; idx++){  // Looping through slip local storage, inturn represent slip element figures
+            const slipElementFigures = slipLocalStorage[idx];  // Represent, figures of slip
+            const slipElementFilter = slipElementFigures.slipFilter;  // Slip filter attribute, represent slip filter panel identifier
+            if(staticFilterElementIdentifier == slipElementFilter){  // If absent, mould slip recreation!
+                filteredElementArray.push(slipElementFigures); 
+            }
+        }
+
+        for(let idx = 0 ; idx < filteredElementArray.length ; idx++){  // Looping, through filtered element array
+            const slipElementFigures = filteredElementArray[idx];  // Represent, filtered slip element
+            const slipChore = slipElementFigures.slipChore;  // Represent, slip chore
+            const slipFilter = slipElementFigures.slipFilter; //Represent, slip element filter identifier
+            const slipCredentials = slipElementFigures.slipCredentials; // Represent, slip credentials
+            generateSlip(slipChore, slipFilter, slipCredentials);  // Slip recreation, provided static filter element identifier and slip filter panel identifier are same!
+        }
+    })
+
+    // Shed light on, slip element, from slip local storage, provided invocation of double click event on static filter elements
+
+    staticFilterElement.addEventListener('dblclick', function(event){  // Invoke with double click on static filter element
+
+        // Empty, body container!
+        const currentSlipElementArray = bodyContainer.querySelectorAll('.slipElement'); // Represent, current slip element in body container
+        for(let idx = 0 ; idx < currentSlipElementArray.length ; idx++){
+            const currentSlipElement = currentSlipElementArray[idx]; // Represent, slip element
+            bodyContainer.removeChild(currentSlipElement);  // Empty, body container
+        }
+
+        for(let idx = 0 ; idx < slipLocalStorage.length ; idx++){  // Looping through slip local storage
+            const slipElementFigure = slipLocalStorage[idx];  // Represent, data about slip element
+            const slipChore = slipElementFigure.slipChore;  // Represent, slip chore
+            const slipFilter = slipElementFigure.slipFilter; //Represent, slip element filter identifier
+            const slipCredentials = slipElementFigure.slipCredentials; // Represent, slip credentials
+            generateSlip(slipChore, slipFilter, slipCredentials);  // Slip recreation
+        }
+    })
+}
+
+// const slipElementFigures = {slipFilter : slipFilterColor , slipCredentials : localUniqueIdentifier , slipChore : textAreaElementValue}
 
 // Dynamic creation of tickets
 textContainerElement.addEventListener('keydown', function(event){  // Trigger with keydown
@@ -119,7 +173,7 @@ function generateSlip(textAreaElementValue, slipFilterColor, uniqueIdentifier){
     const slipElement = document.createElement('div'); // Dynamic creation of div element
     slipElement.classList.add('slipElement'); // Append 'slipElement' class to slip element
     slipElement.innerHTML = `<div class="filter ${slipFilterColor}"></div>
-                             <div class="credentials">#${localUniqueIdentifier}</div>
+                             <div class="credentials">${localUniqueIdentifier}</div>
                              <div class="chore" contentEditable="false">${textAreaElementValue}</div>
                              <div class="choreManipulation"><i class="fa fa-lock"></i></div>`
     
@@ -130,8 +184,23 @@ function generateSlip(textAreaElementValue, slipFilterColor, uniqueIdentifier){
     slipElement.addEventListener('click', function(){  // Trigger with click on slip element 
         if(deleteFlag){  // Deletion possible, only if delete flag is true
             deleteSlip(slipElement);  // Abstract --> On click, slip deletion
+
+            // Maintain slip local storage, deletion
+            const slipElementCredentials = slipElement.querySelector('.credentials');  // Represent, slip credential element, holding up slip unique identifier
+            const slipUniqueIdentifier = slipElementCredentials.innerText;  // Represent, slip unique identifier
+            for(let idx = 0 ; idx < slipLocalStorage.length ; idx++){  // Looping, through slip local storage
+                const slipElementFigure = slipLocalStorage[idx];  // Data, slip element
+                const slipElementCredentials = slipElementFigure.slipCredentials;
+                if(slipUniqueIdentifier == slipElementCredentials){  // Remove, slip entry!
+                    slipLocalStorage.splice(idx,1);  // Remove, slip entry, provided slip element deleted
+                    console.log(slipLocalStorage);
+                }
+            }
         }
     })
+
+    // splice() function: This method is use to remove elements from the specific index of an array.
+
 
     // Chore manipulation 
     const choreElement = slipElement.querySelector('.chore')  // Represent, chore
@@ -143,6 +212,18 @@ function generateSlip(textAreaElementValue, slipFilterColor, uniqueIdentifier){
         }else{  // Abort, chore manipulation
             choreManipulationElement.classList = "fa fa-lock"  // Classlist updation, representing, chore manipulation not possible
             choreElement.setAttribute('contentEditable','false');  // Disable chore manipulation, div element
+
+            // Maintain, slip local storage, dynamic chore manipulation
+            // console.log(choreElement.innerText);
+            const reformedChore = choreElement.innerText;  // innerText attribute, to acquire reformed chore
+            const slipElementCredentials = slipElement.querySelector('.credentials');  // Represent, slip unique credentials
+            const slipElementUniqueIdentifier = slipElementCredentials.innerText;  // Represent, slip element unique identifier
+            const slipLocalStorageIndex = getSlipElementIndex(slipElementUniqueIdentifier);
+            // console.log(slipLocalStorageIndex);
+            const slipElementFigure = slipLocalStorage[slipLocalStorageIndex];  // Represent, slip element figure, to be updated
+            // console.log(reformedChore);
+            slipElementFigure.slipChore = reformedChore;  // Update, slip element figure, slip local storage on dynamic slip filter panel updation 
+            console.log(slipLocalStorage);
         }
         manipulationFlag = !manipulationFlag  // Maintain manipulation flag 
     })
@@ -153,7 +234,17 @@ function generateSlip(textAreaElementValue, slipFilterColor, uniqueIdentifier){
     // Slip filter panel updation
     slipFilterPanelElement.addEventListener('click', function(){ // Trigger with click on slip filter panel, provided deleteFlag is false
         if(deleteFlag == false){
-            slipFilterPanelUpdation(slipFilterPanelElement);  // Abstract --> Provide slip filter panel updation 
+            const updatedSlipFilterPanel = slipFilterPanelUpdation(slipFilterPanelElement);  // Abstract --> Provide slip filter panel updation 
+
+            // Maintain, slip local storage on slip filter panel updation
+            const slipElement = slipFilterPanelElement.parentElement;  // Represent, invoked slip element
+            const slipElementCredentials = slipElement.querySelector('.credentials');  // Represent, slip unique credentials
+            const slipElementUniqueIdentifier = slipElementCredentials.innerText;  // Represent, slip element unique identifier
+            const slipLocalStorageIndex = getSlipElementIndex(slipElementUniqueIdentifier);
+            // console.log(slipLocalStorageIndex);
+            const slipElementFigure = slipLocalStorage[slipLocalStorageIndex];  // Represent, slip element figure, to be updated
+            slipElementFigure.slipFilter = updatedSlipFilterPanel;  // Update, slip element figure, slip local storage on dynamic slip filter panel updation 
+            console.log(slipLocalStorage);
         }
     })
 
@@ -168,6 +259,18 @@ function generateSlip(textAreaElementValue, slipFilterColor, uniqueIdentifier){
     bodyContainer.appendChild(slipElement); // Append slip element into body container element
 }
 
+
+function getSlipElementIndex(uniqueCredentials){  // Abstract --> return, slip element index
+    for(let idx = 0 ; idx < slipLocalStorage.length ; idx++){  // Looping, through slip local storage
+        const slipElementFigure = slipLocalStorage[idx];  // Represent, slip element data
+        const slipElementCredentials = slipElementFigure.slipCredentials  // Represent, unique slip identifier
+        if(uniqueCredentials == slipElementCredentials){  // Manipulation of slip filter panel, slip local storage
+            return idx;
+        }
+    }
+}
+
+
 function slipFilterPanelUpdation(slipFilterPanelElement){
     const currentSlipFilter = slipFilterPanelElement.classList[1]; // Represent, slip filter panel element's, class clause, which inturn represent color
     console.log(currentSlipFilter);
@@ -177,6 +280,7 @@ function slipFilterPanelUpdation(slipFilterPanelElement){
             slipFilterPanelElement.classList.remove(currentSlipFilter); // Removal of current slip filter class, from slip filter panel, to ease filter panel updation
             const toBeSlipFilterPanel = slipFilterPanelArray[(idx+1) % slipFilterPanelArray.length]; // Represent to be slip filter panel element's, class clause, which inturn represent color
             slipFilterPanelElement.classList.add(toBeSlipFilterPanel); // Update, slip filter panel
+            return toBeSlipFilterPanel;  // Maintainance of slip local storage
         }
     }
 }
