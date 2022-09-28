@@ -94,7 +94,7 @@ line-height --> paragraph of text mai, lines ke bich me, space/height dene ke li
 font --> text ki font sytling
 
 font-size --> ye property use karke hum text ka size set kar sakte hai
-font-family --> ye property use karke font style set kar sakte hai
+font-family --> ye property use karke font style set kar sakte haihumko
 web safe fonts --> ye font sabhi browsers mai mil jayege humko
 
 font-weight --> ye property font ki boldness set karne ke liye use karte hai

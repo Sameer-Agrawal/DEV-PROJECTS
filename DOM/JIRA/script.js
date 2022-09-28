@@ -13,8 +13,28 @@ const staticFilterElementArray = document.querySelectorAll('.subHeadContainer .s
 const textContainerElement = floatingContainerElement.querySelector('.textAreaElement');  // Represent text area element in floating container element
 const bodyContainer = document.querySelector('.bodyContainer');  // Represent parent body container
 const floatingFilterElementArray = floatingContainerElement.querySelectorAll('.floatingFilterElement'); // Represent filter element's from floating filter container
-const slipLocalStorage = [];  // Local storage, slip element data! 
+let slipLocalStorage = [];  // Local storage, slip element data! 
 // Each element from slip local storage, represent slip element figures, which inturn ease slip recreation
+
+// Retrieval, browser local storage
+if(localStorage.getItem('JIRA')){  // Check, if data exist, provided specific key
+    const precedingLocalStorageString = localStorage.getItem('JIRA');  // String format
+    const precedingLocalStorage = JSON.parse(precedingLocalStorageString);  // Array format!
+    console.log(precedingLocalStorage);
+    slipLocalStorage = precedingLocalStorage;  // local storage sync
+
+    // Preceding slip recreation!
+
+    for(let idx = 0 ; idx < slipLocalStorage.length ; idx++){  // Looping, through sync, slip local storage
+        const slipElementFigure = slipLocalStorage[idx];  // Represent, data about slip element
+        const slipChore = slipElementFigure.slipChore;  // Represent, slip chore
+        const slipFilter = slipElementFigure.slipFilter; //Represent, slip element filter identifier
+        const slipCredentials = slipElementFigure.slipCredentials; // Represent, slip credentials
+        generateSlip(slipChore, slipFilter, slipCredentials);  // Slip recreation
+    }
+}  
+
+// The JSON.parse() method resolve a JSON string, constructing the JavaScript value or object described by the string
 
 addBtnElement.addEventListener('click', function(event) { // Trigger callback, with a click on add button
     if(flag == false){ // Request for floating container visiblity
@@ -194,6 +214,7 @@ function generateSlip(textAreaElementValue, slipFilterColor, uniqueIdentifier){
                 if(slipUniqueIdentifier == slipElementCredentials){  // Remove, slip entry!
                     slipLocalStorage.splice(idx,1);  // Remove, slip entry, provided slip element deleted
                     console.log(slipLocalStorage);
+                    reformLocalStorage();  // Abstract --> Sync slipLocalStorage and browser localStorage!
                 }
             }
         }
@@ -223,6 +244,7 @@ function generateSlip(textAreaElementValue, slipFilterColor, uniqueIdentifier){
             const slipElementFigure = slipLocalStorage[slipLocalStorageIndex];  // Represent, slip element figure, to be updated
             // console.log(reformedChore);
             slipElementFigure.slipChore = reformedChore;  // Update, slip element figure, slip local storage on dynamic slip filter panel updation 
+            reformLocalStorage();  // Abstract --> Sync slipLocalStorage and browser localStorage!
             console.log(slipLocalStorage);
         }
         manipulationFlag = !manipulationFlag  // Maintain manipulation flag 
@@ -244,6 +266,7 @@ function generateSlip(textAreaElementValue, slipFilterColor, uniqueIdentifier){
             // console.log(slipLocalStorageIndex);
             const slipElementFigure = slipLocalStorage[slipLocalStorageIndex];  // Represent, slip element figure, to be updated
             slipElementFigure.slipFilter = updatedSlipFilterPanel;  // Update, slip element figure, slip local storage on dynamic slip filter panel updation 
+            reformLocalStorage();  // Abstract --> Sync slipLocalStorage and browser localStorage!
             console.log(slipLocalStorage);
         }
     })
@@ -254,6 +277,7 @@ function generateSlip(textAreaElementValue, slipFilterColor, uniqueIdentifier){
         // slipElementFigures --> Slip element figures!
         slipLocalStorage.push(slipElementFigures);  // The push() method adds new items to the end of an array
         console.log(slipLocalStorage);
+        reformLocalStorage();  // Abstract --> Sync slipLocalStorage and browser localStorage!
     }
 
     bodyContainer.appendChild(slipElement); // Append slip element into body container element
@@ -289,3 +313,11 @@ function deleteSlip(slipElement){
     bodyContainer.removeChild(slipElement); // Removal of slip element from body container node list
 }
 
+
+// Update, browser local storage
+
+function reformLocalStorage(){
+    const slipLocalStorageString = JSON.stringify(slipLocalStorage);  // Stringify, slip local storage
+    localStorage.setItem('JIRA', slipLocalStorageString);  // Stringified Array
+    // The JSON.stringify() method converts a JavaScript value to a JSON string
+}
