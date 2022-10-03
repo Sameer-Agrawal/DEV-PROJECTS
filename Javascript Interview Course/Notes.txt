@@ -1,0 +1,355 @@
+
+Lecture 1 --> Core fundamentals of javascript
+Everything in javascript happen inside an execution context
+Javascript ka saara code execution context mai execute hota hai
+Execution context ko hum ek box ya container samaj sakte hai
+
+Execution context mai, do components hote hai
+1. Memory component --> Isko variable environment bhi bolte hai because, isme saare variable and function key value pair ke tarah store hote hai
+2. Code component --> Isko thread of execution bhi bolte hai because, isme js code line by line execute hota hai from top to bottom
+
+Javascript is a synchronous, single threaded language
+
+single threaded --> javascript mai sirf ek code ek time par execute hosakta hai, wo bhi line by line
+synchronous --> javascript mai jab tak ek time execute nahi ho jaati, next line execute nahi ho sakti
+
+.......................................................................................................................................................
+
+Lecture 2 --> Real time simulation of execution context creation and execution
+
+Execution context bhi javascript engine ke andar hota hai
+
+In javascript, memory allocates first, execution happens later
+memory allocation phase mai, variable ke undefined value unassign ho jaati hai. Whereas, functions ka entire code function key ke aage assign ho jaata hai 
+
+In javascript, undefined ek special keyword hota hai
+Jab bhi code execution phase mai js engine, key ko encounter karta hai, jiske aage memory allocation phase mai undefined store hua tha, wo key ke aage uske actual value place kar deta hai.
+
+
+Function invocation in js --> In js jab bhi koi function invoke hota hai, to ek naya execution context ban jaata hai
+function ke invocation mai, in memory allocation phase, function ke andar ke variable, parameter and function ko hi memory allocate hoti hai
+
+Things passed during function invocation are called as arguments
+variable, accepting the things passed are called as parameters
+
+local memory --> memory inside local/function's execution context
+
+Whenever js engine encounters, return keyword, it will state that the work of respective execution context is over, and return the js engine control to the place where the function was invoked
+
+Jab bhi function pura execute ho jaata hai, uska respective execution context completely delete ho jaata hai
+
+Jab pura program execute ho jaata hai to global execution context bhi delete ho jaata hai
+
+Execution context creation, deletion, control allocation ye sab ko manage karne ke liye js engine ek stack maintain karta hai jisko call stack bhi bolte hai
+
+At the bottom of the call stack there is always a global execution context. Function invocation leads to pushing respective execution context, inside call stack. The moment function is completely executed, respective execution context is poped out of call stack 
+
+Call stack maintain karta hai order of execution of execution context
+Call stack is also known as execution context stack.
+
+.........................................................................................................................................................
+
+Lecture 3 --> Hoisting in JS
+
+Hoisting --> The ability to, access variable and function's even before they are initialized, is known as hoisting in js
+
+One of the major difference between arrow function and function declaration is hoisting.
+
+In memory allocation phase arrow function, get attached to global object, and are treated similar to variable's, have a special keyword undefined as a value in front of a arrow function name key.
+
+...........................................................................................................................................................
+
+Lecture 4 --> Function internal working and variable environment
+
+A function's execution context is independent of any other outer environment!
+console.log --> JS engine first search for the variable, inside local memory space
+Every function has its own local memory space
+
+.............................................................................................................................................................
+
+Lecture 5 --> Shortest JS program  --> An empty js program is the shortest program in js
+
+Even before a single line of js code is executed, js provide us with a window/global object. It contains various methods and variables
+This --> Isko hum referrring keyword bol sakte hai. Global level par ye window object ko refer karta hai
+this keyword humko JS engine hi provide karta hai
+window object, js engine global execution context ke sath banata hai
+
+Jab bhi koi program run hota hai js engine hume, global execution context, window object, and this keyword provide karta hai, jo hume program run karne mai help karta hai
+
+No matter where we execute a js program, a global object will always get created. It might be different for browser, node etc. But it is an responsiblity of js engine to provide global object
+
+At global level means, inside an global execute context
+
+Not only for global execution context, agar koi bhi exection context create hota hai to uske sath this create hota hai
+Global Space --> Jo bhi program hum likhte hai, provided wo kisi function mai nahi hai --> ye global space hoti hai
+
+Jab bhi hum koi variable ya function, global space mai declare karte hai, to wo global object ke saath attach ho jaate hai
+At global level, agar hum kisi variable ya function ko access karna chahte hai to, hum window.functionName/variableName likh sakte hai
+
+
+................................................................................................................................................................
+
+Lecture 6 --> undefined and not defined in js
+
+undefined --> Hum undefined ko ek placeholder consider kar sakte hai. Memory allocation phase mai variable ki value set karne ke undefined ka use karte hai 
+not defined --> Jab bhi hum koi variable ya function ko access karne ka try karte hai, jisko bhi memory allocate nahi hui hai during memory allocation phase
+
+undefined is a special keyword, used as a placeholder, so it definately takes some amount of memory space
+
+'===' --> Abstract --> Strictly checking if two things are equal or not
+
+Loosely typed language / Weakly typed language --> Iska matlab js apne variable ko kisi bhi datatype se attach nahi karti, moreover, variable se attach datatype update bhi ho sakta hai
+Until any value is assign to a variable, it will hold the placeholder undefined to it
+
+undefined keyword has a purpose. It is completely possible to assign undefined to a variable, but it is not a good practice, as when the code becomes enough big or complex to comprehend, it can lead to errors
+
+.................................................................................................................................................................
+
+Lecture 7 --> Scope, lexical environment
+
+Scope --> hum ek function ya variable ko program mai kaha access kar sakte hai, usko wo function ya variable ka scope bolte hai
+Scope humke ye batata hai that ek particular entity ko hum kaha-kaha access kar sakte hai
+
+Along with the creation of execution context, a lexical environment is also created
+
+Lexical environment --> It is local memory, along with lexical environment of its parent
+
+Suppose there is a function b inside function a, we can say that function b is lexically/hierarchly sitting inside function a
+
+Whenever, the execution context is created due to function invocation, memory component of execution context, will also have access to lexical enviroment of its parent
+// Observation --> The reason why we can access global variables and function, everywhere in the program is because, every function has access to lexical environment of its parent, which includes, hierarchly deep inside lexical environment of global execution context
+
+Suppose there is a function b inside function a, we can say that function a is lexical parent of function b
+
+The reference to lexical environment of global execution context, is null
+
+The way of finding, the value of an variable in the lexical manner is known as scope chain
+Scope chain --> The chain of lexical environment bhi bol sakte hai
+
+Another way to think of scope --> That ye environment mai aap kaun-kaunse variables and function access kar sakte hai
+
+.................................................................................................................................................................
+
+Lecture 8 --> let, const variable declaration; temporal dead zone; difference between reference error, syntax error, type error; hoisting in let,const declaration's
+
+let, const declaration's are hoisted
+Temporal dead zone --> Time between a let, const declaration is hoisted, and it is assigned value
+If the let, const declaration is in temporal dead zone, we cannot access the variable/function
+
+Reference Error : Jab bhi js engine, memory space mai ek variable ko dhundne ka try karta hai, and wo variable ko wo access nahi kar sakta, ya js engine ko nahi milta
+Whenever we try to access a variable in temporal dead zone, it gives you a reference error --> "variable name, cannot be access before initialization"
+Whenever we try to access a variable which is not in the scope, we get a reference error --> "variable name is not defined"
+
+var declaration's get attached to the window object, whereas let, const declaration's are maintained in seperate space
+
+Redeclaration of let variables are not allowed, at the same level or in the same execution context
+Redeclaration of var variables is allowed
+We even cannot redeclare let variable, as var variable, in the same scope
+
+Syntax error --> In syntax error, not a single line of code is executed
+
+const declaration is even more strict, than let declaration
+During const declaration, we have to initialize the variable, otherwise we will get a syntax error
+
+Type error :
+Reinitialization of const declaration, is a type error
+
+To avoid temporal dead zone error, push the initialization and declaration on the top of the program --> Shrinking temporal dead zone window to zero
+
+.......................................................................................................................................................................
+
+Lecture 9 --> Block, block scope, shadowing
+
+Block can be represented with {}
+Block is used to group multiple statements together
+Block usage --> We can group multiple statements and use them in a place where javascript expects single statement e.g, if, for, while
+
+Block scope --> A perspective to think about block scope is, all the variables we can access inside the block
+let and const declarations are block scope
+let, const gets attached to a block object(memory space)
+
+Block scope --> Block scoping means declaring a variable, not just inside a function, but inside any curly brackets like if statements or loops. The variable stays inside memory, but the engine just won't allow you to access it like before when we used var, because they are in the temporal dead zone until assignment
+
+In programming, shadowing occurs when a variable declared in a certain scope (e.g. a local variable) has the same name as a variable in an outer scope (e.g. a global variable). When this happens, the outer variable is said to be shadowed by the inner variable.
+
+The variable in the inner scope, may or may not affect the value of outer scope, but it is said that inner variable having same name as outer variable, shadows outer variable
+
+Illegal shadowing --> Suppose we have a let declaration in an outer scope with a name "z", we cannot declare the var variable with same name in the inner scope, as var is a function scope, and can cross the boundaries of a block
+
+Block also follows lexical scope, we have an access to the lexical environment of parent inside a block also
+ 
+......................................................................................................................................................................
+
+Lecture 10 --> Closures
+
+Closure --> Function, bundled(bind) together with its lexical environment, is known as closure 
+We can pass a function inside a function as a parameter. Also, we can return a function, from another function
+When a function, returns a function, it not only returns a function but it returns a closure(function bundled together with its lexical scope)
+
+Asynchronous programming, might be impossible in javascript without closures
+
+.....................................................................................................................................................................
+
+Lecture 11 --> setTimeOut + closure interview question!
+
+setTimeOut is an asynchronous function. The callback function of setTimeOut function forms a closure with its lexical environment(scope)
+
+Time, tide and javascript waits for none!
+
+In js, it is always pass by value
+Pass by value --> It's always pass by value, but for objects the value of the variable is a reference. Because of this, when you pass an object and change its members, those changes persist outside of the function
+When a value is passed as an argument, a copy of that value is stored inside respective parameter
+
+whenever we iterate through a block, a new instance of let declaration is created, and the old one is destroyed, on in certains cases persist, if declaration is forming a closure with a function
+
+.......................................................................................................................................................................
+
+Lecture 12 --> More about closures, garbage collector
+
+()() --> Suppose a function call return's a function and if we want to call the return function --> shortcut
+
+Faith --> Closure are used in data hiding
+Suppose we have a variable, and we want to put some access contraints on that variable, so that other parts of the program cannot access it
+
+We can achieve data hiding by encapsulating the data inside a function, and the return a function, that represent a way to access to modify the data. The returned function will form a closure with data, and we could'nt access that data, anywhere else in the program, except we use the returned method
+
+When a function is invoked, a new instance of a var declaration is created, which reference to completely new address, as compared to var declaration in previous invocation's.
+So when a function creates a closure with its lexical environment, enclosed in another function, it reference to another parent var declaration, every time outer function is invoked
+
+A constructor is a special function that creates and initializes an object instance of a class. In JavaScript, a constructor gets called when an object is created using the new keyword. The purpose of a constructor is to create a new object and set values for any existing object properties.
+
+A constructor function return's a reference to an object
+
+The major disadvantage of closure's is, it takes up a lot of memory as a closure persist, its lexical scope. But modern js engine, came up with smart garbage collection mechanism, which collects, variables/function's which are not used in the inner scope
+e.g if outer function holds up two var declaration's and only one of them is used in an inner function, which is inturned returned from outer function, garbage collector will collect the variable which is not used by the inner function
+
+.......................................................................................................................................................................
+
+Lecture 13 --> First class function's in javascript 
+
+Anonymous function --> A function without a name is known as anonymous function
+Anonymous function's are used when function's are used a value. e.g function expression, callback function etc.
+
+Function statement --> Basic/Default way of creating a function is known as funtion statement
+Function statement always require a function name --> ECMA script specification's/rules
+
+Function expression --> Function declaration provided, assigning a function to a variable is known as function expression
+The major difference between function statement and function expression is hoisting. During memory allocation phase javascript engine, treats a function expression as a variable declaration, and holds up keyword undefined as a placeholder value. So we cannot call a function expression before it is initialized, as js engine will treat a function expression as a variable
+
+Function declaration --> function declaration, function statement are same thing. They are just the two jargon for a normal function declaration
+
+The major use case of knowing all this jargon's is better understanding of error's, blog articles and books
+
+Named function expression --> When a function statement is assigned to a variable, it is known as named function expression
+e.g. If a function invocation return's a function, and the returned function is stored as a value in a variable which is further used to invoke the returned function
+
+We cannot call the named function expression with a function declaration name, as it is not attached to the scope as a key!
+
+First class function's --> The ability to use function, as a value, which inturn provide a capability to pass a function as a argument and return a function from another function
+
+Functions are called first class citizen's in javascript because of there ability to be used as a value
+
+.........................................................................................................................................................................
+
+Lecture 14 --> Callback function's and event listener's in javascript
+
+Callback function --> A function which is passed into an another function is known as callback function
+
+Core --> Javascript is a synchronous single threaded language
+Callback function gave javascript a capability to explore a asynchronous world
+
+Why callback function are known as callback functions?
+When we pass a function to an already defined function as an argument, we gave the responsibility of the passed function, to the function it has been passed. The passed argument, will be stored as a value to a identifier, and the defined function, already knew what to do with that passed function.
+
+Javascript has only one call stack, also called as the main thread. Suppose a operation blocked the callstack, it is known as blocking of main thread, and to prevent it asynchronous world came into picture
+
+The major aim is not to block the call stack, so use async operation's for things which take time
+
+Event handler --> Suppose, an event is triggered, what follows that event is grouped together in a block and passed as callback function. Trigger of event leads to invocation of callback function/ event handler
+
+callback function passed to addEventListner is also known as event handler
+
+In addEventListner method, a callback function is passed, which inturn is triggered is an event is triggered
+To know if an event is triggered or not, we have to continuously keep an eye/listen on an element
+
+Closure + Element listner simulations --> Event listner functionality, would not be possible without closures, callback functions
+
+Event listner, generally are heavy, as they clogs up a lot of memory space. So, here comes the need to remove event listner
+
+When an event listner is removed, the closure callback forms with its lexical environment won't persist, and the variable declaration's and other elements persisted through closures will get garbage collected
+
+...........................................................................................................................................................................
+
+Lecture 15 --> ** Event loop ** --> Callback queue, microTask queue, and there internal working inside the browser
+
+The callstack is present inside the javascript engine
+For every function invocation a execution context is created for a function, to execute the code of a function
+
+The main job of the callstack is to execute, whatever is at the top of the stack, also callstack helps in maintaining, current control in each execution context
+
+Whatever comes inside the callstack is quickly executed, JS engine waits for nothing
+
+Callstack is inside JS engine, and JS engine is inside the browser
+
+Browser also has local storage, i.e we can store some data inside a browser
+Timer superpower is also, enclosed inside a browser
+Browser also have the power to contact with the external world, e.g. netflix server
+
+To access, all the superpowers of the browser we need web API.  
+
+Abstract --> APIs are mechanisms/methods that enable two software components to communicate with each other using a set of definitions and protocols/rules
+We can think of API as a function or method, that connect a component, to some other component
+
+Some examples of web API / superpower that browser provides --> setTimeout, DOM API, console, fetch, localStorage, location etc.
+
+fetch() API, which to provided to JS engine by the browser, gave us access to contact with external server
+
+JS engine, can access all the superpower of the browser, using API, which are connected to window object, provided by the browser, and the JS engine have an access to this global object which is called window in case of browser
+
+To access local storage of the browser, we can use window.localStorage()
+Writting window.localStorage or localStorage is the same thing
+
+console is an api which provide log method. Whatever we pass into the method as an argument, is log into the console, through the console method/function which holds up the code to actually interact with console
+
+setTimeout() API internally give the access of timer, to the JS engine  
+When a callback function, along with a timer is passed as an argument into setTimeout API, setTimeout method internally start the timer provided, and once a timer is finished it somehow push the function, inside the callstack passing through a mechanism, and then the callstack will execute the callback function
+
+Callback function, is passed to a callstack through an callback queue. Event loop works as a gate keeper and is constantly looking for whether there is any callback method inside callback queue, as soon as event loop encounter's a callback inside callback queue, it push that callback inside, callstack, and the callback function get's executed
+
+EventListner is another superpower provided by the browser through DOM API
+
+
+How addEventListner function works internally?
+--> When we add an event listner to a html element, the event handler along with event type, is passed to addEventListner function as an argument, This internally become the part of local environment of addEventListner method. We event occures, the copy of event handler is pushed inside the callback queue. Event loop, acts as a gatekeeper and is constantly looking for a callback function inside a callback queue, when event loop see a callback, it push the callback inside a callstack, and the callback function gets executed
+
+
+Event loop --> 
+
+Event loop only has one job and that is to constantly moniter, call stack and callback queue, it will only push the callback function into the callstack, if the callstack is empty
+
+fetch() API --> A url passed into a fetch() function as an argument, is used internally by the fetch method defination to request the url. Here fetch represent a promise
+
+Microtask queue --> It is exactly similar to callback queue, but event loop give it higher priority compared to callback queue
+
+In simple words we can say that, the work of event loop is to schedule the callback functions, once the callstack is empty
+
+All the callback function, passed as an argument to a promise, callback function passed to an mutation observer(abstract) enter the microtask queue, where as all the other callback function passed to other web API will enter callback queue
+
+Mutation(change) observer --> This mutation observer, continuously observe the dom tree, and if there is a change in the dom tree, a callback function will be invoked
+
+Callback queue is also known as task queue
+
+Callback starvation --> Sometimes, if a callback function of promise or mutation observer, invoked another callback and so on, that callback function has to wait for long time, until all the callback function in the microtask queue are executed this will lead to starvation of callback function in the callback queue
+
+.............................................................................................................................................................................
+
+
+
+
+
+
+
+
+
+
+
