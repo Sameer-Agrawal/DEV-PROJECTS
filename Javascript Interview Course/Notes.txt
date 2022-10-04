@@ -344,6 +344,26 @@ Callback starvation --> Sometimes, if a callback function of promise or mutation
 .............................................................................................................................................................................
 
 
+In javascript arguments are pass by value.
+
+Isolated function's --> Isolated function's don't depend on the state/scope of the program, which include global variable's, and other member's of lexical environment
+
+Pure function --> Function's returning same output for same input. Pure function's are isolated, i.e they don't mutate anything outside function scope
+Passing an input as an argument to console API, inturn leads to mutation in console. So, function holding up console.log() call, are not pure function's as they cause a mutation in external environment
+
+Pass by reference --> Mutation in variable location, provided as an argument to a function.
+
+Side effects / Impurity in JS --> Variable mutation's from parent's lexical scope, is bad practice. To avoid, we isolated function's are preferable 
+In simple language, mutation of variable, function's outside current function scope is side effect
+
+In case of non-primitive variable declaration's, variable holds up reference to an object, causing mutation in original location, if passed to a function through an argument
+
+
+
+
+
+
+
 
 
 
