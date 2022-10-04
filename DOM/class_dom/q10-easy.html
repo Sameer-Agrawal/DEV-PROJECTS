@@ -27,7 +27,34 @@
       //Q- Write a script which keeps checking the password being entered. It should check if capslock is on or off if its on it should not allow to type and show "caps on" on screen, also it should only allow to type if the shift in pressed down.
       
       //   Solution :
+      // Abstract --> Allow input if shift modifier key is pressed down
+      const textAreaElement = document.querySelector('#pass');  // Represent, text area element
+      const paragraphElement = document.querySelector('p'); // Represent, paragraph element
+      // textAreaElement.setAttribute('disabled', true);  // Dynamic restriction of input, input element
+      // textAreaElement.removeAttribute('disabled');  // Dynamic removal of element
 
+      textAreaElement.addEventListener('keydown', function(event) {  // callback, invoked with a keydown
+        // console.log(event.key);
+        // console.log(event.getModifierState('Shift'));  // Event object, contain, getModifierState method, representing current state of specified modifier
+        // Abstract --> Enable, readonly, if capslock is active
+        let capsLockKeyState = event.getModifierState('CapsLock');  // Represent, state of capslock key
+        if(capsLockKeyState == true){  // Input mutation, not allowed
+          textAreaElement.setAttribute('readonly','true');  
+          paragraphElement.style.display = 'block';  // Default, display of paragraph element is block
+        }else if(capsLockKeyState == false){  // Enable, Readonly
+          // If capslock is not active, check if, shift is active
+          paragraphElement.style.display = 'none'; // Maintainance of warning 
+          let shiftKeyState = event.getModifierState('Shift');  // Represent, shift key state
+          if(shiftKeyState == true){  // Allow, mutations
+            textAreaElement.removeAttribute('readonly');
+          }else if(shiftKeyState == false){
+            textAreaElement.setAttribute('readonly','true');  // Maintainance of readonly, attribute
+          }
+        }
+      })
+
+      // Modifier key --> Key, which are used in conjuction with another key --> shift + a, here shift is modifier key 
+      // Read-only attribute specify, input field is read only
     </script>
   </body>
 </html>
