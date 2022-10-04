@@ -18,8 +18,18 @@
     <p>lorem</p>
     <p>lorem</p>
     <script>
-      // Q - Map function does not exist for a nodelist like it does for an array. Create a function called nodeStyleMapper which takes a nodelist a css property name and a value and it add that property with the given value to all the dom nodes of the nodelist.Using that function make the colour of all p tags red
-
+      // Q - Map function does not exist for a nodelist like it does for an array. Create a function called nodeStyleMapper which takes a nodelist a css property name and a value and it add that property with the given value to all the dom nodes of the nodelist. Using that function make the colour of all p tags red
+      // nodelist --> List of type, node
+      const nodeListElement = document.querySelectorAll('p');  // Represent, list of node/HTML element
+      nodeStyleMapper(nodeListElement, 'color', 'red');  // Abstract --> Mutate, colour of paragraph element to red
+      // Abstract --> nodeStyleMapper, which inturn accept nodelist, css property, and property value as an argument, inturn assign property to every node in node list
+      function nodeStyleMapper(nodeList, property, value){
+        for(let idx = 0 ; idx < nodeList.length ; idx++){  // Looping through nodeList
+          const nodeElement = nodeList[idx];  // Represent, node element
+          // Here, property parameter, is passed as value
+          nodeElement.style[property] = value;  // Provided, absence of property key in style object, no mutation's should be expected
+        }
+      }
 
       // Solution 
     </script>
