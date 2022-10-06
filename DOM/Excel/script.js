@@ -65,6 +65,9 @@ function cellConstructor(){  // Faith --> Construct cell!
             cellElement.classList.add("cellElement");  // To add one or more CSS classes to the class list of an element, you use the add() method of the classList
             cellElement.setAttribute("contentEditable", "true");  // The contenteditable attribute specifies whether the content of an element is editable or not
             // The setAttribute() method is used to set or add an attribute to a particular element and provides a value to it
+            cellElement.setAttribute("columnIdentifier", String.fromCharCode(64+column));  // Represent, column identifier, cell element
+            cellElement.setAttribute("rowIdentifier", row);  // Represent, row identifier, cell element
+            cellIdentifier(cellElement); // Pin-point cell
             rowElement.appendChild(cellElement); // The appendChild() method appends a node (element) as the last child of an element.
         }
         mutableCellContainer.appendChild(rowElement);  // Adjoin, row element to a cell container
@@ -114,6 +117,18 @@ function maintainElement(){  // Faith --> Maintain top, side panel through scrol
 }
 
 maintainElement();
+
+
+const labelElement = document.querySelector(".labelElement");  // Represent, label element, which inturn unveil cell element identity
+
+function cellIdentifier(cellElement){  // Faith --> Pin-point cell
+    cellElement.addEventListener('click', function(){  // Callback, invoke with click on cell element
+        const rowIdentifier = cellElement.getAttribute("rowIdentifier");  // The getAttribute() method returns the value of an element's attribute
+        const columnIdentifier = cellElement.getAttribute("columnIdentifier");  // Represent, column identifier, of a cell element clicked!
+        const cellIdentifier = columnIdentifier + rowIdentifier;  // Represent, cell identity
+        labelElement.innerText = cellIdentifier;  // Unveil cell element identity
+    })
+}
 
 
 

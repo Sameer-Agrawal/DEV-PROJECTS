@@ -20,7 +20,7 @@ Sticky positioning is a hybrid of relative and fixed positioning. The element is
 /* box-sizing: border-box  --> Represent content size, padding, border is inclusive of element size provided */
 
 .taskbarContainer{
-    height: 9vh;
+    height: 9.5vh;
     background-color: #C9D6DF;
     z-index: 2;
 }
@@ -30,10 +30,9 @@ Z Index ( z-index ) is a CSS property that defines the order of overlapping HTML
 */
 
 .cellContainer{
-    height: calc(100vh - 13.5vh);
+    height: calc(100vh - 14vh);
     background-color: #F0F5F9;
     position: relative;
-    top:0px;
     overflow: auto;
 }
 
@@ -108,5 +107,21 @@ Z Index ( z-index ) is a CSS property that defines the order of overlapping HTML
 
 .mutable-cell-container{
     position: absolute;
+    top: 20px;
     left: 40px;
+}
+
+.assistContainer{
+    height: 2.5vh;
+    background-color:red;
+    position: relative;
+    top:7vh;
+}
+
+.labelElement{
+    height: 100%;
+    width: 40px;
+    background-color: #C9D6DF;
+    outline: none;
+    text-align: center;
 }
