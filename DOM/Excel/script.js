@@ -43,22 +43,44 @@ function cellConstructor(){  // Faith --> Construct cell!
 
 
     // Dynamic creation, cell container
-
-    // for(let row = 1 ; row <= 100 ; row++){  // Represent, 100 static row
-    //     const rowElement = document.createElement("div");  // Represent, row element
-    //     rowElement.classList.add("rowElement");  // add() method, to addjoin class to class list
-    //     for(let column = 1 ; column <= 26 ; column++){  // Represent, 100 static column
-    //         const cellElement = document.createElement("div");  // createElement() is used to dynamically create an HTML element node
-    //         // console.log(cellElement);  // Represent, cell element
-    //         cellElement.classList.add("cellElement");  // To add one or more CSS classes to the class list of an element, you use the add() method of the classList
-    //         rowElement.appendChild(cellElement); // The appendChild() method appends a node (element) as the last child of an element.
-    //     }
-    //     cellContainer.appendChild(rowElement);  // Adjoin, row element to a cell container
-    //     // console.log(rowElement.children.length);  // Represent, row element
-    //     // The childElementCount property returns the number of child elements of an element.
-    // }
+    const mutableCellContainer = document.createElement("div");  // Represent, mutable cell container, which inturn bottle up cell element
+    mutableCellContainer.classList.add("mutable-cell-container");  // add() method, to addjoin class to class list
+    cellContainer.appendChild(mutableCellContainer);  // Adjoin, row element to a cell container
+    for(let row = 1 ; row <= 100 ; row++){  // Represent, 100 static row
+        const rowElement = document.createElement("div");  // Represent, row element
+        rowElement.classList.add("rowElement");  // add() method, to addjoin class to class list
+        for(let column = 1 ; column <= 26 ; column++){  // Represent, 100 static column
+            const cellElement = document.createElement("div");  // createElement() is used to dynamically create an HTML element node
+            // console.log(cellElement);  // Represent, cell element
+            cellElement.classList.add("cellElement");  // To add one or more CSS classes to the class list of an element, you use the add() method of the classList
+            rowElement.appendChild(cellElement); // The appendChild() method appends a node (element) as the last child of an element.
+        }
+        mutableCellContainer.appendChild(rowElement);  // Adjoin, row element to a cell container
+        // console.log(rowElement.children.length);  // Represent, row element
+        // The childElementCount property returns the number of child elements of an element.
+    }
 }
 
-
 cellConstructor();
+
+
+// Maintain top, side panel through scrolling
+
+const columnIdentifierElement = document.querySelector(".column-identifier-row");  // Represent, column identifier panel element
+const rowIdentifierElement = document.querySelector(".row-identifier-column");  // Represent, row identifier panel element
+const topLeftCellElement = document.querySelector(".top-left-cell");  // Represent, top left cell element
+
+function maintainElement(){  // Faith --> Maintain top, side panel through scrolling
+    cellContainer.addEventListener("scroll", function(event){  // Callback invoke, with scroll on cell container element
+        console.log(event);  // Represent, scroll event
+        const scrollTop = cellContainer.scrollTop;  // Event, maintain scrollTop attribute, which inturn represent, content scroll in px
+        const scrollLeft = cellContainer.scrollLeft;  // Event, maintain scrollTop attribute, which inturn represent, content scroll in px 
+        columnIdentifierElement.style.top = scrollTop + "px";  // With a scroll, column identifier element, maintainance with slide down
+        topLeftCellElement.style.top = scrollTop + "px";  // With a scroll, top left cell element, maintainance with slide down
+        topLeftCellElement.style.left = scrollLeft + "px";  // With a scroll, top left cell element, maintainance with slide left
+        rowIdentifierElement.style.left = scrollLeft + "px";  // With a scroll, row identifier element, maintainance with slide left
+    })
+}
+
+maintainElement();
 

@@ -6,6 +6,11 @@ vh --> 50vh = 50% of viewport height/device height in which the website is opene
 % --> width : 50% = 50% of parent's width 
 */
 
+/* 
+A fixed position element is positioned relative to the viewport, or the browser window itself. The viewport doesn't change when the window is scrolled, so a fixed positioned element will stay right where it is when the page is scrolled
+Sticky positioning is a hybrid of relative and fixed positioning. The element is treated as relative positioned when window is fixed initially, at which point it is treated as fixed positioned
+*/
+
 *{
     margin: 0px;
     padding: 0px;
@@ -17,13 +22,19 @@ vh --> 50vh = 50% of viewport height/device height in which the website is opene
 .taskbarContainer{
     height: 9vh;
     background-color: #C9D6DF;
+    z-index: 2;
 }
+
+/* 
+Z Index ( z-index ) is a CSS property that defines the order of overlapping HTML elements. Elements with a higher index will be placed on top of elements with a lower index.
+*/
 
 .cellContainer{
     height: calc(100vh - 13.5vh);
-    overflow-y: auto;
-    overflow-x: scroll;
     background-color: #F0F5F9;
+    position: relative;
+    top:0px;
+    overflow: auto;
 }
 
 /* The overflow property specifies whether to clip the content or to add scrollbars when the content of an element is too big to fit in the specified area 
@@ -47,9 +58,17 @@ vh --> 50vh = 50% of viewport height/device height in which the website is opene
 
 .cellElement{
     height: 20px;
-    width: 200px;
+    width: 125px;
     border: 0.01px solid #C9D6DF;
 }
+
+.column-identifier-row{
+    position: absolute;
+    left: 40px;
+    z-index: 2;
+}
+
+/* position : absolute --> Element removal, document flow */
 
 .column-identifier-element{
     text-align: center;
@@ -57,8 +76,13 @@ vh --> 50vh = 50% of viewport height/device height in which the website is opene
 }
 
 .row-identifier-column{
+    height: calc(100vh - 13.5vh);
     background-color: lightblue;
+    position: absolute;
+    left: 0px;
+    top: 20px;
     width: 40px;
+    z-index: 2;
 }
 
 .row-identifier-element{
@@ -70,3 +94,17 @@ vh --> 50vh = 50% of viewport height/device height in which the website is opene
 
 /* text-align: center --> Center a text, within an element */
 
+.top-left-cell{
+    width: 40px;
+    height: 20px;
+    border: 0.01px solid #C9D6DF;
+    background-color: aquamarine;
+    position: absolute;
+    left: 0px;
+    z-index: 3;
+}
+
+.mutable-cell-container{
+    position: absolute;
+    left: 40px;
+}
