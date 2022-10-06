@@ -1,0 +1,72 @@
+/*
+em --> 1em = 1 * parent's font size...similarly 3em = 3 * parent's font size
+rem --> 1rem = 1 * html tag's font size...similarly 3rem = 3 * html tag's font size
+vw --> 50vw = 50% of viewport width/device width in which the website is opened
+vh --> 50vh = 50% of viewport height/device height in which the website is opened
+% --> width : 50% = 50% of parent's width 
+*/
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+/* box-sizing: border-box  --> Represent content size, padding, border is inclusive of element size provided */
+
+.taskbarContainer{
+    height: 9vh;
+    background-color: #C9D6DF;
+}
+
+.cellContainer{
+    height: calc(100vh - 13.5vh);
+    overflow-y: auto;
+    overflow-x: scroll;
+    background-color: #F0F5F9;
+}
+
+/* The overflow property specifies whether to clip the content or to add scrollbars when the content of an element is too big to fit in the specified area 
+    scroll - The overflow is clipped, and a scrollbar is added to see the rest of the content
+    auto - Similar to scroll, but it adds scrollbars only when necessary
+    overflow-x - auto --> When content overflow in x direction
+*/
+
+/* Abstract --> calc() --> The calc() function performs numeric calculation to be used as the property value. */
+
+.sheetAnchor{
+    height: 4.5vh;
+    background-color: #C9D6DF;
+}
+
+/* Style cell Element */
+
+.rowElement{
+    display: flex;
+}
+
+.cellElement{
+    height: 20px;
+    width: 200px;
+    border: 0.01px solid #C9D6DF;
+}
+
+.column-identifier-element{
+    text-align: center;
+    background-color: lightgreen;
+}
+
+.row-identifier-column{
+    background-color: lightblue;
+    width: 40px;
+}
+
+.row-identifier-element{
+    width: 100%;
+    height: 20px;
+    text-align: center;
+    border: 0.01px solid #C9D6DF;
+}
+
+/* text-align: center --> Center a text, within an element */
+
