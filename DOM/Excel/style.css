@@ -60,6 +60,8 @@ Z Index ( z-index ) is a CSS property that defines the order of overlapping HTML
     height: 20px;
     width: 125px;
     border: 0.01px solid #C9D6DF;
+    overflow-x: scroll;
+    outline: none;
 }
 
 .column-identifier-row{

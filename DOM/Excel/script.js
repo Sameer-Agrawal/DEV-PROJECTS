@@ -1,3 +1,13 @@
+// Database, manipulation
+
+function databaseManipulation(){
+    const database = [];  // Represent, local database
+    return database;
+}
+
+const database = databaseManipulation();  // Represent, database
+
+
 // Dynamic construction of cell
 
 const cellContainer = document.querySelector(".cellContainer");  // Represent, cell container
@@ -53,15 +63,36 @@ function cellConstructor(){  // Faith --> Construct cell!
             const cellElement = document.createElement("div");  // createElement() is used to dynamically create an HTML element node
             // console.log(cellElement);  // Represent, cell element
             cellElement.classList.add("cellElement");  // To add one or more CSS classes to the class list of an element, you use the add() method of the classList
+            cellElement.setAttribute("contentEditable", "true");  // The contenteditable attribute specifies whether the content of an element is editable or not
+            // The setAttribute() method is used to set or add an attribute to a particular element and provides a value to it
             rowElement.appendChild(cellElement); // The appendChild() method appends a node (element) as the last child of an element.
         }
         mutableCellContainer.appendChild(rowElement);  // Adjoin, row element to a cell container
         // console.log(rowElement.children.length);  // Represent, row element
         // The childElementCount property returns the number of child elements of an element.
     }
+
 }
 
 cellConstructor();
+
+
+// Instante, database
+
+function instantiateDatabase(database){  // Faith --> Database, incarnation!
+    for(let row = 1 ; row <= 100 ; row++){  // Looping through, row
+        const rowArray = [];  // suppress, a row
+        for(let column = 1 ; column <= 26 ; column++){  // Looping through, column
+            const cellIdentifer = String.fromCharCode(64+column) + row;  // Stringify, cell identifier
+            // console.log(cellIdentifer);
+            const datum = {cellIdentifer : cellIdentifer, cellDatum : ""};  // Represent, cell identifier accompanying, cell datum 
+            rowArray.push(datum);  // Append, cell datum, to a row
+        }
+        database.push(rowArray);  // Append, row datum, to database
+    }
+}
+
+instantiateDatabase(database);  
 
 
 // Maintain top, side panel through scrolling
@@ -83,4 +114,6 @@ function maintainElement(){  // Faith --> Maintain top, side panel through scrol
 }
 
 maintainElement();
+
+
 
