@@ -8,19 +8,16 @@ function globalFunction(x) {
   };
 }
 
-let instance1 = globalFunction(2);
+let instance1 = globalFunction(2);  // After assignment, no more in temporal dead zone
 var instance2 = instance1(3);
-console.log(instance2());
+console.log(instance2());  // z --> undefined
 
 
 // Options:
 
 // 1) undefined
 // 2) error
-// 3) NaN
+// 3) NaN  --> ANS
 // 4) 5undefined
 
-
-//solution 
-
-//3) NaN
+// Adding numbers to undefined results in NaN (not-a-number), which won't get you anywhere

@@ -47,15 +47,15 @@ function reduce(array, callbackFunction, accumalatorInitializer){
 
 // Task --> Return, an array of first name, provided age is greater than 40
 
-function callbackFunction(accumalator, current){  // Callback function is invoked, for every element in an arrayOfObject
-    if(current.age > 40){  // Condition over age
-        accumalator.push(current.name);  // Append name, provided age is greater than 40 
-    }
-    return accumalator;
-}
+// function callbackFunction(accumalator, current){  // Callback function is invoked, for every element in an arrayOfObject
+//     if(current.age > 40){  // Condition over age
+//         accumalator.push(current.name);  // Append name, provided age is greater than 40 
+//     }
+//     return accumalator;
+// }
 
-const arrayOfName = reduce(arrayOfObject, callbackFunction, []);  // Function invocation
-console.log(arrayOfName);
+// const arrayOfName = reduce(arrayOfObject, callbackFunction, []);  // Function invocation
+// console.log(arrayOfName);
 
 // // Callback function is invoked, for every element of an array!
 // const callbackFunction = function(accumalator, current){  // Accumalation logic
@@ -64,5 +64,3 @@ console.log(arrayOfName);
 
 // const sum = reduce(array, callbackFunction, 0);  // Reduce function invocation
 // console.log(sum);
-
-

@@ -5,7 +5,7 @@ a[2] = a  // 2nd Index of an array hold's reference to array itself
 // a = ["a", "b", ["a", "b"]]  
 
 function f(a) {  // Reference to a is provided as an argument, maintained by 'a' variable
-    // Identifier a, differ's from a in global scope
+    // Identifier a, differ's from 'a' in global scope. Here, a is a local identifier
     a = a[2]  // A is assigned, with a reference to a
     console.log(a);  // a = ["a", "b", ["a", "b"]] 
     let n = Array("a", "b")  // Method, provided with, elements of an array, which inturn will be returned

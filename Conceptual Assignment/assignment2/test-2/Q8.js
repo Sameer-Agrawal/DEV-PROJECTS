@@ -1,38 +1,35 @@
-//Q- Transducer is a higher order function which takes 3 parameter => an array, a function used for filtering and another function to map values and returns the resultant array without mutation
+//Q- Transducer is a higher order function which takes 3 parameter => an array, a function used for filtering and another function to map values and returns the resultant array without mutation / side-effects!
 
 // which of the following definitions is/are correct?
 
 
 //A
-function transducer(arr, fFn, mFn) {
-  let nArr = arr.filter(fFn);
-  nArr = nArr.map(mFn);
-  return nArr;
+function transducer(array, filterFunction, mapFunction) {  // Pure function
+  let newArray = array.filter(filterFunction);  // Represent, filtered array
+  newArray = newArray.map(mapFunction);  // Represent transformation, provided new array
+  return newArray;
 }
 
 
 //B
-function transducer(arr, fFn, mFn) {
-  let nArr = [];
-  for (x in arr) {
-    if (fFn(arr[x])) {
-      nArr.push(arr[x]);
+function transducer(array, filterFunction, mapFunction) {
+  let newArray = [];
+  for (index in array) {
+    if(filterFunction(array[index])) {  // Represent, whether array element meet criteria, return true otherwise false
+      newArray.push(array[index]);
     }
   }
 
-  for (x in nArr) {
-    nArr[x] = mFn(nArr[x]);
+  for (index in newArray) {  // Index by index, transformation of an array element
+    newArray[index] = mapFunction(newArray[index]);  // Represent, transformation of array element
   }
-  return nArr;
+  return newArray;
 }
 
 // Options:
 
 // 1) A
 // 2) B
-// 3) Both
+// 3) Both  --> ANS
 // 4) None
-
-//solution 
-//3)
 

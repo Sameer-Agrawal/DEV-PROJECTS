@@ -358,7 +358,121 @@ In simple language, mutation of variable, function's outside current function sc
 
 In case of non-primitive variable declaration's, variable holds up reference to an object, causing mutation in original location, if passed to a function through an argument
 
+.......................................................................................................................................................................
 
+Lecture 16 --> Javascript engine architecture!
+
+Abstract --> Internal working of javascript engine; Conjunction of interpreter, compiler inside modern js engine; Memory Heap for memory allocation
+
+Javascript runtime environment --> Isko hum ek container samaj sakte hai, Jisme saari dependency hai required to run js code
+Javascript runtime environment mai hi javascript engine hota hai. Also, isme event loop, callback queue, microtask queue, and API's to connect with external environment bhi hote hai
+
+Javascript engine is the heart of javascript runtime environment
+Every browser has javascript runtime environment
+
+Node.js mai bhi javascript runtime environment hota hai, that is wo capable hai javascript code ko execute karne mai
+
+The API's inside javascript runtime environment, help to access the superpower of an outer environment of js runtime environment.
+API's may be different based on the environment, javascript engine is in. e.g. setTimeout and console, are common API's of browser and node 
+API's of browser and node, may have similar name but they are implemented differently
+
+Different browser, have different js engine, in case of chrome it is called as v8
+
+We can create a JS engine, but we have to follow ecma script(governing body of js language) standards/protocols in doing so, to avoid any inconsistency 
+
+The first ever js engine was created by the creator of js itself, it is now evolved a lot and is known as spiderMonkey which is used inside firefox browser
+
+Javascript engine in itself is a software, written in low level language's
+V8 engine is written in low level language, C++
+
+JS engine, takes high level code as an input and output a code, that is understandable by the machine
+
+
+Javascript engine architecture -->
+
+1. JS engine takes, human readable(high level code as an input)
+2. This high level code, mainly goes through three steps i.e parsing, compilation, execution
+A. Parsing --> Take's high level code as an input, and construct, an abstract syntax tree
+    a. During the parsing state, code is broken down into small token's/pieces.
+    b. Then, the token's are sent to syntax parser.
+    c. The job of syntax parser is to take the token and convert them into AST(Abstract syntax tree).
+3. This AST, inturn is passed to an interpreter, which inturn converts AST, to byte level code, and this byte level code moves to execution step
+4. In modern js engine, compiler and interpreter works together, as interpreter takes the help of compiler to optimize the code, while the code is interpreted line by line
+
+
+
+Interpreter --> Interpreter is used to execute a code. Interpreter takes a code, and it execute's a code line by line, provided it doesn't know what will happen in the next line
+Advantage --> Fast --> It is fast as there is no compilation stage, and code execution directly start
+
+
+Compiler --> In case of compiler, the code is first compiler, before an execution. And compilation, lead's to formation of new code which is optimized version of this code
+Advantage --> Efficiency --> Able to work well without making mistakes or wasting time and energy
+
+Is javascript, a compiled or interpreted language?
+-->    Javascript can behave as an interpreted or compiled language, it completely depends on javascript engine
+       When js was first created, js engine, use an interpreter to execute a js code
+       Currently most js engine used interpreter and compiler both together
+
+
+Just in time compilation --> This JIT comes under existence, just because modern js engine use both interpreter and compiler for code execution
+AOT(Ahead of time compilation) --> In certain js engine, there is a concept of AOT, where, compiler, takes a piece of code, and optimize it as much as it can and convert it into byte-code, which is inturn passed to an execution phase
+
+Js engine also consist of memory heap and call stack which helps in the execution of byte level code, recieved
+Memory head --> Memory heap is the place where all the memory is stored
+
+JS runtime environment, also have something known as garbage collector, which try to free up the memory space whenever possible, which inturn use an algorithm known as mark and sweep algorithm
+
+
+In v8, an interpreter(Ignition), convert's a specific code which don't need a optimization into byte-code, along with ignition, turbo fan compiler continuously work which optimize a code and then convert into byte-code, Internally this ignition and turbo-work works into different permutation's, and a configuration is choosen, which directly influence the optimization of execution time
+
+The job of interpreter is to convert ast into an byte-code, so does that of an compiler, but interpreter doesn't optimize the code, but compiler does
+V8 engine use an garbage collector known as Orinoco, Oilpan; which internally use mark and sweep algorithm
+
+Execution of byte-code, is done with the help of memory heap and call stack
+
+..........................................................................................................................................................................
+
+Lecture 17. Trust issue, with setTimeout  --> We can't trust setTimeout
+
+In setTimeout, when there is a delay, of 5000ms, setTimeout doesn't exactly way for 5000ms
+It is nowhere guaranteed, that the callback is invoked, exactly after 5000ms, It all depends on the callstack, as a callback is not executed until a callstack is empty
+
+No callback function inside, callback queue, can get executed, until and unless, callstack is empty --> Concurrency model in javascript(Abstract)
+
+Date API --> We date API, we can have access to, present date and time
+
+A concurrency model specifies how threads in the the system collaborate to complete the tasks they are are given. Different concurrency models split the tasks in different ways, and the threads may communicate and collaborate in different ways.
+
+Using a 0ms as an argument, in setTimeout function, will defer, the execution of callback, to the end of the program
+
+............................................................................................................................................................................
+
+Lecture 18 --> Functional Programming!
+
+Statement --> Functional programming is not possible without higher order function!
+
+Higher order function --> A function, which take another function as an argument, or can return a function, is known as higher order function
+
+In CS there is a principle 'DRY' --> Don't repeat yourself
+Functional Programming --> Functional Programming focus on making the code modular, reusable, avoiding side effects(Pure function's)
+
+Generally, functional programming means using functions to the best effect for creating clean and maintainable software
+Clean and maintainable inturn convey reusablility, modularity, no mutation's outside function scope
+...........................................................................................................................................................................
+
+Lecture 19. Map, Filter, Reduce
+
+Map is a high order function, which inturn return's a new array, and is used for transformation of provided array. Callback provided as an argument, into a map function, represent the transformation, to be applied, to provided array elements
+
+Filter, as the name suggest, return's a new array, provided the condition mentioned in the callback provided as an argument to a filter function. Callback holds up a condition, if true, append an respective element to new array.
+
+Reduce --> When, an accumalation of array elements into an single entity is required we use reduce method. Callback function, holds up two parameters, accumalator and current. 
+Current represent an element of element, current into scope whereas, accumalator represent an variable from parent lexical scope, which inturn mutate with each iteration, through a provided array
+
+A polyfill is a piece of code (usually JavaScript on the Web) used to provide modern functionality on older browsers that do not natively support it.
+We can consider polyfill as an algorithm, of an functionality not supported by older browser.
+
+...........................................................................................................................................................................
 
 
 
