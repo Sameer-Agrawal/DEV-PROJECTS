@@ -115,6 +115,7 @@ Z Index ( z-index ) is a CSS property that defines the order of overlapping HTML
     height: 2.5vh;
     background-color:red;
     position: relative;
+    display: flex;
     top:7vh;
 }
 
@@ -124,4 +125,12 @@ Z Index ( z-index ) is a CSS property that defines the order of overlapping HTML
     background-color: #C9D6DF;
     outline: none;
     text-align: center;
+}
+
+.formulaElement{
+    height: 100%;
+    width: calc(100vw - 40px);
+    background-color: #F0F5F9;
+    outline: none;
+    text-align: center
 }

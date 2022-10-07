@@ -16,6 +16,7 @@ class database{  // Database class
             const cellElementDatum = cellElement.innerText;  // Represent, cell element datum
             if(cellElementDatum == "") return;  // Represent, no mutation in cell datum 
             const {rowReservoirIndex, cellReservoirIndex} = workmate(cellElement);
+            // The destructuring syntax, makes it possible to unveil properties from objects
             // console.log(typeof(rowIdentifier));  // typeof --> Return, data type, of provided argument!
             // In JavaScript parseInt() function (or a method) is used to convert the provided string parameter or variable declaration value, to an integer value.
             const rowReservoir = database[rowReservoirIndex];  // Represent, row reservoir, of row specified 
@@ -166,6 +167,32 @@ function workmate(cellElement){
     const cellReservoirIndex = columnIdentifier.charCodeAt(0) - 65;  // Represent, cell reservoir index, provided column identifier
     return {columnIdentifier, rowIdentifier, rowReservoirIndex, cellReservoirIndex};
 }
+
+
+
+// Faith --> Compute cell datum, provided formula
+function computeCellDatum(cellElement){  // Faith --> cell element is provided as an argument
+    const formulaElement = document.querySelector(".formulaElement");  // Represent, formula element
+    const formula = formulaElement.innerText;  // Represent, formula
+    const decryptedFormulaArray = decryptFormula(formula);  // Faith --> Return, decoded formula, as an array
+    console.log(decryptedFormulaArray);
+
+
+    // Faith --> Return, decoded formula, as an array!
+    function decryptFormula(formula){
+        // The split() method splits a string into an array of substrings
+        // The split() method returns the new array
+        // The split() method does not change the original string
+        // split() method, expect two parameter, namely separator and limit
+        // Separator --> A string, use to split. If omitted, an array with the original string is returned
+        // limit --> An integer that limits the number of splits(element in an array). substring after the limit are excluded
+        const decryptedFormulaArray = formula.split(" ");  // Represent, decrypted formula, as an array
+        return decryptedFormulaArray;
+    }
+}
+
+
+
 
 
 
