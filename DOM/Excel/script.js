@@ -15,15 +15,14 @@ class database{  // Database class
             // console.log(cellElement);  
             const cellElementDatum = cellElement.innerText;  // Represent, cell element datum
             if(cellElementDatum == "") return;  // Represent, no mutation in cell datum 
-            const columnIdentifier = (cellElement.getAttribute("columnIdentifier"));  // Represent, column identifier, cell element
-            const rowIdentifier = parseInt(cellElement.getAttribute("rowIdentifier")); // Represent, row identifier, cell element
+            const {rowReservoirIndex, cellReservoirIndex} = workmate(cellElement);
             // console.log(typeof(rowIdentifier));  // typeof --> Return, data type, of provided argument!
             // In JavaScript parseInt() function (or a method) is used to convert the provided string parameter or variable declaration value, to an integer value.
-            const rowReservoir = database[rowIdentifier-1];  // Represent, row reservoir, of row specified 
-            const cellReservoirIndex = columnIdentifier.charCodeAt(0) - 65;  // Represent, cell reservoir index, provided column identifier
+            const rowReservoir = database[rowReservoirIndex];  // Represent, row reservoir, of row specified 
             const cellReservoir = rowReservoir[cellReservoirIndex];  // Represent, cell reservoir, provided cell reservoir index
+            if(cellElementDatum == cellReservoir.cellDatum) return;  // Represent, no mutation in cell datum
             cellReservoir.cellDatum = cellElementDatum;  // Maintain, cell reservoir
-            // console.log(cellReservoir);  // The charCodeAt() method returns the Unicode of the character at a specified index (position) in a string
+            console.log(cellReservoir);  // The charCodeAt() method returns the Unicode of the character at a specified index (position) in a string
         })
     }
 
@@ -155,6 +154,17 @@ function cellIdentifier(cellElement){  // Faith --> Pin-point cell
         const cellIdentifier = columnIdentifier + rowIdentifier;  // Represent, cell identity
         labelElement.innerText = cellIdentifier;  // Unveil cell element identity
     })
+}
+
+
+// Faith --> Return, column identifier, row identifier, row reservoir index provided row identifier, cell reservoir index provided column identifier
+function workmate(cellElement){ 
+    const columnIdentifier = cellElement.getAttribute("columnIdentifier");  // Represent, column identifier, cell element
+    const rowIdentifier = parseInt(cellElement.getAttribute("rowIdentifier")); // Represent, row identifier, cell element
+    // In JavaScript parseInt() function (or a method) is used to convert the provided string parameter or variable declaration value, to an integer value.
+    const rowReservoirIndex = rowIdentifier-1;  // Represent, row reservoir index, of row specified 
+    const cellReservoirIndex = columnIdentifier.charCodeAt(0) - 65;  // Represent, cell reservoir index, provided column identifier
+    return {columnIdentifier, rowIdentifier, rowReservoirIndex, cellReservoirIndex};
 }
 
 
