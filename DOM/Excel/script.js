@@ -1,18 +1,62 @@
-// Database, manipulation
+// Database, access
 
-function databaseManipulation(){
-    const database = [];  // Represent, local database
-    return database;
+class database{  // Database class
+
+    // Database constructor
+    constructor(){  // Constructor function!
+        this.database = [];  // Represent, local database instance
+        // console.log(this);
+        // Function declaration, this refer to an object instance, inturn which invoke the function/method
+    }
+
+    // Maintain database!
+    databaseMaintainance(cellElement, database){  // Faith --> Maintain, database
+        cellElement.addEventListener("blur", function(){  // Callback, trigger with a cell element, loosing focus!
+            // console.log(cellElement);  
+            const cellElementDatum = cellElement.innerText;  // Represent, cell element datum
+            if(cellElementDatum == "") return;  // Represent, no mutation in cell datum 
+            const columnIdentifier = (cellElement.getAttribute("columnIdentifier"));  // Represent, column identifier, cell element
+            const rowIdentifier = parseInt(cellElement.getAttribute("rowIdentifier")); // Represent, row identifier, cell element
+            // console.log(typeof(rowIdentifier));  // typeof --> Return, data type, of provided argument!
+            // In JavaScript parseInt() function (or a method) is used to convert the provided string parameter or variable declaration value, to an integer value.
+            const rowReservoir = database[rowIdentifier-1];  // Represent, row reservoir, of row specified 
+            const cellReservoirIndex = columnIdentifier.charCodeAt(0) - 65;  // Represent, cell reservoir index, provided column identifier
+            const cellReservoir = rowReservoir[cellReservoirIndex];  // Represent, cell reservoir, provided cell reservoir index
+            cellReservoir.cellDatum = cellElementDatum;  // Maintain, cell reservoir
+            // console.log(cellReservoir);  // The charCodeAt() method returns the Unicode of the character at a specified index (position) in a string
+        })
+    }
+
+    // Instante, database
+    instantiateDatabase(database){  // Faith --> Database, incarnation!
+        for(let row = 1 ; row <= 100 ; row++){  // Looping through, row
+            const rowArray = [];  // suppress, a row
+            for(let column = 1 ; column <= 26 ; column++){  // Looping through, column
+                const cellIdentifer = String.fromCharCode(64+column) + row;  // Stringify, cell identifier
+                // console.log(cellIdentifer);
+                const datum = {cellIdentifer : cellIdentifer, cellDatum : ""};  // Represent, cell identifier accompanying, cell datum 
+                rowArray.push(datum);  // Append, cell datum, to a row
+            }
+            database.push(rowArray);  // Append, row datum, to database
+        }
+    }
 }
 
-const database = databaseManipulation();  // Represent, database
+// Abstract --> Classes are a template for creating objects. They encapsulate/enclose data with method's to work on that data
+
+// A constructor is a special function that creates and initializes(Add attributes, methods) an object instance of a class. In JavaScript, a constructor gets called when an object is created using the new keyword. 
+// The purpose of a constructor is to create a new object and set values for any existing object properties
+
+const databaseInstance = new database();  // Represent, database instance
+databaseInstance.instantiateDatabase(databaseInstance.database);  // Instantiation, database
+console.log(databaseInstance.database);
 
 
 // Dynamic construction of cell
 
 const cellContainer = document.querySelector(".cellContainer");  // Represent, cell container
 
-function cellConstructor(){  // Faith --> Construct cell!
+function cellConstructor(database){  // Faith --> Construct cell!
 
     // Dynamic creation, top left cell container
 
@@ -68,6 +112,7 @@ function cellConstructor(){  // Faith --> Construct cell!
             cellElement.setAttribute("columnIdentifier", String.fromCharCode(64+column));  // Represent, column identifier, cell element
             cellElement.setAttribute("rowIdentifier", row);  // Represent, row identifier, cell element
             cellIdentifier(cellElement); // Pin-point cell
+            database.databaseMaintainance(cellElement, database.database);  // Maintain, database
             rowElement.appendChild(cellElement); // The appendChild() method appends a node (element) as the last child of an element.
         }
         mutableCellContainer.appendChild(rowElement);  // Adjoin, row element to a cell container
@@ -77,25 +122,7 @@ function cellConstructor(){  // Faith --> Construct cell!
 
 }
 
-cellConstructor();
-
-
-// Instante, database
-
-function instantiateDatabase(database){  // Faith --> Database, incarnation!
-    for(let row = 1 ; row <= 100 ; row++){  // Looping through, row
-        const rowArray = [];  // suppress, a row
-        for(let column = 1 ; column <= 26 ; column++){  // Looping through, column
-            const cellIdentifer = String.fromCharCode(64+column) + row;  // Stringify, cell identifier
-            // console.log(cellIdentifer);
-            const datum = {cellIdentifer : cellIdentifer, cellDatum : ""};  // Represent, cell identifier accompanying, cell datum 
-            rowArray.push(datum);  // Append, cell datum, to a row
-        }
-        database.push(rowArray);  // Append, row datum, to database
-    }
-}
-
-instantiateDatabase(database);  
+cellConstructor(databaseInstance);  
 
 
 // Maintain top, side panel through scrolling

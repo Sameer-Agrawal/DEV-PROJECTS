@@ -474,10 +474,28 @@ We can consider polyfill as an algorithm, of an functionality not supported by o
 
 ...........................................................................................................................................................................
 
+Lecture 20 --> Event bubbling, capturing/Trickling(to flow in a thin line)
+
+Propagation(verb)  --> Reproduction 
+
+Event propagation --> Event propagation is a mechanism that defines how events propagate or event handler are invoked, through the DOM tree to arrive at its target and what happens to it afterward.
+
+Event bubbling -->  Event bubbling is a method of event propagation in the HTML DOM API/tree when an event is in an element inside another element, and both elements have registered a handle to that event. It is a process that starts with the element that triggered the event and then bubbles up/moves up to the containing elements in the hierarchy
+
+Event capturing --> Event capturing is one of two ways to do event propagation in the HTML DOM. In event capturing, an event propagates from the outermost element to the target element. It is the opposite of event bubbling, where events propagate outwards from the target to the outer elements. Capturing happens before bubbling
+
+What are the phases of event propagation?
+--> These three phases in order are 1) the event capturing phase, 2) the target phase, and 3) the event bubbling phase.
+    In essence, the event first goes down through the parent elements until it reaches the target element (capturing phase). 
+    When the event reaches the target it triggers there (target phase), and then goes back up the chain (bubbling phase), calling handlers along the way.
 
 
+addEventListner(), method of DOM API, expect, third argument as a onCapture flag. By default, onCapture flag is false, which inturn represent, event bubbling. 
+If onCapture flag is true, event trickle down the DOM tree, invoking callback accordingly, to their, event propagation decision, which inturn represent, in which event propagation phase, respective callback will be invoked.
 
+Event element, hold's up a method stopPropagation(), representing, stop event propagation
 
+..........................................................................................................................................................................
 
 
 
