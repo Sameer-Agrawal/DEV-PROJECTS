@@ -1,3 +1,6 @@
+let precedingCellElement;
+
+
 // Database, access
 
 class database{  // Database class
@@ -12,6 +15,8 @@ class database{  // Database class
     // Maintain database!
     databaseMaintainance(cellElement, database){  // Faith --> Maintain, database
         cellElement.addEventListener("blur", function(){  // Callback, trigger with a cell element, loosing focus!
+            precedingCellElement = cellElement;
+            // console.log(precedingCellElement);  // Faith --> Compute, cell datum, provided formula
             // console.log(cellElement);  
             const cellElementDatum = cellElement.innerText;  // Represent, cell element datum
             if(cellElementDatum == "") return;  // Represent, no mutation in cell datum 
@@ -23,7 +28,7 @@ class database{  // Database class
             const cellReservoir = rowReservoir[cellReservoirIndex];  // Represent, cell reservoir, provided cell reservoir index
             if(cellElementDatum == cellReservoir.cellDatum) return;  // Represent, no mutation in cell datum
             cellReservoir.cellDatum = cellElementDatum;  // Maintain, cell reservoir
-            console.log(cellReservoir);  // The charCodeAt() method returns the Unicode of the character at a specified index (position) in a string
+            // console.log(cellReservoir);  // The charCodeAt() method returns the Unicode of the character at a specified index (position) in a string
         })
     }
 
@@ -34,7 +39,7 @@ class database{  // Database class
             for(let column = 1 ; column <= 26 ; column++){  // Looping through, column
                 const cellIdentifer = String.fromCharCode(64+column) + row;  // Stringify, cell identifier
                 // console.log(cellIdentifer);
-                const datum = {cellIdentifer : cellIdentifer, cellDatum : ""};  // Represent, cell identifier accompanying, cell datum 
+                const datum = {cellIdentifer : cellIdentifer, cellDatum : "", formulaDatum : ""};  // Represent, cell identifier accompanying, cell datum 
                 rowArray.push(datum);  // Append, cell datum, to a row
             }
             database.push(rowArray);  // Append, row datum, to database
@@ -171,25 +176,70 @@ function workmate(cellElement){
 
 
 // Faith --> Compute cell datum, provided formula
-function computeCellDatum(cellElement){  // Faith --> cell element is provided as an argument
+function computeCellDatum(database){  // Faith --> cell element is provided as an argument
     const formulaElement = document.querySelector(".formulaElement");  // Represent, formula element
-    const formula = formulaElement.innerText;  // Represent, formula
-    const decryptedFormulaArray = decryptFormula(formula);  // Faith --> Return, decoded formula, as an array
-    console.log(decryptedFormulaArray);
+    formulaElement.addEventListener("blur", function(event){
+        const formula = formulaElement.innerText;  // Represent, formula
+        // Check, formula disparate, formula datum
+        const {rowReservoirIndex, cellReservoirIndex} = workmate(precedingCellElement);  // Return, row reservoir index, cell reservoir index, provided cell element
+        const rowReservoir = database[rowReservoirIndex];  // Represent, row reservoir, of row specified 
+        const cellReservoir = rowReservoir[cellReservoirIndex];  // Represent, cell reservoir, provided cell reservoir index
+        if(cellReservoir.formulaDatum == formula) return;  // Represent, no mutation in cell element formula 
+        const cellDatum = compute(formula);  // Faith --> Return, computed cell datum, provided formula as an argument
+        // console.log(cellDatum);
+        // console.log(decryptedFormulaArray);
+        cellReservoir.cellDatum = cellDatum;  // Maintain, formula datum, cell datum
+        cellReservoir.formulaDatum = formula;
+        precedingCellElement.innerText = cellDatum;  // UI maintainance
+        console.log(cellReservoir);
+    })
 
 
-    // Faith --> Return, decoded formula, as an array!
-    function decryptFormula(formula){
-        // The split() method splits a string into an array of substrings
-        // The split() method returns the new array
-        // The split() method does not change the original string
-        // split() method, expect two parameter, namely separator and limit
-        // Separator --> A string, use to split. If omitted, an array with the original string is returned
-        // limit --> An integer that limits the number of splits(element in an array). substring after the limit are excluded
-        const decryptedFormulaArray = formula.split(" ");  // Represent, decrypted formula, as an array
-        return decryptedFormulaArray;
+    // Faith --> Return, computed cell datum, provided formula as a parameter
+    function compute(formula){
+        let decryptedFormulaArray = decryptFormula(formula);  // Faith --> Return, decoded formula, as an array
+        decryptedFormulaArray = decryptedFormulaArray.map(callbackFunction);  
+        // Map is a high order function, which inturn return's a new array, and is used for transformation of provided array
+
+        // Faith --> Compute cell datum!
+        let methodArgument = ""
+        for(let index = 0 ; index < decryptedFormulaArray.length ; index++) {  // Looping through decrypted formula array
+            methodArgument = methodArgument + decryptedFormulaArray[index];
+        }
+
+        const cellDatum = eval(methodArgument);  // Faith --> Return, cell datum, provided string argument
+
+        return cellDatum;
+
+        // Callback, function
+        function callbackFunction(current){  // Current, represent, decrypt formula array element, in scope
+            if(current[0] >= "A" && current[0] <= "Z"){  // Represent, valid cell identifier
+                const columnIdentifier = current[0];  // Represent, column identifier, cell element
+                const rowIdentifier = parseInt(current[1]); // Represent, row identifier, cell element
+                const rowReservoirIndex = rowIdentifier-1;  // Represent, row reservoir index, of row specified 
+                const rowReservoir = database[rowReservoirIndex];  // Represent, row reservoir, provided row reservoir index
+                const cellReservoirIndex = columnIdentifier.charCodeAt(0) - 65;  // Represent, cell reservoir index, provided column identifier
+                const cellReservoir = rowReservoir[cellReservoirIndex];
+                return cellReservoir.cellDatum;  // Append, cell datum, provided cell identifier
+            }
+            return current;
+        }
+
+        // Faith --> Return, decoded formula, as an array!
+        function decryptFormula(formula){
+            // The split() method splits a string into an array of substrings
+            // The split() method returns the new array
+            // The split() method does not change the original string
+            // split() method, expect two parameter, namely separator and limit
+            // Separator --> A string, use to split. If omitted, an array with the original string is returned
+            // limit --> An integer that limits the number of splits(element in an array). substring after the limit are excluded
+            const decryptedFormulaArray = formula.split(" ");  // Represent, decrypted formula, as an array
+            return decryptedFormulaArray;
+        }
     }
 }
+
+computeCellDatum(databaseInstance.database);
 
 
 
