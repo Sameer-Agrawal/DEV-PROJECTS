@@ -339,6 +339,31 @@ function maintainParentDatum(children, database){  // Faith --> Removal, childre
 }
 
 
+// Dynamic, sheet construction!
+function sheetConstruction(){
+    const appendElement = document.querySelector(".appendElement");  // Represent, sheet append element 
+    const catalogueElement = document.querySelector(".catalogueElement"); // Represent, sheet catalogue element
+    let sheetIdentifier = 0;  // Represent, sheet identifier
+    appendElement.addEventListener("click", function(){  // Callback trigger with click, on append element
+        sheetIdentifier = sheetIdentifier + 1;  // Maintainance, sheet identifier
+
+        // Maintainance active sheet, element
+        const activeSheetElement = document.querySelector(".activeSheetElement");  // Represent, active sheet element
+        activeSheetElement.classList.remove("activeSheetElement");  // Class removal, provided class list
+
+        const sheetElement = document.createElement("div");  // Dynamic creation, div element
+        sheetElement.classList.add("sheetElement");  // Append class, to HTML element class list
+        sheetElement.classList.add("activeSheetElement");
+        sheetElement.setAttribute("sheetIdentifier", sheetIdentifier);  // Represent, sheet identifier
+        sheetElement.innerText = `Sheet ${sheetIdentifier + 1}`;  // The innerText property sets or returns the text content of an element.
+
+        catalogueElement.appendChild(sheetElement);  // Append sheet element, to catalogue element
+    })
+}
+
+
+sheetConstruction();
+
 
 
 
