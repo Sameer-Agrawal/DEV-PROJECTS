@@ -132,3 +132,76 @@ sticky --> element document ke flow se nahi nikalta...according to observation s
 
 z-index --> suppose do element overlap kar rahe hai...then hum jis bhi element ko upar dikhana chahte hai, usko hum higher value dete hai z-index ki
 list-style --> list ke bullet-style ke set karne ke liye hum list style use karte hai
+
+........................................................................................................................................................
+
+CSS grid and media queries --> 
+
+display : grid --> Grid ko initialize karne ke liye display property ka use karna padta hai
+Agar table format ka layout chahiye to hum css grid ka use karte hai
+All direct children, automatically become grid items
+
+grid-column-gap --> Grid mai, column ke bich ki gap ko set karne ke liye grid-column-gap ka use karte hai
+grid-row-gap --> Grid mai, row ke bich ki gap ko set karne ke liye grid-row-gap ka use karte hai
+
+grid-template-column --> Ye property ka use karke hum, column ki width de sakte hai. Isme hum ye bhi bata sakte hai ki kitne column hoge
+Hum jitne, width define karege, ye utna column consider kar lenga
+
+grid-gap --> Ye property shorthand hai, for grid-row-gap as well as grid-column-gap
+grid-gap : grid-row-gap grid-column-gap;
+
+Note --> For single value of grid gap, both row and column gap can be set with single value
+
+grid-template-row --> Ye property ka use karke hum, row ki height set kar sakte hai
+
+justify-content --> Ye property ka use karke hum, horizontally grid container mai, grid item's ko set kar sakte hai
+align-content --> Ye property ka use karke hum, vertically grid container mai, grid item's ko set kar sakte hai
+
+grid-column --> Ye property ka use karke hum, ye define kar sakte hai, kitna column, item span karega
+grid-column --> Column kaha se start hoga / Column kaha tak jayega
+
+grid-row --> Ye property ka use karke hum define karte hai, kitna row, item span karega
+grid-row --> Kaunsi row line se row start hogi / Kaunse row line tak grid item span hoga
+
+grid-row --> Kaunsi row line se start hogi / (span 2) Kitni row ki jagah ye lenga
+
+Media queries hum website ko responsive, banane ke liye use karte hai
+Media queries --> Hum kya karega if resize, karte-karte, humari website ek specific size ki ho jayegi
+If humari, screen size specified size ki hojaye, to hum ek specific css trigger karenge
+
+max-width : x --> Jab tak width, max-width se kaam hai, do something
+
+inline-grid --> Agar hum chahte hai grid items, inline items ki tarah behave kaare
+
+........................................................................................................................................................
+
+The var() function is used to insert the value of a CSS variable
+
+CSS variables have access to the DOM, which means that you can change the variables with JavaScript, and change the variables based on media queries --> 
+CSS variable, constantly listen for any mutation in DOM, so dynamic mutation in variable, with JS is possible 
+
+Usage --> A good way to use CSS variables is when it comes to the colors of elements. Instead of copy and paste the same colors over and over again, we can place them in variables
+
+Note --> The variable name must begin with two dashes (--) and it is case sensitive!
+
+Scope CSS variable's --> 
+
+CSS variables can have a global or local scope.
+Global variables can be accessed/used through the entire stylesheet, whereas local variables can be used only inside the selector where it is declared
+
+Global declaration --> To create a variable with global scope, declare it inside the ':root' selector. The ':root' selector represent the document's root / major element
+
+Syntax -->  :root{
+                    --blue: #1e90ff;
+                    --white: #ffffff;
+                }
+
+Local declaration --> To create a variable with local scope, declare it inside the selector, which inturn represent element, that is going to use it.
+
+
+Advantages of using var() -->
+        1. Makes the code easier to read (more understandable)
+        2. Makes it much easier to change the color values
+
+
+...................................................................................................................................................

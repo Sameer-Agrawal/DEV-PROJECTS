@@ -11,6 +11,16 @@ A fixed position element is positioned relative to the viewport, or the browser 
 Sticky positioning is a hybrid of relative and fixed positioning. The element is treated as relative positioned when window is fixed initially, at which point it is treated as fixed positioned
 */
 
+/* Variable Declaration */
+
+:root{
+    --taskbarContainer: #1E2022;
+    --cellIdentifier: #52616B;
+    --border: #1E2022;
+    --fontColor : #F0F5F9;
+}
+
+
 *{
     margin: 0px;
     padding: 0px;
@@ -21,7 +31,7 @@ Sticky positioning is a hybrid of relative and fixed positioning. The element is
 
 .taskbarContainer{
     height: 9.5vh;
-    background-color: #C9D6DF;
+    background-color: var(--taskbarContainer);
     z-index: 2;
 }
 
@@ -58,8 +68,9 @@ Z Index ( z-index ) is a CSS property that defines the order of overlapping HTML
 .cellElement{
     height: 20px;
     width: 125px;
-    border: 0.01px solid #C9D6DF;
-    overflow-x: scroll;
+    border-bottom: thin solid var(--border);
+    border-left: thin solid var(--border);
+    overflow-x: auto;
     outline: none;
 }
 
@@ -73,12 +84,11 @@ Z Index ( z-index ) is a CSS property that defines the order of overlapping HTML
 
 .column-identifier-element{
     text-align: center;
-    background-color: lightgreen;
+    background-color: var(--cellIdentifier);
 }
 
 .row-identifier-column{
     height: calc(100vh - 13.5vh);
-    background-color: lightblue;
     position: absolute;
     left: 0px;
     top: 20px;
@@ -90,16 +100,22 @@ Z Index ( z-index ) is a CSS property that defines the order of overlapping HTML
     width: 100%;
     height: 20px;
     text-align: center;
-    border: 0.01px solid #C9D6DF;
+    /* color: var(--fontColor); */
+    background-color: var(--cellIdentifier);
+    border-bottom: thin solid var(--border);
+    border-left: thin solid var(--border);
 }
 
+/* border-color: red; border-style: dashed; border-width: 1px 1px 0 1px --> Shorthand */
+/* border-shorthand --> border : border-thickness border-style border-color */
 /* text-align: center --> Center a text, within an element */
 
 .top-left-cell{
     width: 40px;
     height: 20px;
-    border: 0.01px solid #C9D6DF;
-    background-color: aquamarine;
+    border-left: 0.01px solid var(--border);
+    /* border-bottom: 0.01px solid var(--border); */
+    background-color: var(--cellIdentifier);
     position: absolute;
     left: 0px;
     z-index: 3;
