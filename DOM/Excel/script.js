@@ -28,6 +28,8 @@ class database{  // Database class
             const cellReservoir = rowReservoir[cellReservoirIndex];  // Represent, cell reservoir, provided cell reservoir index
             if(cellElementDatum == cellReservoir.cellDatum) return;  // Represent, no mutation in cell datum
             cellReservoir.cellDatum = cellElementDatum;  // Maintain, cell reservoir
+            // Maintain, children datum, with mutation in parent datum
+            maintainChildrenDatum(cellReservoir, database);  // Maintain, children datum, provided mutation in parent datum
             // console.log(cellReservoir);  // The charCodeAt() method returns the Unicode of the character at a specified index (position) in a string
         })
     }
@@ -37,9 +39,9 @@ class database{  // Database class
         for(let row = 1 ; row <= 100 ; row++){  // Looping through, row
             const rowArray = [];  // suppress, a row
             for(let column = 1 ; column <= 26 ; column++){  // Looping through, column
-                const cellIdentifer = String.fromCharCode(64+column) + row;  // Stringify, cell identifier
-                // console.log(cellIdentifer);
-                const datum = {cellIdentifer : cellIdentifer, cellDatum : "", formulaDatum : ""};  // Represent, cell identifier accompanying, cell datum 
+                const cellIdentifier = String.fromCharCode(64+column) + row;  // Stringify, cell identifier
+                // console.log(cellIdentifier);
+                const datum = {cellIdentifier : cellIdentifier, cellDatum : "", formulaDatum : "", childrenDatum : [], parentDatum : []};  // Represent, cell identifier accompanying, cell datum 
                 rowArray.push(datum);  // Append, cell datum, to a row
             }
             database.push(rowArray);  // Append, row datum, to database
@@ -116,7 +118,8 @@ function cellConstructor(database){  // Faith --> Construct cell!
             // The setAttribute() method is used to set or add an attribute to a particular element and provides a value to it
             cellElement.setAttribute("columnIdentifier", String.fromCharCode(64+column));  // Represent, column identifier, cell element
             cellElement.setAttribute("rowIdentifier", row);  // Represent, row identifier, cell element
-            cellIdentifier(cellElement); // Pin-point cell
+            cellIdentifier(cellElement, database.database); // Pin-point cell
+            mutationCellDatum(cellElement, database.database);  // Maintainance, with mutation in cell datum, provided formula
             database.databaseMaintainance(cellElement, database.database);  // Maintain, database
             rowElement.appendChild(cellElement); // The appendChild() method appends a node (element) as the last child of an element.
         }
@@ -151,14 +154,17 @@ function maintainElement(){  // Faith --> Maintain top, side panel through scrol
 maintainElement();
 
 
-const labelElement = document.querySelector(".labelElement");  // Represent, label element, which inturn unveil cell element identity
 
-function cellIdentifier(cellElement){  // Faith --> Pin-point cell
+function cellIdentifier(cellElement, database){  // Faith --> Pin-point cell
+    const labelElement = document.querySelector(".labelElement");  // Represent, label element, which inturn unveil cell element identity
+    const formulaElement = document.querySelector(".formulaElement");  // Represent, formula element
     cellElement.addEventListener('click', function(){  // Callback, invoke with click on cell element
         const rowIdentifier = cellElement.getAttribute("rowIdentifier");  // The getAttribute() method returns the value of an element's attribute
         const columnIdentifier = cellElement.getAttribute("columnIdentifier");  // Represent, column identifier, of a cell element clicked!
         const cellIdentifier = columnIdentifier + rowIdentifier;  // Represent, cell identity
         labelElement.innerText = cellIdentifier;  // Unveil cell element identity
+        const cellReservoir = getCellReservoir(cellIdentifier, database);  // Return, cell reservoir, provided cell identifier
+        formulaElement.innerText = cellReservoir.formulaDatum;  // Convey, cell element formula datum, if exist
     })
 }
 
@@ -181,26 +187,31 @@ function computeCellDatum(database){  // Faith --> cell element is provided as a
     formulaElement.addEventListener("blur", function(event){
         const formula = formulaElement.innerText;  // Represent, formula
         // Check, formula disparate, formula datum
-        const {rowReservoirIndex, cellReservoirIndex} = workmate(precedingCellElement);  // Return, row reservoir index, cell reservoir index, provided cell element
+        if(formula == "") return;
+        const {columnIdentifier, rowIdentifier, rowReservoirIndex, cellReservoirIndex} = workmate(precedingCellElement);  // Return, row reservoir index, cell reservoir index, provided cell element
         const rowReservoir = database[rowReservoirIndex];  // Represent, row reservoir, of row specified 
         const cellReservoir = rowReservoir[cellReservoirIndex];  // Represent, cell reservoir, provided cell reservoir index
         if(cellReservoir.formulaDatum == formula) return;  // Represent, no mutation in cell element formula 
-        const cellDatum = compute(formula);  // Faith --> Return, computed cell datum, provided formula as an argument
+        if(cellReservoir.formulaDatum != ""){  // Mutation, cell formula datum
+            maintainParentDatum(cellReservoir, database);  // Maintainance, cell element's parent datum, parent's children datum, with mutation in cell element formula datum
+        }
+        const cellDatum = compute(formula, cellReservoir);  // Faith --> Return, computed cell datum, provided formula as an argument
+        // Cell reservoir represent, preceding cell element / children
         // console.log(cellDatum);
         // console.log(decryptedFormulaArray);
         cellReservoir.cellDatum = cellDatum;  // Maintain, formula datum, cell datum
         cellReservoir.formulaDatum = formula;
         precedingCellElement.innerText = cellDatum;  // UI maintainance
-        console.log(cellReservoir);
+        maintainChildrenDatum(cellReservoir, database);  // Maintain, children datum, with mutation in formula!
+        // console.log(cellReservoir);
     })
 
-
     // Faith --> Return, computed cell datum, provided formula as a parameter
-    function compute(formula){
+    function compute(formula, children){  // Cell reservoir represent, children
         let decryptedFormulaArray = decryptFormula(formula);  // Faith --> Return, decoded formula, as an array
         decryptedFormulaArray = decryptedFormulaArray.map(callbackFunction);  
         // Map is a high order function, which inturn return's a new array, and is used for transformation of provided array
-
+        console.log(children);   
         // Faith --> Compute cell datum!
         let methodArgument = ""
         for(let index = 0 ; index < decryptedFormulaArray.length ; index++) {  // Looping through decrypted formula array
@@ -219,7 +230,12 @@ function computeCellDatum(database){  // Faith --> cell element is provided as a
                 const rowReservoirIndex = rowIdentifier-1;  // Represent, row reservoir index, of row specified 
                 const rowReservoir = database[rowReservoirIndex];  // Represent, row reservoir, provided row reservoir index
                 const cellReservoirIndex = columnIdentifier.charCodeAt(0) - 65;  // Represent, cell reservoir index, provided column identifier
-                const cellReservoir = rowReservoir[cellReservoirIndex];
+                const cellReservoir = rowReservoir[cellReservoirIndex];  // Cell reservoir, represent parent
+                if(children != undefined){
+                    cellReservoir.childrenDatum.push(children.cellIdentifier);  // Maintain children datum, parent cell reservoir
+                    children.parentDatum.push(current);  // Maintain, parent datum
+                } 
+                // console.log(cellReservoir);
                 return cellReservoir.cellDatum;  // Append, cell datum, provided cell identifier
             }
             return current;
@@ -237,10 +253,90 @@ function computeCellDatum(database){  // Faith --> cell element is provided as a
             return decryptedFormulaArray;
         }
     }
+
+    return compute;
 }
 
-computeCellDatum(databaseInstance.database);
 
+
+const compute = computeCellDatum(databaseInstance.database);
+
+
+// Faith --> Maintain, children datum, with mutation in parent datum
+function maintainChildrenDatum(cellReservoir, database){
+    // console.log(cellReservoir);
+    // Compute, children datum, provided mutation in children datum
+    const childrenDatum = cellReservoir.childrenDatum;  // Represent, children datum
+    // console.log(childrenDatum);
+    for(let index = 0 ; index < childrenDatum.length ; index++){  // Looping through, children datum!
+        const cellIdentifier = childrenDatum[index];  // Represent, children identifier
+        const cellReservoir = getCellReservoir(cellIdentifier, database);  // Faith --> Return, cell reservoir, provided cell identifier
+        const formulaDatum = cellReservoir.formulaDatum;  // Represent, children, formula datum
+        const cellDatum = compute(formulaDatum);  // Represent, reform children cell datum, provided mutation in parent cell datum
+        cellReservoir.cellDatum = cellDatum;  // Maintain children cell datum, database!
+        console.log(cellReservoir);
+        // The [attribute] selector is used to select elements with a specified attribute
+        // input[name="Sex"][value="M"] --> Attribute selector --> Element, with multiple attribute specified
+        const cellElement = document.querySelector(`div[columnIdentifier="${cellIdentifier[0]}"][rowIdentifier="${cellIdentifier[1]}"]`);  // Represent, children cell element
+        cellElement.innerText = cellDatum;  // Maintain UI
+        maintainChildrenDatum(cellReservoir, database);  // Faith --> Maintain, ancestor!
+    }
+}
+
+
+// Faith --> Return, cell reservoir, provided cell identifier
+function getCellReservoir(cellIdentifier, database) {
+    const columnIdentifier = cellIdentifier[0];  // Represent, column identifier, cell element
+    const rowIdentifier = parseInt(cellIdentifier[1]); // Represent, row identifier, cell element
+    const rowReservoirIndex = rowIdentifier-1;  // Represent, row reservoir index, of row specified 
+    const cellReservoirIndex = columnIdentifier.charCodeAt(0) - 65;  // Represent, cell reservoir index, provided column identifier
+    const rowReservoir = database[rowReservoirIndex];  // Represent, row reservoir, of row specified 
+    const cellReservoir = rowReservoir[cellReservoirIndex];  // Represent, cell reservoir, provided cell reservoir index
+    return cellReservoir;
+}
+
+
+// Faith --> Maintainance, with mutation in cell datum, provided formula
+function mutationCellDatum(cellElement, database){  // Maintainance, with mutation in cell datum, provided formula
+    // The onkeydown event occurs when the user is pressing a key (on the keyboard)
+    cellElement.addEventListener("keydown", callbackFunction);  // Callback trigger, with keydown
+
+    
+    function callbackFunction(event){
+        const key = event.key;  // Represent, preceding key down
+        const cellIdentifier = cellElement.getAttribute("columnIdentifier") + cellElement.getAttribute("rowIdentifier");  // Represent, cell identifier
+        const cellReservoir = getCellReservoir(cellIdentifier, database);  // Return, cell reservoir, provided cell identifier
+        const formulaDatum = cellReservoir.formulaDatum;  // Represent, formula datum, cell element
+        if((formulaDatum != "") && (key == "Backspace")){  // Represent, mutation cell datum, provided formula
+            const formulaElement = document.querySelector(".formulaElement");  // Represent, formula element
+            formulaElement.innerText = "";  // Maintainance, UI, formula element
+            cellElement.innerText = "";  // Maintainance, UI, cell element
+            cellReservoir.formulaDatum = "";  // Maintain, formula datum
+            cellReservoir.cellDatum = "";  // Maintain, cell datum
+            maintainParentDatum(cellReservoir, database);  // Faith --> Removal, children cell identifier, parent's cell reservoir, children datum
+            console.log(cellReservoir);
+        }
+    }
+}
+
+
+function maintainParentDatum(children, database){  // Faith --> Removal, children cell identifier, parent's cell reservoir, children datum
+    const parentDatum = children.parentDatum;  // Represent, children's, parent datum
+    for(let index = 0 ; index < parentDatum.length ; index++){  // Looping through, parent datum
+        const parentIdentifier = parentDatum[index];  // Represent, parent identifier
+        const parentReservoir = getCellReservoir(parentIdentifier, database);  // Represent, parent reservoir, provided parent identifier
+        const childrenDatum = parentReservoir.childrenDatum; // Represent, children datum provided parent reservoir
+        const refurbishChildrenDatum = childrenDatum.filter(filterCallbackFunction);  // Represent, refurbished children datum 
+        console.log(refurbishChildrenDatum);
+        parentReservoir.childrenDatum = refurbishChildrenDatum;  // Children datum, maintainance
+        console.log(parentReservoir);
+    }
+    children.parentDatum = [];  // Maintainance, children's, parent datum
+
+    function filterCallbackFunction(childrenIdentifier){
+        return childrenIdentifier != children.cellIdentifier;  // Removal, children identifier, 
+    }
+}
 
 
 
