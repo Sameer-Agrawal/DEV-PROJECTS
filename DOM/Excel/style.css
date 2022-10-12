@@ -57,7 +57,55 @@ Z Index ( z-index ) is a CSS property that defines the order of overlapping HTML
 .sheetAnchor{
     height: 4.5vh;
     background-color: var(--taskbarContainer);
+    display: flex;
+    align-items: center;
 }
+
+.appendElement{
+    /* background-color: var(--fontColor); */
+    width: 3rem;
+    height: 4.5vh;
+}
+
+.appendElement i{
+    height: 100%;
+    width: 100%;
+    color: var(--fontColor);
+    font-size: larger;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.catalogueElement{
+    height: 4.5vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.sheetElement{
+    color: var(--fontColor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 6rem;
+    cursor: pointer;
+}
+
+/* 
+The cursor property specifies the mouse cursor to be displayed, when pointing over an element.
+The font-weight property represent how thick or thin characters in text should be displayed
+*/
+
+.activeSheetElement{
+    font-weight: bold;
+    background-color: var(--fontColor);
+    color: var(--taskbarContainer);
+}
+
+/* The :hover selector is used to select elements when you mouse over them */
 
 /* Style cell Element */
 
@@ -151,3 +199,7 @@ Z Index ( z-index ) is a CSS property that defines the order of overlapping HTML
     outline: none;
     text-align: center
 }
+
+
+
+
