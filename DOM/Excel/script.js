@@ -31,7 +31,7 @@ class database{  // Database class
             if(cellElementDatum == "\n") cellElementDatum = "";  // Mutation, cell element datum
 
             if(cellElementDatum == "" && cellReservoir.cellRelevant == false) return;  // Represent, no mutation in cell datum 
-
+            
             if(cellReservoir.cellRelevant == false){  // Represent, cell element irrelevant, first cell visit
 
                 cellReservoir.cellRelevant = true;  // Represent, cell holding up relevance / datum
@@ -40,9 +40,9 @@ class database{  // Database class
                 // console.log(sheetClosure.cellElementRelevant);
 
             }else if(cellReservoir.cellRelevant == true){  // Cell element, relevant
-
-                if(cellElementDatum == cellReservoir.cellDatum) return;  // Represent, no mutation in cell datum
                 
+                if(cellElementDatum == cellReservoir.cellDatum) return;  // Represent, no mutation in cell datum
+                // console.log("I am here!");
                 if(cellElementDatum == ""){  // Static removal, cell datum
                     cellReservoir.cellRelevant = false;  // Represent, cell element, irrelevant
 
@@ -230,33 +230,51 @@ function workmate(cellElement){
 function computeCellDatum(){  // Faith --> cell element is provided as an argument
     const formulaElement = document.querySelector(".formulaElement");  // Represent, formula element
     formulaElement.addEventListener("blur", function(event){
-        const formula = formulaElement.innerText;  // Represent, formula
+        let formula = formulaElement.innerText;  // Represent, formula
         // Check, formula disparate, formula datum
-        if(formula == "") return;
+        if(formula == "\n") formula = "";  // Corner case
+
         const {columnIdentifier, rowIdentifier, rowReservoirIndex, cellReservoirIndex} = workmate(precedingCellElement);  // Return, row reservoir index, cell reservoir index, provided cell element
+        
         // Active, sheet database
         const rowReservoir = sheetDatabase[rowReservoirIndex];  // Represent, row reservoir, of row specified 
         const cellReservoir = rowReservoir[cellReservoirIndex];  // Represent, cell reservoir, provided cell reservoir index
+        
+        // Unconcious, touch, formula element
+        if(formula == "" && cellReservoir.cellRelevant == false) return;
+        // console.log("I am here!");
+        const cellIdentifier = columnIdentifier + rowIdentifier;  // Represent, cell identifier
+        
+        if(cellReservoir.cellRelevant == false){  // Represent, cell element irrelevant
+            
+            cellReservoir.cellRelevant = true;  // Represent, cell holding up relevance / datum
+            sheetClosure.cellElementRelevant.push(cellReservoir.cellIdentifier);  // Maintainance, relevant cell element
+            
+        }else if(cellReservoir.cellRelevant == true){
 
-        // if(cellReservoir.cellRelevant == false){  // Represent, cell element irrelevant
-        //     cellReservoir.cellRelevant = true;  // Represent, cell holding up relevance / datum
-        //     sheetClosure.cellElementRelevant.push(cellReservoir.cellIdentifier);  // Maintainance, relevant cell element
-        // }
-        // console.log(sheetClosure.cellElementRelevant);
+            if(cellReservoir.formulaDatum == formula) return;  // Represent, no mutation in cell element formula 
 
-        if(cellReservoir.formulaDatum == formula) return;  // Represent, no mutation in cell element formula 
-        if(cellReservoir.formulaDatum != ""){  // Mutation, cell formula datum
-            maintainParentDatum(cellReservoir);  // Maintainance, cell element's parent datum, parent's children datum, with mutation in cell element formula datum
+            if(cellReservoir.formulaDatum != ""){  // Mutation, cell formula datum
+                maintainParentDatum(cellReservoir);  // Maintainance, cell element's parent datum, parent's children datum, with mutation in cell element formula datum
+            }
         }
-        const cellDatum = compute(formula, cellReservoir);  // Faith --> Return, computed cell datum, provided formula as an argument
+
+
+        let cellDatum = compute(formula, cellReservoir);  // Faith --> Return, computed cell datum, provided formula as an argument
         // Cell reservoir represent, preceding cell element / children
         // console.log(cellDatum);
         // console.log(decryptedFormulaArray);
-        cellReservoir.cellDatum = cellDatum;  // Maintain, formula datum, cell datum
+
+        if(cellDatum == undefined){cellDatum = ""}  // Maintain, formula datum, cell datum
+        
+        cellReservoir.cellDatum = cellDatum;
         cellReservoir.formulaDatum = formula;
         precedingCellElement.innerText = cellDatum;  // UI maintainance
+
+        console.log(cellReservoir);
+        console.log(sheetClosure.cellElementRelevant);
+
         maintainChildrenDatum(cellReservoir);  // Maintain, children datum, with mutation in formula!
-        // console.log(cellReservoir);
     })
 
     // Faith --> Return, computed cell datum, provided formula as a parameter
@@ -366,8 +384,20 @@ function mutationCellDatum(cellElement){  // Maintainance, with mutation in cell
             cellElement.innerText = "";  // Maintainance, UI, cell element
             cellReservoir.formulaDatum = "";  // Maintain, formula datum
             cellReservoir.cellDatum = "";  // Maintain, cell datum
+
+            cellReservoir.cellRelevant = false;  // Represent, cell element, irrelevant
+
+            // Maintainance, cell element relevant array
+            const cellElementRelevant = sheetClosure.cellElementRelevant;  // Represent, relevant cell element
+            const refurbishCellElementRelevant = cellElementRelevant.filter(function(cellIdentifier){  // Return, relevant cell element, except active cell element
+                                                                                return cellIdentifier != cellReservoir.cellIdentifier;
+                                                                            })
+
+            sheetClosure.cellElementRelevant = refurbishCellElementRelevant;  // Maintainance, relevant cell element
+            console.log(cellReservoir);
+            console.log(sheetClosure.cellElementRelevant);
+
             maintainParentDatum(cellReservoir);  // Faith --> Removal, children cell identifier, parent's cell reservoir, children datum
-            // console.log(cellReservoir);
         }
     }
 }
