@@ -490,16 +490,18 @@ function flushUI(){
     }
 }
 
+
 // UI, reincarnation
 function reincarnationUI(){
-    for(let rowIdentifier = 0 ; rowIdentifier < 100 ; rowIdentifier++){ // Looping through, row, sheet database
-        for(let columnIdentifier = 0 ; columnIdentifier < 26 ; columnIdentifier++){ // Looping through, column, sheet database
-            // console.log(sheetDatabase);
-            const cellReservoir = sheetDatabase[rowIdentifier][columnIdentifier];  // Represent, cell datum, provided active sheet database 
-            const cellElement = document.querySelector(`div[columnIdentifier="${String.fromCharCode(65+columnIdentifier)}"][rowIdentifier="${rowIdentifier+1}"]`);  // Represent, cell element
-            // console.log(cellElement);
-            cellElement.innerText = cellReservoir.cellDatum;  // UI, reincarnation
-        }
+
+    // Reincarnation, provided cell element relevant
+
+    for(let index = 0 ; index < sheetClosure.cellElementRelevant.length ; index++){  // Looping through, relevant cell element
+        const cellIdentifier = sheetClosure.cellElementRelevant[index];  // Represent, relevant cell element identifier
+        const cellElement = document.querySelector(`div[columnIdentifier="${cellIdentifier.charAt(0)}"][rowIdentifier="${cellIdentifier.charAt(1)}"]`);  // Represent, cell element
+
+        const cellReservoir = getCellReservoir(cellIdentifier);  // Represent, relevant cell reservoir
+        cellElement.innerText = cellReservoir.cellDatum;  // UI, reincarnation
     }
 }
 
