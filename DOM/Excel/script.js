@@ -15,39 +15,77 @@ class database{  // Database class
     // Maintain database!
     databaseMaintainance(cellElement){  // Faith --> Maintain, database
         cellElement.addEventListener("blur", function(){  // Callback, trigger with a cell element, loosing focus!
+            // console.log(sheetDatabase);
             precedingCellElement = cellElement;
             // console.log(precedingCellElement);  // Faith --> Compute, cell datum, provided formula
             // console.log(cellElement);  
-            const cellElementDatum = cellElement.innerText;  // Represent, cell element datum
-            if(cellElementDatum == "") return;  // Represent, no mutation in cell datum 
+            let cellElementDatum = cellElement.innerText;  // Represent, cell element datum
+
             const {rowReservoirIndex, cellReservoirIndex} = workmate(cellElement);
             // The destructuring syntax, makes it possible to unveil properties from objects
             // console.log(typeof(rowIdentifier));  // typeof --> Return, data type, of provided argument!
             // In JavaScript parseInt() function (or a method) is used to convert the provided string parameter or variable declaration value, to an integer value.
             const rowReservoir = sheetDatabase[rowReservoirIndex];  // Represent, row reservoir, of row specified 
             const cellReservoir = rowReservoir[cellReservoirIndex];  // Represent, cell reservoir, provided cell reservoir index
-            if(cellElementDatum == cellReservoir.cellDatum) return;  // Represent, no mutation in cell datum
+
+            if(cellElementDatum == "\n") cellElementDatum = "";  // Mutation, cell element datum
+
+            if(cellElementDatum == "" && cellReservoir.cellRelevant == false) return;  // Represent, no mutation in cell datum 
+
+            if(cellReservoir.cellRelevant == false){  // Represent, cell element irrelevant, first cell visit
+
+                cellReservoir.cellRelevant = true;  // Represent, cell holding up relevance / datum
+
+                sheetClosure.cellElementRelevant.push(cellReservoir.cellIdentifier);  // Maintainance, relevant cell element
+                // console.log(sheetClosure.cellElementRelevant);
+
+            }else if(cellReservoir.cellRelevant == true){  // Cell element, relevant
+
+                if(cellElementDatum == cellReservoir.cellDatum) return;  // Represent, no mutation in cell datum
+                
+                if(cellElementDatum == ""){  // Static removal, cell datum
+                    cellReservoir.cellRelevant = false;  // Represent, cell element, irrelevant
+
+                    // Maintainance, cell element relevant array
+                    const cellElementRelevant = sheetClosure.cellElementRelevant;  // Represent, relevant cell element
+                    const refurbishCellElementRelevant = cellElementRelevant.filter(function(cellIdentifier){  // Return, relevant cell element, except active cell element
+                                                                        return cellIdentifier != cellReservoir.cellIdentifier;
+                                                                    })
+
+                    sheetClosure.cellElementRelevant = refurbishCellElementRelevant;  // Maintainance, relevant cell element
+                }
+            }
+
+
             cellReservoir.cellDatum = cellElementDatum;  // Maintain, cell reservoir
+            
+            console.log(cellReservoir);
+            console.log(sheetClosure.cellElementRelevant);
+
             // Maintain, children datum, with mutation in parent datum
-            maintainChildrenDatum(cellReservoir);  // Maintain, children datum, provided mutation in parent datum
+            maintainChildrenDatum(cellReservoir);  // Maintain, children datum, provided mutation in parent datum  // Abstract
             // console.log(cellReservoir);  // The charCodeAt() method returns the Unicode of the character at a specified index (position) in a string
+
         })
     }
 
     // Instante, database
     instantiateDatabase(database){  // Faith --> Database, incarnation!
+        const sheetClosure = {}  // Represent, sheet object
         const sheetArray = [];  // Represent, sheet database
         for(let row = 1 ; row <= 100 ; row++){  // Looping through, row
             const rowArray = [];  // suppress, a row
             for(let column = 1 ; column <= 26 ; column++){  // Looping through, column
                 const cellIdentifier = String.fromCharCode(64+column) + row;  // Stringify, cell identifier
                 // console.log(cellIdentifier);
-                const datum = {cellIdentifier : cellIdentifier, cellDatum : "", formulaDatum : "", childrenDatum : [], parentDatum : []};  // Represent, cell identifier accompanying, cell datum 
+                const datum = {cellIdentifier : cellIdentifier, cellDatum : "", formulaDatum : "", childrenDatum : [], parentDatum : [], cellRelevant : false};  // Represent, cell identifier accompanying, cell datum 
                 rowArray.push(datum);  // Append, cell datum, to a row
             }
             sheetArray.push(rowArray);  // Append, row datum, to sheet
         }
-        database.push(sheetArray);  // Append, sheet datum, to database
+        sheetClosure.sheetDatabase = sheetArray;  // Represent, sheet database
+        sheetClosure.cellElementRelevant = [];  // Represent, cell element holding up value, provided active sheet
+        database.push(sheetClosure);  // Append, sheet closure, to database
         console.log(database);  // Represent, local database
     }
 }
@@ -62,7 +100,9 @@ databaseInstance.instantiateDatabase(databaseInstance.database);  // Instantiati
 const localDatabase = databaseInstance.database;  // Represent database
 
 // Sheet database
-let sheetDatabase = localDatabase[0];  // Sheet database, active
+let sheetClosure = localDatabase[0];  // Represent, active sheet closure
+let sheetDatabase = localDatabase[0].sheetDatabase;  // Sheet database, active
+console.log(sheetDatabase);
 
 // Dynamic construction of cell
 
@@ -197,6 +237,13 @@ function computeCellDatum(){  // Faith --> cell element is provided as an argume
         // Active, sheet database
         const rowReservoir = sheetDatabase[rowReservoirIndex];  // Represent, row reservoir, of row specified 
         const cellReservoir = rowReservoir[cellReservoirIndex];  // Represent, cell reservoir, provided cell reservoir index
+
+        // if(cellReservoir.cellRelevant == false){  // Represent, cell element irrelevant
+        //     cellReservoir.cellRelevant = true;  // Represent, cell holding up relevance / datum
+        //     sheetClosure.cellElementRelevant.push(cellReservoir.cellIdentifier);  // Maintainance, relevant cell element
+        // }
+        // console.log(sheetClosure.cellElementRelevant);
+
         if(cellReservoir.formulaDatum == formula) return;  // Represent, no mutation in cell element formula 
         if(cellReservoir.formulaDatum != ""){  // Mutation, cell formula datum
             maintainParentDatum(cellReservoir);  // Maintainance, cell element's parent datum, parent's children datum, with mutation in cell element formula datum
@@ -320,7 +367,7 @@ function mutationCellDatum(cellElement){  // Maintainance, with mutation in cell
             cellReservoir.formulaDatum = "";  // Maintain, formula datum
             cellReservoir.cellDatum = "";  // Maintain, cell datum
             maintainParentDatum(cellReservoir);  // Faith --> Removal, children cell identifier, parent's cell reservoir, children datum
-            console.log(cellReservoir);
+            // console.log(cellReservoir);
         }
     }
 }
@@ -349,6 +396,9 @@ function maintainParentDatum(children){  // Faith --> Removal, children cell ide
 function sheetConstruction(databaseInstance){
     const appendElement = document.querySelector(".appendElement");  // Represent, sheet append element 
     const catalogueElement = document.querySelector(".catalogueElement"); // Represent, sheet catalogue element
+    const staticSheetElement = document.querySelector(`div[sheetIdentifier="0"]`);  // Represent, static sheet element
+    sheetListener(staticSheetElement);
+
     let sheetIdentifier = 0;  // Represent, sheet identifier
     appendElement.addEventListener("click", function(){  // Callback trigger with click, on append element
         sheetIdentifier = sheetIdentifier + 1;  // Maintainance, sheet identifier
@@ -365,7 +415,9 @@ function sheetConstruction(databaseInstance){
 
         // Database maintainance
         databaseInstance.instantiateDatabase(databaseInstance.database);  // Instantiate, sheet database
-        sheetDatabase = localDatabase[sheetIdentifier];  // Switch to, active sheet database
+        sheetDatabase = localDatabase[sheetIdentifier].sheetDatabase;  // Switch to, active sheet database
+        sheetClosure = localDatabase[sheetIdentifier];  // Represent, active sheet closure
+
         flushUI();  // Flush UI
 
         sheetListener(sheetElement);  // Faith --> UI, database maintainance, with sheet click
@@ -382,7 +434,8 @@ sheetConstruction(databaseInstance);
 function sheetListener(sheetElement){
     sheetElement.addEventListener("click", function(){  // Callback trigger with click, sheet element
         sheetIdentifier = sheetElement.getAttribute("sheetIdentifier");  // Represent, sheet identifier
-        sheetDatabase = localDatabase[sheetIdentifier]; // Dynamic switch to, active sheet database
+        sheetDatabase = localDatabase[sheetIdentifier].sheetDatabase;  // Dynamic switch to, active sheet database
+        sheetClosure = localDatabase[sheetIdentifier];  // Represent, active sheet closure
 
         // Maintainance, active sheet element, class
         const activeSheetElement = document.querySelector(".activeSheetElement"); 
@@ -411,11 +464,10 @@ function flushUI(){
 function reincarnationUI(){
     for(let rowIdentifier = 0 ; rowIdentifier < 100 ; rowIdentifier++){ // Looping through, row, sheet database
         for(let columnIdentifier = 0 ; columnIdentifier < 26 ; columnIdentifier++){ // Looping through, column, sheet database
-            console.log("inside reincarnation");
-            const cellReservoir = sheetDatabase[rowIdentifier][columnIdentifier];  // Represent, cell datum, provided active sheet database
-            if(cellReservoir.cellDatum == "") return;  
+            // console.log(sheetDatabase);
+            const cellReservoir = sheetDatabase[rowIdentifier][columnIdentifier];  // Represent, cell datum, provided active sheet database 
             const cellElement = document.querySelector(`div[columnIdentifier="${String.fromCharCode(65+columnIdentifier)}"][rowIdentifier="${rowIdentifier+1}"]`);  // Represent, cell element
-            console.log(cellElement);
+            // console.log(cellElement);
             cellElement.innerText = cellReservoir.cellDatum;  // UI, reincarnation
         }
     }
