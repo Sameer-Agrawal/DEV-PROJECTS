@@ -33,6 +33,7 @@ Sticky positioning is a hybrid of relative and fixed positioning. The element is
     height: 9.5vh;
     background-color: var(--taskbarContainer);
     z-index: 2;
+    display: flex;
 }
 
 /* 
@@ -177,7 +178,7 @@ The font-weight property represent how thick or thin characters in text should b
 
 .assistContainer{
     height: 2.5vh;
-    position: relative;
+    position: absolute;
     display: flex;
     top:7vh;
 }
@@ -199,6 +200,34 @@ The font-weight property represent how thick or thin characters in text should b
     outline: none;
     text-align: center
 }
+
+.fontDecorationElement{
+    height: 7vh;
+    width: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+/* UI enhancement, font decoration element */
+.fontDecorationElement div{
+    height: 1.5rem;
+    width: 1.5rem;
+    color: var(--fontColor);
+    background-color: var(--taskbarContainer);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+}
+
+/* The :hover selector is used to select HTML elements when you mouse over them */
+
+.fontDecorationElement div:hover{
+    background-color: var(--fontColor);
+    color: var(--taskbarContainer);
+}
+
 
 
 

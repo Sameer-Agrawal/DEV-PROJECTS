@@ -186,7 +186,7 @@ const topLeftCellElement = document.querySelector(".top-left-cell");  // Represe
 
 function maintainElement(){  // Faith --> Maintain top, side panel through scrolling
     cellContainer.addEventListener("scroll", function(event){  // Callback invoke, with scroll on cell container element
-        console.log(event);  // Represent, scroll event
+        // console.log(event);  // Represent, scroll event
         const scrollTop = cellContainer.scrollTop;  // Event, maintain scrollTop attribute, which inturn represent, content scroll in px
         const scrollLeft = cellContainer.scrollLeft;  // Event, maintain scrollTop attribute, which inturn represent, content scroll in px 
         columnIdentifierElement.style.top = scrollTop + "px";  // With a scroll, column identifier element, maintainance with slide down
