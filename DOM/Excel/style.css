@@ -226,7 +226,16 @@ The font-weight property represent how thick or thin characters in text should b
 .fontDecorationElement div:hover{
     background-color: var(--fontColor);
     color: var(--taskbarContainer);
+    cursor: pointer;
 }
+
+.activeCellIdentifier{
+    background-color: seagreen;
+    color: var(--fontColor);
+}
+
+/* The opacity property specifies the opacity/transparency of an element */
+
 
 
 

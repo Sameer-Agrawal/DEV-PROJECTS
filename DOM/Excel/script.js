@@ -78,7 +78,7 @@ class database{  // Database class
             for(let column = 1 ; column <= 26 ; column++){  // Looping through, column
                 const cellIdentifier = String.fromCharCode(64+column) + row;  // Stringify, cell identifier
                 // console.log(cellIdentifier);
-                const datum = {cellIdentifier : cellIdentifier, cellDatum : "", formulaDatum : "", childrenDatum : [], parentDatum : [], cellRelevant : false};  // Represent, cell identifier accompanying, cell datum 
+                const datum = {cellIdentifier : cellIdentifier , cellDatum : "" , formulaDatum : "" , childrenDatum : [] , parentDatum : [] , cellRelevant : false , fontDecoration : {boldElement : false , italicElement : false , underlineElement : false}};  // Represent, cell identifier accompanying, cell datum 
                 rowArray.push(datum);  // Append, cell datum, to a row
             }
             sheetArray.push(rowArray);  // Append, row datum, to sheet
@@ -178,6 +178,62 @@ function cellConstructor(databaseInstance){  // Faith --> Construct cell!
 cellConstructor(databaseInstance);  
 
 
+// Faith --> Dynamic, font decoration
+function fontDecoration(){
+    const boldElement = document.querySelector(".boldElement");  // Represent, bold element
+    const italicElement = document.querySelector(".italicElement");  // Represent, bold element
+    const underlineElement = document.querySelector(".underlineElement");  // Represent, bold element
+
+    boldElement.addEventListener("click", function(){  // Callback invoke, with click, bold element
+        setFontDecoration("boldElement", precedingCellElement);  // Represent, preceding active cell element
+    })
+
+    italicElement.addEventListener("click", function(){  // Callback invoke, with click, italic element
+        setFontDecoration("italicElement", precedingCellElement);  // Represent, preceding active cell element
+    })
+
+    underlineElement.addEventListener("click", function(){  // Callback invoke, with click, underline element
+        setFontDecoration("underlineElement", precedingCellElement);  // Represent, preceding active cell element
+    })
+
+
+    // Faith --> Font decoration operator, provided font decoration fashion and cell element operand
+    function fontDecorationOperator(fontDecorationFashion, cellElement){
+        if(cellElement == undefined) return;
+        // Faith --> Valid, cell element
+        const cellIdentifier = cellElement.getAttribute("columnIdentifier") + cellElement.getAttribute("rowIdentifier");  // Represent cell identifier
+        const cellReservoir = getCellReservoir(cellIdentifier);  // Return cell reservoir, provided cell identifier
+
+        if(cellReservoir.fontDecoration[fontDecorationFashion] == false){  // Request, font decoration
+
+            if(fontDecorationFashion == "boldElement"){  // Request, bold font decoration
+                cellElement.style.fontWeight = "bold";
+            }else if(fontDecorationFashion == "italicElement"){  // Request, italic font decoration
+                cellElement.style.fontStyle = "italic";
+            }else{  // Request, underline font decoration
+                // The text-decoration property specifies the decoration added to text
+                cellElement.style.textDecoration = "underline";
+            }
+
+        }else{  // Overturn, font decoration
+
+            if(fontDecorationFashion == "boldElement"){  // Overturn, bold font decoration
+                cellElement.style.fontWeight = "normal";
+            }else if(fontDecorationFashion == "italicElement"){  // Overturn, italic font decoration
+                cellElement.style.fontStyle = "normal";
+            }else{  // Overturn, underline font decoration
+                // The text-decoration property specifies the decoration added to text
+                cellElement.style.textDecoration = "none";
+            }
+
+        }
+
+        cellReservoir.fontDecoration[fontDecorationFashion] = !cellReservoir.fontDecoration[fontDecorationFashion]  // Maintainance, font decoration datum
+    } 
+}
+
+fontDecoration();
+
 // Maintain top, side panel through scrolling
 
 const columnIdentifierElement = document.querySelector(".column-identifier-row");  // Represent, column identifier panel element
@@ -210,6 +266,40 @@ function cellIdentifier(cellElement){  // Faith --> Pin-point cell
         labelElement.innerText = cellIdentifier;  // Unveil cell element identity
         const cellReservoir = getCellReservoir(cellIdentifier);  // Return, cell reservoir, provided cell identifier
         formulaElement.innerText = cellReservoir.formulaDatum;  // Convey, cell element formula datum, if exist
+
+        // Reflect row, column identifier element, provided row, column identifier
+        function cellIdentifierReflection(rowIdentifier, columnIdentifier){
+            const rowIdentifierElementArray = document.querySelectorAll(".row-identifier-element");  // Represent row identifier element array
+            const columnIdentifierElementArray = document.querySelectorAll(".column-identifier-element");  // Represent column identifier element array
+            const rowIdentifierElement = rowIdentifierElementArray[parseInt(rowIdentifier) - 1];  // Represent, row identifier element
+            const columnIdentifierElement = columnIdentifierElementArray[columnIdentifier.charCodeAt(0) - 65];  // Represent, column identifier element
+
+            // console.log(rowIdentifierElementArray);  // nth index represent, [n+1]'st row identifier 
+            // console.log(rowIdentifierElement); // Tested!
+            // console.log(columnIdentifierElement);  // Tested!
+
+            // precedingCellElement, represent preceding active cell element
+
+            if(precedingCellElement != undefined){
+                
+                const precedingRowIdentifierElement = rowIdentifierElementArray[parseInt(precedingCellElement.getAttribute("rowIdentifier")) - 1];  // Represent, row identifier element
+                const precedingColumnIdentifierElement = columnIdentifierElementArray[precedingCellElement.getAttribute("columnIdentifier").charCodeAt(0) - 65];  // Represent, column identifier element
+
+                // console.log(precedingRowIdentifierElement);  // Tested!
+                // console.log(precedingColumnIdentifierElement);  // Tested!
+
+                // Removal, preceding active element, cell identifier reflection
+                precedingRowIdentifierElement.classList.remove("activeCellIdentifier");
+                precedingColumnIdentifierElement.classList.remove("activeCellIdentifier");
+            }
+
+            // Reflection, active cell identifier
+            rowIdentifierElement.classList.add("activeCellIdentifier");
+            columnIdentifierElement.classList.add("activeCellIdentifier");
+        }
+
+
+        cellIdentifierReflection(rowIdentifier, columnIdentifier);
     })
 }
 
