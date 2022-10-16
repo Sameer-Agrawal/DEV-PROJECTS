@@ -209,25 +209,28 @@ The font-weight property represent how thick or thin characters in text should b
     justify-content: space-around;
 }
 
+
 /* UI enhancement, font decoration element */
 .fontDecorationElement div{
     height: 1.5rem;
     width: 1.5rem;
-    color: var(--fontColor);
-    background-color: var(--taskbarContainer);
+    background-color: var(--fontColor);
+    color: var(--taskbarContainer);
+    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 6px;
 }
 
+
 /* The :hover selector is used to select HTML elements when you mouse over them */
 
-.fontDecorationElement div:hover{
+/* .fontDecorationElement div:hover{
     background-color: var(--fontColor);
     color: var(--taskbarContainer);
     cursor: pointer;
-}
+} */
 
 .activeCellIdentifier{
     background-color: seagreen;
@@ -235,6 +238,13 @@ The font-weight property represent how thick or thin characters in text should b
 }
 
 /* The opacity property specifies the opacity/transparency of an element */
+
+.activeFontDecoration{
+    opacity: 0.5;
+}
+
+
+
 
 
 

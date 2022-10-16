@@ -181,19 +181,19 @@ cellConstructor(databaseInstance);
 // Faith --> Dynamic, font decoration
 function fontDecoration(){
     const boldElement = document.querySelector(".boldElement");  // Represent, bold element
-    const italicElement = document.querySelector(".italicElement");  // Represent, bold element
-    const underlineElement = document.querySelector(".underlineElement");  // Represent, bold element
+    const italicElement = document.querySelector(".italicElement");  // Represent, italic element
+    const underlineElement = document.querySelector(".underlineElement");  // Represent, underline element
 
     boldElement.addEventListener("click", function(){  // Callback invoke, with click, bold element
-        setFontDecoration("boldElement", precedingCellElement);  // Represent, preceding active cell element
+        fontDecorationOperator("boldElement", precedingCellElement);  // Represent, preceding active cell element
     })
 
     italicElement.addEventListener("click", function(){  // Callback invoke, with click, italic element
-        setFontDecoration("italicElement", precedingCellElement);  // Represent, preceding active cell element
+        fontDecorationOperator("italicElement", precedingCellElement);  // Represent, preceding active cell element
     })
 
     underlineElement.addEventListener("click", function(){  // Callback invoke, with click, underline element
-        setFontDecoration("underlineElement", precedingCellElement);  // Represent, preceding active cell element
+        fontDecorationOperator("underlineElement", precedingCellElement);  // Represent, preceding active cell element
     })
 
 
@@ -229,6 +229,7 @@ function fontDecoration(){
         }
 
         cellReservoir.fontDecoration[fontDecorationFashion] = !cellReservoir.fontDecoration[fontDecorationFashion]  // Maintainance, font decoration datum
+        // console.log(cellReservoir.fontDecoration);
     } 
 }
 
@@ -267,6 +268,29 @@ function cellIdentifier(cellElement){  // Faith --> Pin-point cell
         const cellReservoir = getCellReservoir(cellIdentifier);  // Return, cell reservoir, provided cell identifier
         formulaElement.innerText = cellReservoir.formulaDatum;  // Convey, cell element formula datum, if exist
 
+        cellIdentifierReflection(rowIdentifier, columnIdentifier);
+        fontDecorationElementReflection(cellReservoir);
+
+
+        // Faith --> Reflect, active font decoration element, provided cell reservoir
+        function fontDecorationElementReflection(cellReservoir){
+            const fontDecoration = cellReservoir.fontDecoration;  // Represent, font decoration datum
+            console.log(fontDecoration);
+
+            // The ternary operator is a simplified conditional operator like if / else.
+            // Syntax: condition ? <expression if true> : <expression if false></expression>
+
+            const boldElement = document.querySelector(".boldElement");  // Represent, bold element
+            const italicElement = document.querySelector(".italicElement");  // Represent, italic element
+            const underlineElement = document.querySelector(".underlineElement");  // Represent, underline element
+
+            fontDecoration.boldElement ? boldElement.classList.add("activeFontDecoration") : boldElement.classList.remove("activeFontDecoration")
+            fontDecoration.italicElement ? italicElement.classList.add("activeFontDecoration") : italicElement.classList.remove("activeFontDecoration")
+            fontDecoration.underlineElement ? underlineElement.classList.add("activeFontDecoration") : underlineElement.classList.remove("activeFontDecoration")
+
+        }
+
+
         // Reflect row, column identifier element, provided row, column identifier
         function cellIdentifierReflection(rowIdentifier, columnIdentifier){
             const rowIdentifierElementArray = document.querySelectorAll(".row-identifier-element");  // Represent row identifier element array
@@ -297,9 +321,6 @@ function cellIdentifier(cellElement){  // Faith --> Pin-point cell
             rowIdentifierElement.classList.add("activeCellIdentifier");
             columnIdentifierElement.classList.add("activeCellIdentifier");
         }
-
-
-        cellIdentifierReflection(rowIdentifier, columnIdentifier);
     })
 }
 
