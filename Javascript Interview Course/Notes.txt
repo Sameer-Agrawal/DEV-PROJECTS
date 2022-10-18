@@ -521,7 +521,10 @@ Deep copy mai ek problem thi that function, and dateTime object, copy nahi hote 
 
 ...........................................................................................................................................................................
 
-
+Short-hand!
+this keyword value, depend on parent function, holding up 'this' keyword invocation
+Method invocation --> 'this' keyword refer, preceding object, method is invoked on
+Function invocation --> 'this' keyword refer, window object
 
 
 
