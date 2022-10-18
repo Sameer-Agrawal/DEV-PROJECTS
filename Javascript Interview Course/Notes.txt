@@ -497,7 +497,29 @@ Event element, hold's up a method stopPropagation(), representing, stop event pr
 
 ..........................................................................................................................................................................
 
+Shallow copy and deep copy --> 
 
+Whenever, an object is assigned to a variable, object value is assigned, but in case of JS object, object value is object reference.
+
+To deal, with object, behaving like pass by reference, shallow, deep copy is introduced
+
+Shallow copy --> Isme sirf ek object level, value ki tarah copy hoti hai, nested object key ke samne, purana reference hi rakha hota hai
+
+There are two methods, to achieve shallow copy
+
+1. Object.assign() 
+2. Destructuring object
+
+Shallow copy ki problem's ko solve karne ke liye deep copy came into picture.
+Deep copy --> Isme, saare nested object's, copy ho jaate hai
+
+There is one way to achieve deep copy
+
+let deepClone = JSON.parse(JSON.stringify(Object));
+
+Deep copy mai ek problem thi that function, and dateTime object, copy nahi hote the. Ye problem ko solve karne ke liye, lodash module use hoti hai
+
+...........................................................................................................................................................................
 
 
 
