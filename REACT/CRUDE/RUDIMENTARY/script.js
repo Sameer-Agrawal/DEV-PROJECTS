@@ -98,5 +98,3 @@ function ParentComponent(){  // Represent, parent react component
 ReactDOM.render(<ParentComponent/>, rootElement);  // render() method represent, append children to parent, which inturn lead to component regeneration(UI)
 
 
-
-
