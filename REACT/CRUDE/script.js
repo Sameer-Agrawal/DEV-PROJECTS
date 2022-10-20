@@ -66,9 +66,30 @@ function HeadingElement(){  // Represent, heading component
     )
 }
 
-ReactDOM.render(<HeadingElement/>, rootElement);  // render() method represent, append children to parent, which inturn lead to component regeneration(UI)
-
-
 // <component/> --> Represent, component invocation
+
+
+// Components represent, independent / pure and reusable block of code. They serve the same purpose as JavaScript functions, but work in isolation and return HTML.
+// Components come in two types, Class components and Function components
+
+// React component reinforce reusability, provided props
+// Props are arguments passed into React component, which inturn represent component properties
+
+
+function ParentComponent(){  // Represent, parent react component
+    return(
+        <React.Fragment>
+            {/* Children, react component */}
+            <HeadingElement/>
+            <HeadingElement/>
+            <HeadingElement/>
+        </React.Fragment>
+    );
+}
+
+
+ReactDOM.render(<ParentComponent/>, rootElement);  // render() method represent, append children to parent, which inturn lead to component regeneration(UI)
+
+
 
 
