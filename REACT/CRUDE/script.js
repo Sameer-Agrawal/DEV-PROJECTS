@@ -58,13 +58,13 @@ const rootElement = document.querySelector("#root");  // Represent, div element,
 // 7. JSX, is expected, inside return block
 
 
-// Functional component
-function HeadingElement(){  // Represent, heading component
-    return(  // Expected, syntax
-        // A common pattern in React is for a component to return multiple component. Fragments let you group a list of children without adding extra nodes to the DOM
-        <h1>Hey there, Nice to meet you</h1>
-    )
-}
+// // Functional component
+// function HeadingElement(){  // Represent, heading component
+//     return(  // Expected, syntax
+//         // A common pattern in React is for a component to return multiple component. Fragments let you group a list of children without adding extra nodes to the DOM
+//         <h1>Hey there, Nice to meet you</h1>
+//     )
+// }
 
 // <component/> --> Represent, component invocation
 
@@ -75,14 +75,21 @@ function HeadingElement(){  // Represent, heading component
 // React component reinforce reusability, provided props
 // Props are arguments passed into React component, which inturn represent component properties
 
+// Functional component, provided props as an argument
+function HeadingElement(props){  // Represent, heading component
+    // prop's provided as an argument, represent a object
+    return(  // Expected, syntax
+        // A common pattern in React is for a component to return multiple component. Fragments let you group a list of children without adding extra nodes to the DOM
+        <h1>{props.message}</h1>
+    );
+}
+
 
 function ParentComponent(){  // Represent, parent react component
     return(
         <React.Fragment>
             {/* Children, react component */}
-            <HeadingElement/>
-            <HeadingElement/>
-            <HeadingElement/>
+            <HeadingElement message = "Hey there, nice to meet you"/>
         </React.Fragment>
     );
 }
