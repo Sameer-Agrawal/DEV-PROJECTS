@@ -39,3 +39,9 @@ const rootElement = document.querySelector("#root");  // Represent, div element,
 
 
 ReactDOM.render(<Counter/>, rootElement);  // render() method represent, append children to parent, which inturn lead to component regeneration(UI)
+
+
+// If you’re learning React or creating a new single-page app, use Create React App
+
+
+// A single-page application is a web application that interacts with the user by dynamically rewriting the current web page with new data from the web server, instead of the default method of a web browser loading entire new pages
