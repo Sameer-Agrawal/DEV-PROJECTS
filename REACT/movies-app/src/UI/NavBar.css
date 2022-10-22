@@ -1,0 +1,25 @@
+*{
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+/* box-sizing : border-box --> Element dimension = content dimension + padding dimension + border dimension */
+
+.navbarElement{
+    display: flex;
+    height: 6rem;
+    background-color: lightcoral;
+    align-items: center;
+}
+
+/* rem --> 1rem = 1 * html tag's font size */
+
+.exploreElement{
+    margin: 2rem;
+    font-size: 3rem;
+}
+
+.preferElement{
+    margin: 2rem;
+}
