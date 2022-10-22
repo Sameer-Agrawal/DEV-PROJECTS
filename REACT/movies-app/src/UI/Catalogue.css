@@ -1,0 +1,42 @@
+.catalogueElement{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100vw;
+    margin: 2rem 0rem;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+}
+
+/* The gap property defines the size of the gap between the rows and columns */
+/* The flex-wrap property represent whether the items should wrap or not */
+
+.cardElement{
+    position: relative;
+    height: 22.5rem;
+    width: 20rem;
+}
+
+.cardImageElement{
+    height: 22.5rem;
+    width: 20rem;
+}
+
+.cardTitleElement{
+    position: absolute;
+    top: 1rem;
+    color: white;
+    width: 100%;
+    text-align: center;
+}
+
+.appendElement{
+    position: absolute;
+    top: 18.5rem;
+    margin: auto;
+    width: 65%;
+}
+
+.appendContainer{
+    display: flex;
+    justify-content: center;
+}

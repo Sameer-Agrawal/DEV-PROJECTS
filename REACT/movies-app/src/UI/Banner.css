@@ -1,7 +1,10 @@
 .bannerElement{
     height: 40rem;
     width: 100vw;
+    overflow: hidden;
 }
+
+/* The overflow-x property specifies whether to clip the content, add a scroll bar, or display overflow content of a block-level element, when it overflows at the left and right edges */
 
 .bannerImageElement{
     height: 40rem;

@@ -4,6 +4,7 @@
 .navbarElement{
     display: flex;
     height: 6rem;
+    width: 100vw;
     /* background-color: lightcoral; */
     color: seagreen;
     align-items: center;
