@@ -1,0 +1,29 @@
+.bannerElement{
+    height: 40rem;
+    width: 100vw;
+}
+
+.bannerImageElement{
+    height: 40rem;
+    width: 100%;
+}
+
+.bannerMetadataClosure{
+    position: relative;
+    top: -14rem;
+    left: 5rem;
+    color: white;
+}
+
+/* position: absolute --> Element removal, document flow */
+
+.bannerTitleElement{
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+/* padding : y(top,bottom) x(left,right) --> Short-hand */
+
+.bannerMetadataElement{
+    font-size: 1.25rem;
+}
