@@ -25,20 +25,23 @@ class Catalogue extends Component {
         const metadata = movies.results;  // Represent, metadata
         return(  // JSX, expected
         <React.Fragment>
-            <div className="catalogueElement">
-                { metadata.map( (dataElement) => {  // Data element, represent movie metadata
-                    return(  // Represent, block
+            <div className="catalogueContainer">
+                <div className="headlineElement">TRENDING</div>
+                <div className="catalogueElement">
+                    { metadata.map( (dataElement) => {  // Data element, represent movie metadata
+                        return(  // Represent, block
 
-                        <div className="cardElement" onMouseLeave={ this.mouseLeaveHandler } onMouseEnter={() => { this.mouseEnterHandler(dataElement.id) }}>
-                        <img src={`https://image.tmdb.org/t/p/original${dataElement.backdrop_path}`} className="cardImageElement" alt="Movie representation"/>
-                        <div className="cardMetadataClosure">
-                            <h5 className="cardTitleElement">{ dataElement.original_title }</h5>
-                            { this.state.hover == dataElement.id && <div className="appendContainer"><button className="appendElement btn btn-success">Append to preferable</button></div> }
-                        </div>
-                        </div>
+                            <div className="cardElement" onMouseLeave={ this.mouseLeaveHandler } onMouseEnter={() => { this.mouseEnterHandler(dataElement.id) }}>
+                            <img src={`https://image.tmdb.org/t/p/original${dataElement.backdrop_path}`} className="cardImageElement" alt="Movie representation"/>
+                            <div className="cardMetadataClosure">
+                                <h5 className="cardTitleElement">{ dataElement.original_title }</h5>
+                                { this.state.hover == dataElement.id && <div className="appendContainer"><button className="appendElement btn btn-success">Append to preferable</button></div> }
+                            </div>
+                            </div>
 
-                    );
-                } ) }
+                        );
+                    } ) }
+                </div>
             </div>
         </React.Fragment>
         )

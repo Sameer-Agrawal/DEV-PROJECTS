@@ -1,8 +1,14 @@
+.headlineElement{
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 1rem 0rem;
+}
+
 .catalogueElement{
     display: flex;
     justify-content: space-evenly;
     width: 100vw;
-    margin: 2rem 0rem;
     flex-wrap: wrap;
     gap: 2.5rem;
 }
