@@ -14,11 +14,13 @@
     position: relative;
     height: 22.5rem;
     width: 20rem;
+    border-radius: 0.5rem;
 }
 
 .cardImageElement{
     height: 22.5rem;
     width: 20rem;
+    border-radius: 0.5rem;
 }
 
 .cardTitleElement{
