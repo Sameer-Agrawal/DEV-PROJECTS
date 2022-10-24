@@ -2,7 +2,6 @@ import React from "react";
 import NavBar from "./component's/NavBar";
 import Banner from "./component's/Banner";
 import Catalogue from "./component's/Catalogue";
-import Pagination from "./component's/Pagination";
 import './App.css'
 
 function App() {
@@ -12,7 +11,6 @@ function App() {
         <NavBar/>
         <Banner/>
         <Catalogue/>
-        <Pagination/>
       </div>
     </React.Fragment>
   );
