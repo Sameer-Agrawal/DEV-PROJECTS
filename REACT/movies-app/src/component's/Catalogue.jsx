@@ -43,6 +43,18 @@ class Catalogue extends Component {
         // Observation --> setState() is an asynchronous method
     }
 
+    previousHandler = async () => {  // Spread, catalogue provided active page
+        if(this.state.active != 1)
+            await this.setState({ active : this.state.active - 1 });  // Active page, maintainance
+            this.metadataMaintainance();  // Metadata maintainance
+    }
+
+    activeMaintainance = async (present) => {  // Active maintainance, provided click event
+        if(this.state.active != present)
+            await this.setState({ active : present });  // Active page, maintainance
+            this.metadataMaintainance();  // Metadata maintainance
+    }
+
     render() {  // With mutation component state, render method invoked
         const metadata = this.state.metadata;  // Represent, metadata
         return(  // JSX, expected
@@ -68,9 +80,9 @@ class Catalogue extends Component {
             <div className="paginationElement">
                     <nav aria-label="Page navigation example">
                         <ul className="pagination">
-                            <li className="page-item"><a className="page-link" href="#">Previous</a></li>
+                            <li className="page-item" onClick={ this.previousHandler }><a className="page-link" href="#">Previous</a></li>
                             {
-                                this.state.pagination.map( (present) => <li className="page-item"><a className="page-link" href="#">{present}</a></li> )
+                                this.state.pagination.map( (present) => <li className="page-item" onClick = { () => { this.activeMaintainance(present) } }><a className="page-link" href="#">{present}</a></li> )
                             }
                             <li className="page-item" onClick={ this.nextHandler }><a className="page-link" href="#">Next</a></li>
                         </ul>
