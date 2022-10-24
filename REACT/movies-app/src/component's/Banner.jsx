@@ -5,13 +5,23 @@ import { Component } from 'react';
 import React from 'react';
 import '../UI/Banner.css';
 import { movies } from '../Metadata/data.js';  // Import provided, named export
+import axios from 'axios';
 
 class Banner extends Component {
     constructor() {
         super();
+        this.state = { metadata : {} }
     }
+
+    async componentDidMount(){  // Invoked, followed with render method invocation
+        const data = await axios.get("https://api.themoviedb.org/3/trending/movie/day?api_key=81242a2aa2066e052c78ec9ac1700c59");  // get() method is used to make an HTTP get request
+        const metadata = data.data;  // metadata, represent JSON movie metadata
+        // console.log(metadata.results[0]);  // Represent, array of an object
+        this.setState( { metadata : metadata.results[0] } );  // Metadata represent, object reference
+    }
+
     render() {
-        const metadata = movies.results[0];  // Represent, metadata
+        const metadata = this.state.metadata;  // Represent, metadata
         const source = `https://image.tmdb.org/t/p/original${metadata.backdrop_path}`
         return(  // JSX, expected
             <React.Fragment>
