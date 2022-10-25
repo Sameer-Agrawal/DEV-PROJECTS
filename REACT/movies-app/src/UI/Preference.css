@@ -1,0 +1,42 @@
+.preferenceElement{
+    display: flex;
+}
+
+.filterElement{
+    width: 20rem;
+    margin-left: 20rem;
+    margin-top: 2rem;
+}
+
+.rightClosure{
+    margin-left: 2rem;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.assistClosure{
+    display: flex;
+}
+
+/* .searchElement{
+    width: 50%;
+}
+
+.unknown{
+    width: 50%;
+} */
+
+.titleClosure{
+    display: flex;
+    align-items: center;
+    margin: 1rem;
+}
+
+.dataElementImage{
+    height: 3.5rem;
+    width: 7rem;
+}
+
+.dataElementTitle{
+    margin-left: 1rem;
+}
