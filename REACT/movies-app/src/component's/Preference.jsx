@@ -7,7 +7,37 @@ import '../UI/Preference.css';
 class Preference extends Component {
     constructor() {
         super();
-        this.state = { category : ["Absolute category"] , metadata : [] , active : "Absolute category" , filtrate : [] }
+        this.state = { category : ["Absolute category"] , metadata : [] , active : "Absolute category" , filtrate : [] , strainer : "" }
+    }
+
+    strainerMaintainance = async (event) => {
+        // console.log(event.target.value);  // Represent, on change event
+        await this.setState({ strainer :  event.target.value });  // Strainer maintainance
+        // console.log(this.state.strainer);
+        this.filterMaintainanceProvidedStrainer();
+    }
+
+    filterMaintainanceProvidedStrainer = () => {
+        if(this.state.strainer == ""){
+
+            this.setState({ filtrate : [ ...this.state.metadata ] })
+
+        }else{
+
+            // The includes() method returns true if a string contains a specified string, otherwise it returns false
+            // The includes() method is case sensitive
+    
+            const strainer = this.state.strainer.toLowerCase();  // toLowerCase() method converts a string to lowercase letters
+    
+            const filtrate = this.state.metadata.filter( (dataElement) => { 
+                const title = dataElement.title.toLowerCase();  // Lowercase, data element title
+                return title.includes(strainer);
+            } );
+    
+            this.setState({ filtrate : [ ...filtrate ] })
+            
+        }
+
     }
 
     filterPreference = (category) => {  // Faith --> Filter preference, provided category
@@ -76,7 +106,7 @@ class Preference extends Component {
                         <div className="col-9 assistElement">
                             <div className="row assistClosure">  
                             {/* row keyword represent, a row */}
-                                <input type="text" className="form-control col searchElement" placeholder="Search"/>
+                                <input type="text" className="form-control col searchElement" placeholder="Search" value={ this.state.strainer } onChange={ (event) => { this.strainerMaintainance(event) } } />
                                 <input type="number" className="form-control col unknown" />
                             </div>                  
                         </div>
