@@ -12,7 +12,7 @@ import axios from 'axios';
 class Catalogue extends Component {
     constructor() {
         super();
-        this.state = { hover : "" , metadata : [] , active : 1 , pagination : [1] };  // Represent, state
+        this.state = { hover : "" , metadata : [] , active : 1 , pagination : [1] , preference : [] };  // Represent, state
     }
 
     mouseEnterHandler = (Identifier) => {  // State maintainance
@@ -27,7 +27,8 @@ class Catalogue extends Component {
         const data = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=81242a2aa2066e052c78ec9ac1700c59&language=en-US&page=${this.state.active}`);  // get() method is used to make an HTTP get request
         const metadata = data.data;  // metadata, represent JSON movie metadata
         // console.log(metadata);  // Represent, array of an object
-        this.setState( { metadata : [...metadata.results] } );  
+        this.setState( { metadata : [...metadata.results] } , this.preferenceStateMaintainance );  
+        // this.preferenceStateMaintainance();  // Preference state maintainance, provided component is mounted
     }
 
     metadataMaintainance = async () => {  // Metadata maintainance, provided active page mutation
@@ -55,6 +56,36 @@ class Catalogue extends Component {
             this.metadataMaintainance();  // Metadata maintainance
     }
 
+    // Preference maintainance
+    // The localStorage object allows you to save key/value pairs in the browser
+
+    // Browser localStorage stores data with no expiration date.
+    // The data is not deleted when the browser is closed, and are available for future sessions.
+
+    preferenceMaintainance = (dataElement) => {  // Faith --> Preference maintainance, provided local storage
+        // getItem() method, return a value, provided key
+        let preference =  ( JSON.parse(localStorage.getItem("preference")) || [] );  // Database, represent an array, of metadata
+
+        let preferenceState = this.state.preference;  // Represent, preference state
+
+        if(preferenceState.includes(dataElement.id)){  // Preference removal
+            preference = preference.filter( (metadata) => { return metadata.id != dataElement.id });  // Identifier removal
+        }else{  // Append preference
+            preference.push(dataElement);  // Append identifier
+        }
+
+        localStorage.setItem("preference" , JSON.stringify(preference));  // Browser storage, maintainance
+        this.preferenceStateMaintainance();  // Preference, state maintainance
+    }
+
+    preferenceStateMaintainance = () => {  // Faith --> Maintain preference
+        const preference =  ( JSON.parse(localStorage.getItem("preference")) || [] );  // Database, represent an array, of metadata
+
+        const identifier = preference.map( (dataElement) => dataElement.id )
+
+        this.setState({ preference : [ ...identifier ] });  // Preference, state maintainance
+    }
+
     render() {  // With mutation component state, render method invoked
         const metadata = this.state.metadata;  // Represent, metadata
         return(  // JSX, expected
@@ -69,7 +100,7 @@ class Catalogue extends Component {
                             <img src={`https://image.tmdb.org/t/p/original${dataElement.backdrop_path}`} className="cardImageElement" alt="Movie representation"/>
                             <div className="cardMetadataClosure">
                                 <h5 className="cardTitleElement">{ dataElement.original_title }</h5>
-                                { this.state.hover == dataElement.id && <div className="appendContainer"><button className="appendElement btn btn-success">Append to preferable</button></div> }
+                                { this.state.hover == dataElement.id &&  <div className="appendContainer" onClick={ () => { this.preferenceMaintainance(dataElement) } }><button className="appendElement btn btn-success">{ this.state.preference.includes(dataElement.id) ? "Remove preference" : "Append preference" }</button></div>  }
                             </div>
                             </div>
 
