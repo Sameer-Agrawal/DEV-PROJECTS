@@ -10,8 +10,22 @@ import Children from "./Higher Order Component/Children.jsx"
 function App() {
   return (
     <React.Fragment>
-      <Children Dark/>
-      <Children/>
+
+      <div className="parentElement">
+
+        <BrowserRouter>
+          <NavBar/>
+          {/* Routes hold's up route */}
+          {/* In previous versions of React Router you had to order your routes a certain way to get the right one to render when multiple routes matched an ambiguous URL. V6 is a lot smarter and will pick the most specific match so you don't have to worry about that anymore. */}
+          <Routes>
+            {/* element attribute specify, component to render, provided specific path */}
+            <Route path="/" element = { <React.Fragment> <Banner/> <Catalogue/> </React.Fragment> } ></Route>
+            <Route path="/preference" element = { <Preference/> }></Route>
+          </Routes>
+        </BrowserRouter>
+
+      </div>
+      
     </React.Fragment>
   );
 }
