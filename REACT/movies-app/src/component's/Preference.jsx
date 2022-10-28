@@ -10,6 +10,17 @@ class Preference extends Component {
         this.state = { category : ["Absolute category"] , metadata : [] , active : "Absolute category" , filtrate : [] , strainer : "" }
     }
 
+    // Faith --> Preference removal
+    preferenceRemoval = async (identifier) => {
+        const metadata = this.state.metadata.filter( (dataElement) => { return dataElement.id != identifier } )
+        
+        await this.categoryMaintainance(metadata);  // Category maintainance
+
+        localStorage.setItem("preference" , JSON.stringify(metadata));  // Browser storage, maintainance
+        
+        this.filterPreference(this.state.active);  // Filter preference, provided active category
+    }
+
     strainerMaintainance = async (event) => {
         // console.log(event.target.value);  // Represent, on change event
         await this.setState({ strainer :  event.target.value });  // Strainer maintainance
@@ -72,13 +83,13 @@ class Preference extends Component {
         });
 
 
-        this.setState( { category : [...categoryArray] , metadata : [ ...metadata ] , filtrate : [ ...metadata ] } );  // Maintainance, component state 
+        this.setState( { category : [...categoryArray] , metadata : [ ...metadata ] } );  // Maintainance, component state 
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         const metadata = (JSON.parse(localStorage.getItem("preference")) || []);
-        this.categoryMaintainance(metadata);
-        // this.setState({ filtrate : [...this.state.metadata] });  // Filtrate maintainance, provided component mount
+        await this.categoryMaintainance(metadata);
+        this.setState({ filtrate : [...this.state.metadata] });  // Filtrate maintainance, provided component mount
     }
 
     render() {
@@ -132,7 +143,7 @@ class Preference extends Component {
                                                 <td>{ genreIdentifier[dataElement.genre_ids[0]] }</td>
                                                 <td>{ dataElement.popularity }</td> 
                                                 <td>{ dataElement.vote_average }</td>
-                                                <td><button type="button" className="btn btn-danger">Remove</button></td>
+                                                <td><button type="button" className="btn btn-danger" onClick={ () => { this.preferenceRemoval(dataElement.id) } } >Remove</button></td>
                                             </tr>
                                         );
 
