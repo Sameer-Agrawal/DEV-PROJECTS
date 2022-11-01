@@ -15,10 +15,10 @@ let obj = {
   },
 };
 
-let {
+let {  // Destructuring
   a: {
     b: {
-      e: { string },
+      e: { string },  // "string"
     },
   },
 } = obj;
@@ -27,19 +27,18 @@ let {
   d: {
     f: {
       g: {
-        i: { undefined },
+        i: { undefined },  // "defined"
       },
     },
   },
 } = obj;
 
-console.log(`${string}-${undefined}`);
+// console.log(`${string}-${undefined}`);
 
 // options:
 
 // A) string-undefined
 
-// B) string-defined
+// B) string-defined --> ANS
 
 // C) Error
-
