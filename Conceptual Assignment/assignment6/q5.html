@@ -72,20 +72,50 @@
     // This should not happen in a real site.
     //  Even if in a continous go user clicks multiple times on buy button only once it should be added and after adding if user clicks again then add again but not in continous successive clicks. Write a script to just that.
 
-    // Given Code:
-    let tPrice = 0;
-    let btns = document.querySelectorAll("button");
-    let pricetext = document.querySelector("p span");
-    for (let i = 0; i < btns.length; i++) {
-      btns[i].addEventListener("click", function (e) {
-        let price = Number(e.currentTarget.getAttribute("data-price"));
-        tPrice += price;
-        pricetext.innerText = tPrice;
-      });
+    // Debouncing
+
+    // Debouncing in JavaScript is a practice used to improve browser performance. There might be some functionality in a web page which requires time-consuming computations. If such a method is invoked frequently, it might greatly affect the performance of the browser, as JavaScript is a single threaded language.
+
+    const closure = () => {
+      let flag = true;
+
+      const debounce = ( handler , delay , argument ) => {  // Faith --> Invoke handler, provided delay amid handler invocation is greater than delay
+        if( flag ) {
+          handler( argument );
+          flag = false;  // Flag maintainance
+          setTimeout( () => {
+            flag = true;  // Flag maintainance, provided delay
+          } , delay )
+        }
+      }
+
+      return debounce;
+
     }
 
-      // Solution:
+    const debounce = closure();  // Represent debounce closure
       
+    // Code -->
+    let total = 0;
+
+    const button = document.querySelectorAll("button");
+    const cart_total = document.querySelector(".cart-total span");  // Represent cart total
+
+    const callback = ( event ) => {
+
+        const cost = Number( event.currentTarget.getAttribute("data-price") );
+        total = total + cost;
+        cart_total.innerText = total;
+
+    }
+
+    for ( let index = 0 ; index < button.length ; index++ ) {  // Looping through, button element
+
+      button[index].addEventListener("click", ( event ) => { debounce( callback , 1000 , event ) } );
+
+    }
+
+
   </script>
 </body>
 
