@@ -449,7 +449,7 @@ Using a 0ms as an argument, in setTimeout function, will defer, the execution of
 
 Lecture 18 --> Functional Programming!
 
-Statement --> Functional programming is not possible without higher order function!
+Statement --> Functional programming is not possible without higher order function!row-gap
 
 Higher order function --> A function, which take another function as an argument, or can return a function, is known as higher order function
 
@@ -482,7 +482,7 @@ Event propagation --> Event propagation is a mechanism that defines how events p
 
 Event bubbling -->  Event bubbling is a method of event propagation in the HTML DOM API/tree when an event is in an element inside another element, and both elements have registered a handle to that event. It is a process that starts with the element that triggered the event and then bubbles up/moves up to the containing elements in the hierarchy
 
-Event capturing --> Event capturing is one of two ways to do event propagation in the HTML DOM. In event capturing, an event propagates from the outermost element to the target element. It is the opposite of event bubbling, where events propagate outwards from the target to the outer elements. Capturing happens before bubbling
+Event capturing --> Event capturing is one of two ways to do event propagation in the HTML DOM. It is the opposite of event bubbling, where events propagate outwards from the target to the outer elements. Capturing happens before bubbling
 
 What are the phases of event propagation?
 --> These three phases in order are 1) the event capturing phase, 2) the target phase, and 3) the event bubbling phase.
@@ -525,6 +525,10 @@ Short-hand!
 this keyword value, depend on parent function, holding up 'this' keyword invocation
 Method invocation --> 'this' keyword refer, preceding object, method is invoked on
 Function invocation --> 'this' keyword refer, window object
+
+..........................................................................................................................................................................
+
+The term "package" is used to represent code that's been made publicly available. A package can contain a single file or many files of code
 
 
 
