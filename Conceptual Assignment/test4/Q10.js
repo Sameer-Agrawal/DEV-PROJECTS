@@ -1,8 +1,10 @@
 // Find output:
 
-function* f(...a) {
+function* f(...a) {  // Generator function
+  // console.log(a);  // Represent an array
   let s = new Set();
   for (x in a) {
+    // console.log(x);  // Represent index
     s.add(a[x]);
     yield a[x];
   }
@@ -12,15 +14,18 @@ function* f(...a) {
 let f1 = f(3, 2, 1);
 
 while (true) {
-  let yv = f1.next().value;
+  let yv = f1.next().value;  // { 3 , 2 , 1 }
+
   if (typeof yv == "object") {
     console.log(yv);
     yv.add(3);
     console.log(yv);
     break;
   }
+
 }
 
+// ANS --> C
 
 // options:
 
