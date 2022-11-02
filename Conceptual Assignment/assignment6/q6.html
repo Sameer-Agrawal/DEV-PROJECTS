@@ -14,24 +14,31 @@
       // But the very first click which should work instantly is not working.
       //  Find the bug and fix it.
 
-      let btn = document.querySelector("button");
+      const button = document.querySelector("button");  // Represent button, HTML element
 
-      btn.addEventListener(
-        "click",
-        throttle(function (e) {
-          console.log("clicked");
-        }, 5000)
-      );
+      function throttle( callback , delay ) {  // Closure construction, past
+        let past = Date.now();
+        let flag = true;
 
-      function throttle(fn, delay) {
-        let last = Date.now();
-        return function (...args) {
-          let now = Date.now();
-          if (now - last < delay) return;
-          last = now;
-          fn(...args);
+        function handler( event ) {
+          let present = Date.now();
+
+          if( flag == true ){
+            past = present;
+            flag = false;  // FLAG maintainance
+            callback( event );
+          }
+
+          if( present - past > delay ) flag = true;  // FLAG maintainance
+          
         };
+
+        return handler;
       }
+
+      const handler = throttle( function ( event ) { console.log("click!") } , 5000 )  // Optimized, handler
+
+      button.addEventListener( "click" , () => { handler( event ) } );  // Handler triggered, provided delay
     </script>
   </body>
 </html>
