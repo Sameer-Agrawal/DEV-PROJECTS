@@ -54,7 +54,8 @@
       //  a custom event(which does not bubbles) 
       //  which deletes direct parent of p tags and then it alerts "div tag was clicked".
 
-      //   Given Code:
+      // Code -->
+
       // let ps = document.querySelectorAll("p");
       // let container = document.querySelector(".container");
       // for (let i = 0; i < ps.length; i++) {
@@ -67,34 +68,52 @@
       //   alert("div tag was clicked");
       // });
 
-      //   Solution:
+      // SOLUTION -->
 
-      let ps = document.querySelectorAll("p");
-      let innerContainers = document.querySelectorAll(".inner-container")
-      let container = document.querySelector(".container")
-      for(let i=0;i<ps.length;i++){
-        ps[i].addEventListener("click",function(){
-          alert("p tag was clicked");
-        })
-      }
+      const container = document.querySelector(".container");  // Represent container, HTML element
+      const parentContainer = document.querySelectorAll(".inner-container");  // Represent parent container, HTML element
+      const paragraph = document.querySelectorAll("p");  // Represent parent container, HTML element
 
-      for(let i=0;i<innerContainers.length;i++){
-        innerContainers[i].addEventListener("click",function(e){
-          alert("parent of p was clicked");
-          let event = new Event("delete-event",{bubbles:false})
-          e.currentTarget.dispatchEvent(event);
+      // Custom event
 
-          innerContainers[i].addEventListener("delete-event",function(e){
-            e.currentTarget.remove();
-          })
-        })
-      }
+      const custom = new Event( "custom" , { bubbles: false } );
 
-      container.addEventListener("click",function(){
-        alert("div tag was clicked");
+      // Bubbling
+
+      container.addEventListener("click", function ( event ) {  // Callback trigger with click, outer-most container
+        alert( "outer-most container clicked!" );
       })
 
+      for( let index = 0 ; index < parentContainer.length ; index++ ){
 
+        parentContainer[index].addEventListener("click", function ( event ) {
+          alert("parent container clicked!");
+
+          // The Event() constructor creates a new Event object. An event created in this way is called a synthetic event, as opposed to an event fired by the browser, and can be dispatched / sent by a script
+
+          event.currentTarget.dispatchEvent( custom );  // Represent target
+
+        })
+
+        parentContainer[index].addEventListener("custom", function ( event ) {
+          
+          // console.log(event);
+          event.currentTarget.remove();  // The remove() method removes an element from the document.
+          
+        });
+
+      }
+
+      for( let index = 0 ; index < paragraph.length ; index++ ){
+        paragraph[index].addEventListener("click", function ( event ) {
+          alert("para-graph element clicked!");
+        })
+      }
+
+      // const event = new Event("custom");
+      // console.log(event);  // Represent an object
+      // bubbles : true --> A boolean value, which is true if the event bubbles up through the DOM tree.
+      // dispatchEvent() method, trigger an event, which inturn trigger, event handler
 
 
     </script>
