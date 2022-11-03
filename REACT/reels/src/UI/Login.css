@@ -1,0 +1,50 @@
+.parentContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.loginContainer{
+    height: 30rem;
+    width: 25rem;
+    background-color: #A6B1E1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.brandingContainer{
+    margin: 4rem 0rem; 
+}
+
+.branding{
+    font-family: 'Lobster', cursive;
+    font-size: 3rem;
+    color: #424874;
+}
+
+.identical{
+    background-color: #F4EEFF;
+    color: #424874;
+    border: none;
+    outline: none;
+    width: 18rem;
+    height: 1.9rem;
+    text-align: center;
+    margin: 0.2rem 0rem;
+    border-radius: 0.3rem;
+    font-size: 0.9rem;
+}
+
+.surrenderElement{
+    width: 12rem;
+    height: 2rem;
+    margin: 3rem 0rem;
+    background-color: #424874;
+    color: #F4EEFF;
+}
+
+
+
