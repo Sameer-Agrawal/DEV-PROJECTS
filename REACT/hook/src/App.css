@@ -1,0 +1,18 @@
+.mutateElement{
+    position: absolute;
+    top: 2rem;
+    right: 2.5rem;
+    background-color: seagreen;
+    border: none;
+    border-radius: 0.2rem;
+    height: 2rem;
+    width: 10rem;
+    font-size: medium;
+}
+
+
+.App{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
