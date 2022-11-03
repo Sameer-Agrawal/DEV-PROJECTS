@@ -5,22 +5,23 @@
 // import VAR3 from "./Component/USE EFFECT/VAR3";
 // import Parent from "./Component/PROPERTY DRILLING/Parent";
 // import Context from "./Component/Context";
+import Parent from "./Component/MEMO/Parent";
 
 import { useState } from "react";
-import NavBar from "./Component/Theme mutation/Component/NavBar";
+// import NavBar from "./Component/Theme mutation/Component/NavBar";
 import React from "react"
-import "./App.css"
+// import "./App.css"
 
-export const context = React.createContext("white");  // Context definition
+// export const context = React.createContext("white");  // Context definition
 
 function App() {
 
-  const [ view , mutateView ] = useState("white");  // State, definition
+  // const [ view , mutateView ] = useState("white");  // State, definition
 
-  const mutationHandler = () => {  // View mutation, handler
-    if( view == "white" ) mutateView("black");  // View maintainance
-    else mutateView("white");
-  };  
+  // const mutationHandler = () => {  // View mutation, handler
+  //   if( view == "white" ) mutateView("black");  // View maintainance
+  //   else mutateView("white");
+  // };  
 
   return (
     <div className="App">
@@ -32,14 +33,15 @@ function App() {
       {/* <VAR3/> */}
       {/* <Parent/> */}
       {/* <Context/> */}
+      <Parent/>
 
-      <context.Provider value = { view }>  
+      {/* <context.Provider value = { view }>   */}
         {/* State mutation, bring about mutation, global state */}
-        { console.log(view) }
-        <NavBar/>
-      </context.Provider>
+        {/* { console.log(view) } */}
+        {/* <NavBar/> */}
+      {/* </context.Provider> */}
 
-      <button className="mutateElement" onClick = { mutationHandler } >Mutate theme!</button>
+      {/* <button className="mutateElement" onClick = { mutationHandler } >Mutate theme!</button> */}
 
     </div>
   );
