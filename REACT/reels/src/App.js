@@ -1,10 +1,19 @@
 import Login from './Component/Login'
-import "./App.css"
+import Signup from './Component/Signup'
+import "./App.css";
+import { BrowserRouter , Routes , Route } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <Login/>
+      <BrowserRouter>
+        {/* In previous versions of React Router, you had to order your route a certain way to get the right one to render when multiple routes matched an ambiguous URL. V6 is a lot smarter and will pick the most specific, path match so you don't have to worry about that anymore. */}
+        <Routes>
+          {/* "Routes" hold's up "Route" */}
+          <Route path="/login" element = { <Login/> } ></Route>
+          <Route path="/signup" element = { <Signup/> } ></Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
