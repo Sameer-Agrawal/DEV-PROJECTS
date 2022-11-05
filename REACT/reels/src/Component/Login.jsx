@@ -1,9 +1,9 @@
 import React , { useState , useEffect } from 'react'
 import "../UI/Login.css"
 import { Link } from "react-router-dom";
-import { getAuth , signInWithEmailAndPassword } from "firebase/auth";
-import { application } from '../firebase'
-import Process from "./Process"
+import { signInWithEmailAndPassword } from "firebase/auth";
+import Process from "./Process";
+import { authentication } from "../firebase.js";
 
 function Login() {
     const [ identifier , mutateIdentifier ] = useState(null);  // State definition
@@ -30,7 +30,6 @@ function Login() {
         }
     }
 
-    const authentication = getAuth( application );
     const surrenderHandler = async () => {
         // console.log(`Before flag, true ${ flag }`);
         await mutateFlag( true );  // Flag maintainance
