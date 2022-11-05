@@ -1,5 +1,6 @@
 import Login from './Component/Login'
 import Signup from './Component/Signup'
+import Process from './Component/Process'
 import "./App.css";
 import { BrowserRouter , Routes , Route } from "react-router-dom";
 

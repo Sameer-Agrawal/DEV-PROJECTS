@@ -3,6 +3,7 @@ import "../UI/Login.css"
 import { Link } from "react-router-dom";
 import { getAuth , signInWithEmailAndPassword } from "firebase/auth";
 import { application } from '../firebase'
+import Process from "./Process"
 
 function Login() {
     const [ identifier , mutateIdentifier ] = useState(null);  // State definition
@@ -43,14 +44,14 @@ function Login() {
         } catch (error) {
             // console.log(`catch, ${ error }`);
             await mutateBlunder(error);
+            setTimeout( () => { mutateBlunder(null) } , 2500 )
         }
         mutateFlag( false );  // Flag maintainance
     }
 
     return (  // Re-generation, provided state mutation
         <React.Fragment>
-            { console.log("I'm here") }
-            { flag != false ? <h1>In process,</h1> : blunder != null ? <h1> blunder, { blunder.message } </h1> : datum != null ? <h1>datum, { datum.user.uid } </h1> :  
+            { flag != false ? <Process/> : blunder != null ? <h1> blunder, { blunder.message } </h1> : datum != null ? <h1>datum, { datum.user.uid } </h1> :  
                 <div className="parentContainer">
                     <div className="loginContainer">
                         <div className="brandingContainer"> <h1 className="branding" >Instagram reel's</h1> </div>

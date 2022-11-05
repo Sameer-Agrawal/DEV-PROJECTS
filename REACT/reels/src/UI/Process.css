@@ -1,0 +1,12 @@
+.processContainer{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.processElement{
+    height: 15rem;
+    width: 15rem;
+}
