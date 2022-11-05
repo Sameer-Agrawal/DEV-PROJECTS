@@ -6,4 +6,4 @@ import firebaseConfig from "./configuration";  // Firebase configuration
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Initialize Firebase
-const application = initializeApp(firebaseConfig); 
+export const application = initializeApp(firebaseConfig); 
