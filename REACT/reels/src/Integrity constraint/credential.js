@@ -25,3 +25,6 @@ const credentialConstraint = ( credential ) => {  // Integrity constraint, crede
     
     return 'include symbol , number , capital , alphabet'
 }
+
+
+export default credentialConstraint;
