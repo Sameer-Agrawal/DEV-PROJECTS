@@ -1,6 +1,7 @@
 import Login from './Component/Login'
 import Signup from './Component/Signup'
 import Process from './Component/Process'
+import Profile from './Component/Profile'
 import "./App.css";
 import { BrowserRouter , Routes , Route } from "react-router-dom";
 
@@ -13,6 +14,7 @@ function App() {
           {/* "Routes" hold's up "Route" */}
           <Route path="/login" element = { <Login/> } ></Route>
           <Route path="/signup" element = { <Signup/> } ></Route>
+          <Route path="/profile" element = { <Profile/> } ></Route>
         </Routes>
       </BrowserRouter>
     </div>

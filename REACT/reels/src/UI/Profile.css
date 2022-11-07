@@ -1,0 +1,55 @@
+.metadataContainer{
+    width: 50vw;
+    height: 25rem;
+    background-color: lightgreen;
+    display: flex;
+    margin: 0rem auto;
+}
+
+.portraitContainer{
+    height: 100%;
+    width: 17.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.portraitContainer img{
+    height: 8.5rem;
+    width: 8.5rem;
+    border-radius: 4.75rem;
+    margin-top: 2.5rem;
+}
+
+.rightMetadataContainer{
+    height: 10rem;
+    background-color: lightblue;
+    margin-top: 1.75rem;
+}
+
+.topRowMetadata{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: lightslategray;
+}
+
+.identifierElement h1{
+    font-size: 1.75rem;
+    padding-top: 0.3rem
+}
+
+.mutateMetadata button{
+    border: none;
+    outline: none;
+    width: 5.75rem;
+    border-radius: 0.3rem;
+}
+
+.numericMetadata{
+    display: flex;
+    background-color: lightcoral;
+}
+
+.childrenElement h1{
+    font-size: 1.1rem;
+}
