@@ -2,11 +2,15 @@ import React , { useState , useEffect , useContext } from 'react';
 import { Link } from "react-router-dom";
 // import '../UI/Login.css';
 import { context } from "../App.js"
-import { authentication } from "../firebase.js";
+import { authentication , database } from "../firebase.js";
 import { createUserWithEmailAndPassword , signOut } from "firebase/auth";
+import { collection, addDoc } from "firebase/firestore";
 import Process from "./Process"; 
 
 function Signup() {
+
+    const object = useContext(context);  // Read, global state
+
     const [ email , mutateEmail ] = useState(null);  // State definition
     const [ denomination , mutateDenomination ] = useState(null);  // State definition
     const [ identifier , mutateIdentifier ] = useState(null);  // State definition
@@ -14,9 +18,6 @@ function Signup() {
     const [ datum , mutateDatum ] = useState(null);
     const [ blunder , mutateBlunder ] = useState(null);
     const [ flag , mutateFlag ] = useState(false);  // Flag, state definition
-
-    
-    const object = useContext(context);  // Read, global state
 
     useEffect( () => {
         // console.log("Before mutation --> " + datum )
@@ -47,6 +48,12 @@ function Signup() {
 
         try {
             const object = await createUserWithEmailAndPassword( authentication , email , credential );
+
+            // Sometimes there isn't a meaningful identifier for the document, and it's more convenient to let Cloud Firestore auto-generate an document identifier for you. You can do this by invocation, add() methods:
+            
+            // Add a new document with an auto-generated, document identifier
+            const document = await addDoc( collection( database , 'customer' ) , { email : email , denomination : denomination , identifier : identifier , visualRepresentation : '' , numericalIdentifier : object.user.uid } );
+
             await mutateDatum(object);  // State maintainance
         } catch (error) {
             await mutateBlunder(error);

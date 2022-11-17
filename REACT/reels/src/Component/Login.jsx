@@ -1,7 +1,7 @@
 import React , { useState , useEffect , useContext } from 'react'
 import "../UI/Login.css"
 import { Link } from "react-router-dom";
-import { signInWithEmailAndPassword , signOut  } from "firebase/auth";
+import { signInWithEmailAndPassword , signOut , onAuthStateChanged  } from "firebase/auth";
 import Process from "./Process";
 import { authentication } from "../firebase.js";
 import { context } from "../App.js"
@@ -21,6 +21,13 @@ function Login() {
         mutateDatum(object)
         // console.log("After mutation --> " + datum)
     } )  // Invocation, with component mount
+
+    useEffect( () => {
+        // Event observer, callback invocation with mutation, authentication state
+        onAuthStateChanged( authentication , (object) => {
+            mutateDatum(object)
+        } ) 
+    } , [] )  // Invocation, with component mount
 
     // useEffect( () => {  // Alike, componentDidMount and componentDidUpdate
     //     // console.log(datum);
@@ -48,7 +55,6 @@ function Login() {
             // console.log(application);  // Represent application, which inturn hold's up firebase instance, configuration
             // console.log(authentication);  // Represent, an object
             const object = await signInWithEmailAndPassword( authentication , identifier , credential );  
-            await mutateDatum(object);
         } catch (error) {
             // console.log(`catch, ${ error }`);
             await mutateBlunder(error);
