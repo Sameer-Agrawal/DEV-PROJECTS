@@ -1,9 +1,10 @@
-import React , { useState } from 'react';
+import React , { useState , useEffect , useContext } from 'react';
 import { Link } from "react-router-dom";
 // import '../UI/Login.css';
+import { context } from "../App.js"
 import { authentication } from "../firebase.js";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import Process from "./Process";
+import { createUserWithEmailAndPassword , signOut } from "firebase/auth";
+import Process from "./Process"; 
 
 function Signup() {
     const [ email , mutateEmail ] = useState(null);  // State definition
@@ -13,8 +14,17 @@ function Signup() {
     const [ datum , mutateDatum ] = useState(null);
     const [ blunder , mutateBlunder ] = useState(null);
     const [ flag , mutateFlag ] = useState(false);  // Flag, state definition
-  
-    const mutationHandler = ( event ) => {  // State maintainance
+
+    
+    const object = useContext(context);  // Read, global state
+
+    useEffect( () => {
+        // console.log("Before mutation --> " + datum )
+        mutateDatum(object)
+        // console.log("After mutation --> " + datum)
+    } )  // Invocation, with component mount
+
+    const mutationHandler = async ( event ) => {  // State maintainance
         // console.log( event.currentTarget.value );  // Represent, active value
         if( event.currentTarget.getAttribute("placeholder") == "Email" ) {  // Represent mutation, email 
             // console.log("I'm here!");
@@ -24,7 +34,7 @@ function Signup() {
         }else if( event.currentTarget.getAttribute("placeholder") == "Identifier" ) {  // Represent mutation, identifier 
             mutateIdentifier( event.currentTarget.value );
         }else{  // Represent mutation, credential
-            mutateCredential( event.currentTarget.value );
+            await mutateCredential( event.currentTarget.value );
         }
     }
 
@@ -45,9 +55,24 @@ function Signup() {
         mutateFlag( false );  // Flag maintainance
     }
 
+    const signoutHandler = async () => {
+        await mutateFlag( true );  // Flag maintainance
+
+        try {
+            await signOut( authentication );
+            await mutateDatum(null);
+        } catch (error) {
+            await mutateBlunder(error);
+            setTimeout( () => { mutateBlunder(null) } , 2500 )
+        }
+
+        mutateFlag( false );  // Flag maintainance
+    }
+
     return (
         <React.Fragment>
-            { flag != false ? <Process/> : blunder != null ? <h1> blunder, { blunder.message } </h1> : datum != null ? <h1>datum, { datum.user.uid } </h1> :
+            { console.log("I'm here, now") }
+            { flag != false ? <Process/> : blunder != null ? <h1> blunder, { blunder.message } </h1> : datum != null ? <button onClick = { signoutHandler }>SIGN OUT, now</button> :
                 <div className="parentContainer">
                     <div className="loginContainer" style={ { height : '30rem' } }>
                         <div className="brandingContainer"> <h1 className="branding" >Instagram reel's</h1> </div>

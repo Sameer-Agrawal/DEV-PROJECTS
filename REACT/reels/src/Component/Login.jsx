@@ -1,9 +1,10 @@
-import React , { useState , useEffect } from 'react'
+import React , { useState , useEffect , useContext } from 'react'
 import "../UI/Login.css"
 import { Link } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword , signOut  } from "firebase/auth";
 import Process from "./Process";
 import { authentication } from "../firebase.js";
+import { context } from "../App.js"
 
 function Login() {
     const [ identifier , mutateIdentifier ] = useState(null);  // State definition
@@ -13,10 +14,18 @@ function Login() {
     const [ flag , mutateFlag ] = useState(false);  // Flag, state definition
     // let flag = false;
 
-    useEffect( () => {  // Alike, componentDidMount and componentDidUpdate
-        // console.log(datum);
-        // console.log(blunder);  // Represent, error message 
-    } );  
+    const object = useContext(context);  // Read, global state
+
+    useEffect( () => {
+        // console.log("Before mutation --> " + datum )
+        mutateDatum(object)
+        // console.log("After mutation --> " + datum)
+    } )  // Invocation, with component mount
+
+    // useEffect( () => {  // Alike, componentDidMount and componentDidUpdate
+    //     // console.log(datum);
+    //     // console.log(blunder);  // Represent, error message 
+    // } );  
 
     // useEffect() method is invoked, provided UI mutation's as a result of state mutation
 
@@ -48,9 +57,23 @@ function Login() {
         mutateFlag( false );  // Flag maintainance
     }
 
+    const signoutHandler = async () => {
+        await mutateFlag( true );  // Flag maintainance
+
+        try {
+            await signOut( authentication );
+            await mutateDatum(null);
+        } catch (error) {
+            await mutateBlunder(error);
+            setTimeout( () => { mutateBlunder(null) } , 2500 )
+        }
+
+        mutateFlag( false );  // Flag maintainance
+    }
+
     return (  // Re-generation, provided state mutation
         <React.Fragment>
-            { flag != false ? <Process/> : blunder != null ? <h1> blunder, { blunder.message } </h1> : datum != null ? <h1>datum, { datum.user.uid } </h1> :  
+            { flag != false ? <Process/> : blunder != null ? <h1> blunder, { blunder.message } </h1> : datum != null ? <button onClick = { signoutHandler }>SIGN OUT, now</button> :  
                 <div className="parentContainer">
                     <div className="loginContainer">
                         <div className="brandingContainer"> <h1 className="branding" >Instagram reel's</h1> </div>

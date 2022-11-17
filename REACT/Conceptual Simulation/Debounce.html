@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<button id="debounce"> Debounce </button>
+</body>
+<script>
+    const button = document.getElementById("debounce");  // Represent, button HTML element
+    
+    const debounceClosure = () => { 
+        let timer;
+        const debounce = ( handler , delay ) => {
+            clearTimeout( timer );
+            timer = setTimeout( handler , delay )
+        }
+
+        return debounce;
+    }
+
+    const debounce = debounceClosure();  // Return, debounce polyfill
+    const handler = () => { alert("Optimised, event handler") }
+
+    button.addEventListener('click', () => { debounce( handler , 3000 ) } );
+</script>
+</html>
