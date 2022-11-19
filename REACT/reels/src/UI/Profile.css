@@ -1,7 +1,6 @@
 .metadataContainer{
     width: 50vw;
     height: 25rem;
-    background-color: lightgreen;
     display: flex;
     margin: 0rem auto;
 }
@@ -22,7 +21,7 @@
 
 .rightMetadataContainer{
     height: 10rem;
-    background-color: lightblue;
+    width: 22.5rem;
     margin-top: 1.75rem;
 }
 
@@ -30,7 +29,6 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    background-color: lightslategray;
 }
 
 .identifierElement h1{
@@ -47,9 +45,23 @@
 
 .numericMetadata{
     display: flex;
-    background-color: lightcoral;
+    justify-content: space-around;
+    align-items: center;
+    height: 3rem;
 }
 
 .childrenElement h1{
     font-size: 1.1rem;
+}
+
+.baseRowMetadata{
+    height: 4.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.baseRowMetadata h1{
+    text-align: center;
 }

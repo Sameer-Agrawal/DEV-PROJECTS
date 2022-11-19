@@ -52,7 +52,7 @@ function Signup() {
             // Sometimes there isn't a meaningful identifier for the document, and it's more convenient to let Cloud Firestore auto-generate an document identifier for you. You can do this by invocation, add() methods:
             
             // Add a new document with an auto-generated, document identifier
-            const document = await addDoc( collection( database , 'customer' ) , { email : email , denomination : denomination , identifier : identifier , visualRepresentation : '' , numericalIdentifier : object.user.uid } );
+            const document = await addDoc( collection( database , 'customer' ) , { email : email , denomination : denomination , identity : identifier , visualRepresentation : '' , Identifier : object.user.uid } );
 
             await mutateDatum(object);  // State maintainance
         } catch (error) {
@@ -78,17 +78,22 @@ function Signup() {
 
     return (
         <React.Fragment>
-            { console.log("I'm here, now") }
-            { flag != false ? <Process/> : blunder != null ? <h1> blunder, { blunder.message } </h1> : datum != null ? <button onClick = { signoutHandler }>SIGN OUT, now</button> :
+            { flag != false ? <Process/> : datum != null ? <button onClick = { signoutHandler }>SIGN OUT, now</button> :
                 <div className="parentContainer">
-                    <div className="loginContainer" style={ { height : '30rem' } }>
-                        <div className="brandingContainer"> <h1 className="branding" >Instagram reel's</h1> </div>
+                    {/* Blunder showcase, provided blunder */}
+                    <div className="blunderShowcaseContainer"> { blunder != null ? <h1>{`${blunder}`}</h1> : <h1>`blundersome, more blundersome, most blundersome`</h1> } </div>
+                    <div className="loginContainer" style={ { height : '27.5rem' } }>
+                        <div className="brandingContainer" style={ { margin : '3rem' } }> <h1 className="branding" >Instagram reel's</h1> </div>
+
+                        <div className="blunderShowcase"> <h1> { blunder } </h1> </div>
+
                         <div className="credentialContainer">
                             <div className="emailIdentifier"> <input className="identical" onChange = { ( event ) => { mutationHandler( event ) } } type="text" placeholder="Email"/> </div>
                             <div className="denomination"> <input className="identical" onChange = { ( event ) => { mutationHandler( event ) } } type="text" placeholder="Denomination"/> </div>
                             <div className="identifier"> <input className="identical" onChange = { ( event ) => { mutationHandler( event ) } } type="text" placeholder="Identifier"/> </div>
                             <div className="credential"> <input className="identical" onChange = { ( event ) => { mutationHandler( event ) } } type="password" placeholder="Credential"/> </div>
                         </div>
+
                         <div className="surrenderContainer"> <button className="surrenderElement" onClick = { surrenderHandler }>SIGN UP</button> </div>
                     </div>
                     <div className="signupContainer"> <h1 className="quotationElement">established, account</h1> <Link to="/login"><button className="transferElement">LOG IN</button></Link> </div>

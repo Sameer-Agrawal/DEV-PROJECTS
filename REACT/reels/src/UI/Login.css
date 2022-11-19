@@ -9,7 +9,7 @@
 }
 
 .loginContainer{
-    height: 25rem;
+    height: 22.5rem;
     width: 25rem;
     background-color: #A6B1E1;
     display: flex;
@@ -18,7 +18,7 @@
 }
 
 .brandingContainer{
-    margin: 4rem 0rem; 
+    margin: 2.5rem 0rem; 
 }
 
 .branding{
@@ -77,5 +77,25 @@
     margin: 0rem 1rem;
 }
 
+.blunderShowcaseContainer{
+    background-color: #A6B1E1;
+
+    margin: 0.75rem 0rem;
+    height: 2.5rem;
+    width: 25rem;
+
+    overflow: auto;
+}
+
+.blunderShowcaseContainer h1{
+    width: 100%;
+    height: 100%;
+
+    text-align: center;
+    font-family: 'Lobster', cursive;
+
+    font-size: 1.235rem;
+    color: #424874;
+}
 
 

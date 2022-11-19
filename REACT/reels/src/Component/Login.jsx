@@ -3,6 +3,7 @@ import "../UI/Login.css"
 import { Link } from "react-router-dom";
 import { signInWithEmailAndPassword , signOut , onAuthStateChanged  } from "firebase/auth";
 import Process from "./Process";
+import Profile from './Profile';
 import { authentication } from "../firebase.js";
 import { context } from "../App.js"
 
@@ -12,7 +13,6 @@ function Login() {
     const [ datum , mutateDatum ] = useState(null);
     const [ blunder , mutateBlunder ] = useState(null);
     const [ flag , mutateFlag ] = useState(false);  // Flag, state definition
-    // let flag = false;
 
     const object = useContext(context);  // Read, global state
 
@@ -28,13 +28,6 @@ function Login() {
             mutateDatum(object)
         } ) 
     } , [] )  // Invocation, with component mount
-
-    // useEffect( () => {  // Alike, componentDidMount and componentDidUpdate
-    //     // console.log(datum);
-    //     // console.log(blunder);  // Represent, error message 
-    // } );  
-
-    // useEffect() method is invoked, provided UI mutation's as a result of state mutation
 
     const mutationHandler = ( event ) => {  // State maintainance
         // console.log( event.currentTarget.value );  // Represent, active value
@@ -58,29 +51,17 @@ function Login() {
         } catch (error) {
             // console.log(`catch, ${ error }`);
             await mutateBlunder(error);
-            setTimeout( () => { mutateBlunder(null) } , 2500 )
+            setTimeout( () => { mutateBlunder(null) } , 5000 )
         }
-        mutateFlag( false );  // Flag maintainance
-    }
-
-    const signoutHandler = async () => {
-        await mutateFlag( true );  // Flag maintainance
-
-        try {
-            await signOut( authentication );
-            await mutateDatum(null);
-        } catch (error) {
-            await mutateBlunder(error);
-            setTimeout( () => { mutateBlunder(null) } , 2500 )
-        }
-
         mutateFlag( false );  // Flag maintainance
     }
 
     return (  // Re-generation, provided state mutation
         <React.Fragment>
-            { flag != false ? <Process/> : blunder != null ? <h1> blunder, { blunder.message } </h1> : datum != null ? <button onClick = { signoutHandler }>SIGN OUT, now</button> :  
+            { flag != false ? <Process/> : datum != null ? <Profile/> :  
                 <div className="parentContainer">
+                    {/* Blunder showcase, provided blunder */}
+                    <div className="blunderShowcaseContainer"> { blunder != null ? <h1>{`${blunder}`}</h1> : <h1>`blundersome, more blundersome, most blundersome`</h1> } </div>
                     <div className="loginContainer">
                         <div className="brandingContainer"> <h1 className="branding" >Instagram reel's</h1> </div>
                         <div className="credentialContainer">

@@ -24,6 +24,7 @@ function App() {
             {/* "Routes" hold's up "Route" */}
               <Route path="/login" element = { <Login/> } ></Route>
               <Route path="/signup" element = { <Signup/> } ></Route>
+              <Route path="/profile" element = { <Profile/> } ></Route>
           </Routes>
         </context.Provider>
       </BrowserRouter>
