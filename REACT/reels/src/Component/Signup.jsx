@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { context } from "../App.js"
 import { authentication , database } from "../firebase.js";
 import { createUserWithEmailAndPassword , signOut } from "firebase/auth";
-import { collection, addDoc } from "firebase/firestore";
+import { doc , setDoc } from "firebase/firestore";
 import Process from "./Process"; 
 
 function Signup() {
@@ -52,7 +52,7 @@ function Signup() {
             // Sometimes there isn't a meaningful identifier for the document, and it's more convenient to let Cloud Firestore auto-generate an document identifier for you. You can do this by invocation, add() methods:
             
             // Add a new document with an auto-generated, document identifier
-            const document = await addDoc( collection( database , 'customer' ) , { email : email , denomination : denomination , identity : identifier , visualRepresentation : '' , Identifier : object.user.uid } );
+            await setDoc( doc( database , 'customer' , object.user.uid ) , { email : email , denomination : denomination , identity : identifier , visualRepresentation : '' , Identifier : object.user.uid } );
 
             await mutateDatum(object);  // State maintainance
         } catch (error) {

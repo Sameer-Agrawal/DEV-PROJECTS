@@ -1,11 +1,37 @@
 import React from 'react';
 import { context } from '../App';
-import { useContext } from 'react';
+import { useContext , useState , useEffect } from 'react';
+import { database } from '../firebase';
+import { doc, getDoc } from "firebase/firestore";
 import '../UI/Profile.css'
 
 function Profile() {
 
     const object = useContext(context);  // Read, global state 
+    // console.log(object)
+    const [ datum , mutateDatum ] = useState(null);  // Definition, datum state
+    const [ blunder , mutateBlunder ] = useState(null);  // Definition, blunder state
+
+    useEffect( () => {  // Callback invocation, provided component mount
+        (async function() {  // Immediately invoked, functional expression
+            // console.log("Here, inside asynchronous callback")
+            
+            if( object ){
+                const document = doc( database , 'customer' , object.uid );  // Represent particular document, provided unique identifier
+                const datum = await getDoc(document);
+
+                if( datum.exists() ) {  // datum.exists() return, false --> doc.data() return, undefined
+                    // Blunder, handling
+                    // console.log('Document datum, ' , datum.data());  // Represent, document object                        
+                    const object = datum.data()
+
+                    await mutateDatum(object);  // Datum state, maintainance
+                }
+            }
+
+        })();
+    } )
+
 
     return (
         <React.Fragment>
