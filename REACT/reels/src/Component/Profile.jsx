@@ -30,12 +30,11 @@ function Profile() {
             }
 
         })();
-    } )
+    } , [] )
 
 
     return (
         <React.Fragment>
-            { object == null ? <h1>Need, login</h1> : 
                 <div className="outmostContainer">
                     <div className="metadataContainer">
                         <div className="portraitContainer">
@@ -59,7 +58,6 @@ function Profile() {
                         </div>
                     </div>
                 </div>
-            }
         </React.Fragment>
     );
 }

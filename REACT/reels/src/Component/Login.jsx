@@ -17,12 +17,6 @@ function Login() {
     const object = useContext(context);  // Read, global state
 
     useEffect( () => {
-        // console.log("Before mutation --> " + datum )
-        mutateDatum(object)
-        // console.log("After mutation --> " + datum)
-    } )  // Invocation, with component mount
-
-    useEffect( () => {
         // Event observer, callback invocation with mutation, authentication state
         onAuthStateChanged( authentication , (object) => {
             mutateDatum(object)
@@ -58,7 +52,7 @@ function Login() {
 
     return (  // Re-generation, provided state mutation
         <React.Fragment>
-            { flag != false ? <Process/> : datum != null ? <Profile/> :  
+            { flag != false ? <Process/> :  
                 <div className="parentContainer">
                     {/* Blunder showcase, provided blunder */}
                     <div className="blunderShowcaseContainer"> { blunder != null ? <h1>{`${blunder}`}</h1> : <h1>`blundersome, more blundersome, most blundersome`</h1> } </div>
