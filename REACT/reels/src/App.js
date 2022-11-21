@@ -2,12 +2,14 @@ import Login from './Component/Login'
 import Signup from './Component/Signup'
 import Process from './Component/Process'
 import Profile from './Component/Profile'
+import HOC from './Component/HOC'
 import { BrowserRouter , Routes , Route } from "react-router-dom";
 import "./App.css";
 import React , { useEffect , useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { authentication } from "./firebase"
 export const context = React.createContext();  // Context definition
+
 
 function App() {
 
@@ -24,7 +26,7 @@ function App() {
             {/* "Routes" hold's up "Route" */}
               <Route path="/login" element = { <Login/> } ></Route>
               <Route path="/signup" element = { <Signup/> } ></Route>
-              <Route path="/profile" element = { <Profile/> } ></Route>
+              <Route path="/profile" element = { <HOC component={ Profile } path='/login' /> } ></Route>
           </Routes>
         </context.Provider>
       </BrowserRouter>
