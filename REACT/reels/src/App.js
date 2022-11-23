@@ -4,7 +4,7 @@ import Process from './Component/Process'
 import Profile from './Component/Profile'
 import HOC from './Component/HOC/HOC'
 import FeedRedirection from './Component/HOC/FeedRedirection'
-import Feed from './Component/Feed'
+import Navigation from './Component/Navigation'
 import { BrowserRouter , Routes , Route } from "react-router-dom";
 import "./App.css";
 import React , { useEffect , useState } from 'react';
@@ -26,11 +26,11 @@ function App() {
         <context.Provider value = { datum }>
           <Routes>
             {/* "Routes" hold's up "Route" */}
-              <Route path="/login" element = { <FeedRedirection component={ Login } /> } ></Route>
-              {/* <Route path="/signup" element = { <FeedRedirection component={ Signup } /> } ></Route> */}
-              <Route path="/signup" element = { <Signup/> } ></Route>
+              {/* <Route path="/login" element = { <FeedRedirection component={ Login } /> } ></Route>
+              <Route path="/signup" element = { <FeedRedirection component={ Signup } /> } ></Route>
               <Route path="/profile" element = { <HOC component={ Profile } /> } ></Route>
-              <Route path="/feed" element = { <HOC component={ Feed } /> } ></Route>
+              <Route path="/feed" element = { <HOC component={ Feed } /> } ></Route> */}
+              <Route path='/navigation' element={ <Navigation/> }></Route>
           </Routes>
         </context.Provider>
       </BrowserRouter>

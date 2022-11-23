@@ -62,23 +62,9 @@ function Signup() {
         mutateFlag( false );  // Flag maintainance
     }
 
-    const signoutHandler = async () => {
-        await mutateFlag( true );  // Flag maintainance
-
-        try {
-            await signOut( authentication );
-            await mutateDatum(null);
-        } catch (error) {
-            await mutateBlunder(error);
-            setTimeout( () => { mutateBlunder(null) } , 2500 )
-        }
-
-        mutateFlag( false );  // Flag maintainance
-    }
-
     return (
         <React.Fragment>
-            { flag != false ? <Process/> : datum != null ? <button onClick = { signoutHandler }>SIGN OUT, now</button> :
+            { flag != false ? <Process/> :
                 <div className="parentContainer">
                     {/* Blunder showcase, provided blunder */}
                     <div className="blunderShowcaseContainer"> { blunder != null ? <h1>{`${blunder}`}</h1> : <h1>`blundersome, more blundersome, most blundersome`</h1> } </div>
