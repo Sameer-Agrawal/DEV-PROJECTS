@@ -13,6 +13,8 @@ import { doc, updateDoc , getDoc } from "firebase/firestore";
 import { repository } from '../firebase.js'
 import { database } from '../firebase.js'
 import { context } from '../App.js'
+import ReportIcon from '@mui/icons-material/Report';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 function Navigation() {
 
@@ -118,6 +120,7 @@ function Navigation() {
 
     return (
         <React.Fragment>
+            <div className="parentContainer">
                 <div className="navigationContainer">
                     <div className="brandingContainer"> <h1>Instagram reel's</h1> </div>
 
@@ -128,7 +131,7 @@ function Navigation() {
 
                     <div className="navigationElement">
 
-                        <Button variant="text" component='label' onClick={ () => redirectHandler('/feed') } className="buttonElement"> 
+                        <Button variant="text" component='label' onClick={ () => redirectHandler('/inspection/feed') } className="buttonElement"> 
                             <div className="iconContainer"><HomeSharpIcon className="iconElement"/></div>
                             <div className="labelElement">Home</div>
                         </Button>
@@ -140,7 +143,7 @@ function Navigation() {
                             <input hidden accept="video/*" type="file" />
                         </Button>
 
-                        <Button variant="text" component='label' onClick={ () => redirectHandler('/profile') } className="buttonElement">
+                        <Button variant="text" component='label' onClick={ () => redirectHandler('/inspection/profile') } className="buttonElement">
                             <div className="iconContainer"><Face2SharpIcon className="iconElement"/></div>
                             <div className="labelElement">Profile</div>
                         </Button>
@@ -152,6 +155,14 @@ function Navigation() {
 
                     </div>
                 </div>
+                {
+                    blunder != null && <div className="alertContainer">
+                                            <ReportIcon className="warningIconElement iconElement"/>
+                                            <h1 className="blunderShowcaseElement">{ blunder }</h1>
+                                            <CancelIcon className="alertEradicationElement iconElement" onClick={ () => { mutateBlunder(null) } }/>
+                                        </div>   
+                }
+            </div>
         </React.Fragment>
     )
 }

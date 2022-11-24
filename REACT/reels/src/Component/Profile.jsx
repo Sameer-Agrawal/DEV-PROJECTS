@@ -1,4 +1,5 @@
 import React from 'react';
+import Navigation from './Navigation.jsx'
 import { context } from '../App';
 import { useContext , useState , useEffect } from 'react';
 import { database } from '../firebase';
@@ -36,6 +37,7 @@ function Profile() {
     return (
         <React.Fragment>
                 <div className="outmostContainer">
+                    {/* <Navigation/> */}
                     <div className="metadataContainer">
                         <div className="portraitContainer">
                             <img src="https://thumbs.dreamstime.com/b/golden-retriever-dog-21668976.jpg" alt="Visual representation" />
