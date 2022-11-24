@@ -2,22 +2,29 @@ import Login from './Component/Login'
 import Signup from './Component/Signup'
 import Process from './Component/Process'
 import Profile from './Component/Profile'
-import HOC from './Component/HOC/HOC'
-import FeedRedirection from './Component/HOC/FeedRedirection'
-import Navigation from './Component/Navigation'
+import Feed from './Component/Feed'
+import Inspection from './Component/HOC/Inspection'
+import Redirection from './Component/HOC/Redirection'
 import { BrowserRouter , Routes , Route } from "react-router-dom";
 import "./App.css";
 import React , { useEffect , useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { authentication } from "./firebase"
+// import { customer } from './context.js'
 export const context = React.createContext();  // Context definition
 
 
 function App() {
 
-  const [ datum , mutateDatum ] = useState();  // State definition, functional component
+  const [ datum , mutateDatum ] = useState(null);  // State definition, functional component
 
-  useEffect( () => { onAuthStateChanged( authentication , (object) => { mutateDatum(object) } ) } , [] )  // Invocation, with mutation, authentication state
+  useEffect( () => { 
+    onAuthStateChanged( authentication , (object) => { 
+      // console.log(`Represent authentication, state --> ${object}`);
+      if( object == null )  mutateDatum('dormant')
+      else  mutateDatum(object) 
+    } ) 
+  } , [] )  // Invocation, with mutation, authentication state
 
   return (
     <div className="App">
@@ -26,11 +33,19 @@ function App() {
         <context.Provider value = { datum }>
           <Routes>
             {/* "Routes" hold's up "Route" */}
-              {/* <Route path="/login" element = { <FeedRedirection component={ Login } /> } ></Route>
-              <Route path="/signup" element = { <FeedRedirection component={ Signup } /> } ></Route>
-              <Route path="/profile" element = { <HOC component={ Profile } /> } ></Route>
-              <Route path="/feed" element = { <HOC component={ Feed } /> } ></Route> */}
-              <Route path='/navigation' element={ <Navigation/> }></Route>
+
+              <Route path='/inspection' element={ <Inspection/> }>
+                {/* Absolute route path "/profile" nested under path "/inspection" is not valid. An absolute child route path must start with the combined path of all its parent routes */}
+                <Route path='/inspection/profile' element={ <Profile/> }></Route>
+                <Route path='/inspection/feed' element={ <Feed/> }></Route>
+              </Route>
+
+              <Route path='/redirection' element={ <Redirection/> }>
+                {/* Absolute route path "/profile" nested under path "/inspection" is not valid. An absolute child route path must start with the combined path of all its parent routes */}
+                <Route path='/redirection/signup' element={ <Signup/> }></Route>
+                <Route path='/redirection/login' element={ <Login/> }></Route>
+              </Route>
+              
           </Routes>
         </context.Provider>
       </BrowserRouter>

@@ -20,10 +20,8 @@ function Signup() {
     const [ flag , mutateFlag ] = useState(false);  // Flag, state definition
 
     useEffect( () => {
-        // console.log("Before mutation --> " + datum )
-        mutateDatum(object)
-        // console.log("After mutation --> " + datum)
-    } )  // Invocation, with component mount
+        mutateDatum(object);
+    } , [] )  // Invocation, with component mount
 
     const mutationHandler = async ( event ) => {  // State maintainance
         // console.log( event.currentTarget.value );  // Represent, active value
@@ -52,26 +50,24 @@ function Signup() {
             // Sometimes there isn't a meaningful identifier for the document, and it's more convenient to let Cloud Firestore auto-generate an document identifier for you. You can do this by invocation, add() methods:
             
             // Add a new document with an auto-generated, document identifier
-            await setDoc( doc( database , 'customer' , object.user.uid ) , { email : email , denomination : denomination , identity : identifier , visualRepresentation : '' , Identifier : object.user.uid } );
+            await setDoc( doc( database , 'customer' , object.user.uid ) , { email : email , denomination : denomination , alphabetic_identifier : identifier , representation : '' , numerical_identifier : object.user.uid , media : [] } );
 
             await mutateDatum(object);  // State maintainance
         } catch (error) {
             await mutateBlunder(error);
-            setTimeout( () => { mutateBlunder(null) } , 2500 )
+            setTimeout( () => { mutateBlunder(null) } , 10000 )
         }
         mutateFlag( false );  // Flag maintainance
     }
 
     return (
         <React.Fragment>
-            { flag != false ? <Process/> :
+            { flag != false ? <Process/> : datum != null ? <h3>Successful, registration</h3> : 
                 <div className="parentContainer">
                     {/* Blunder showcase, provided blunder */}
                     <div className="blunderShowcaseContainer"> { blunder != null ? <h1>{`${blunder}`}</h1> : <h1>`blundersome, more blundersome, most blundersome`</h1> } </div>
                     <div className="loginContainer" style={ { height : '27.5rem' } }>
                         <div className="brandingContainer" style={ { margin : '3rem' } }> <h1 className="branding" >Instagram reel's</h1> </div>
-
-                        <div className="blunderShowcase"> <h1> { blunder } </h1> </div>
 
                         <div className="credentialContainer">
                             <div className="emailIdentifier"> <input className="identical" onChange = { ( event ) => { mutationHandler( event ) } } type="text" placeholder="Email"/> </div>
