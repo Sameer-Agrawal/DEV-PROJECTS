@@ -1,27 +1,33 @@
-import React , { useState , useContext } from 'react';
+import React , { useState , useContext , useEffect } from 'react';
 import Button from '@mui/material/Button';
 import AddToPhotosSharpIcon from '@mui/icons-material/AddToPhotosSharp';
 import HomeSharpIcon from '@mui/icons-material/HomeSharp';
 import Face2SharpIcon from '@mui/icons-material/Face2Sharp';
 import LogoutSharpIcon from '@mui/icons-material/LogoutSharp';
-import '../UI/Feed.css';
+import '../UI/Navigation.css';
 import { signOut } from 'firebase/auth';
 import { authentication } from "../firebase.js";
 import { useLocation , useNavigate } from 'react-router-dom';
 import { ref , uploadBytesResumable , getDownloadURL } from "firebase/storage";
-import { doc, updateDoc , getDoc } from "firebase/firestore";
+import { doc, updateDoc , setDoc } from "firebase/firestore";
 import { repository } from '../firebase.js'
 import { database } from '../firebase.js'
 import { context } from '../App.js'
 import ReportIcon from '@mui/icons-material/Report';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { v4 as generator } from 'uuid';
 
-function Navigation() {
+function Navigation( props ) {
 
     const location = useLocation();
     const navigate = useNavigate();
     const object = useContext(context);  // Read, global store
+    const [ datum , mutateDatum ] = useState(null);
     const [ blunder , mutateBlunder ] = useState(null);
+
+    useEffect( () => {  // Callback invocation, provided component mount
+        if( props.customer != null ){ mutateDatum( props.customer ) }
+    } , [] )
 
     const uploadHandler = async ( video ) => {
         // console.log(event.target.files[0]);  // Single file upload sanctioned
@@ -70,23 +76,19 @@ function Navigation() {
                     // Upload completed successfully, now we can get the download URL
                     // Return URL, provided media upload
                     getDownloadURL( task.snapshot.ref ).then( async (URL) => { 
-                        console.log("Media URL --> " + URL);
+                        // console.log("Media URL --> " + URL);
+                        const identifier = generator();  // Return, unique identifier
+
                         // Mutate, customer database
-                        const reference = doc( database , 'customer' , object.uid );  // Represent reference, document 
-                        const snapshot = await getDoc(reference);
-                        let datum;
-
-                        if ( snapshot.exists() ) {
-                            datum = snapshot.data();  // Datum retrieval, firestore
-                        } else {
-                            // doc.data() will be undefined in this case
-                            mutateBlunder('blunder, provided datum retrieval');
-                            setTimeout( () => { mutateBlunder(null) } , 10000 );  // Blunder, maintainance
-                        }
-
-                        const array = datum.media;
+                        const reference = doc( database , 'customer' , object.uid );  // Represent reference, document   
+                        const mediaArray = datum.media;
+                        const identifierArray = datum.media_identifier;
                         // const modified = array.push(URL)  // The push() method append new items to the end, of an array
-                        await updateDoc( reference , { media : [ ...array , URL ] } );
+                        await updateDoc( reference , { media : [ ...mediaArray , URL ] , media_identifier : [ ...identifierArray , identifier ] } );
+
+                        // Maintainance, media database
+                        const metadata = { like : [] , comment : [] , media_identifier : identifier , media : URL , customer_identifier : props.customer.numerical_identifier }  // Metadata, customer media
+                        await setDoc( doc( database , 'media' , identifier ) , metadata );
                     });
 
             }              
@@ -120,7 +122,7 @@ function Navigation() {
 
     return (
         <React.Fragment>
-            <div className="parentContainer">
+            <div className="closureContainer">
                 <div className="navigationContainer">
                     <div className="brandingContainer"> <h1>Instagram reel's</h1> </div>
 

@@ -49,8 +49,8 @@ function Signup() {
 
             // Sometimes there isn't a meaningful identifier for the document, and it's more convenient to let Cloud Firestore auto-generate an document identifier for you. You can do this by invocation, add() methods:
             
-            // Add a new document with an auto-generated, document identifier
-            await setDoc( doc( database , 'customer' , object.user.uid ) , { email : email , denomination : denomination , alphabetic_identifier : identifier , representation : '' , numerical_identifier : object.user.uid , media : [] } );
+            // Add a new document, provided document identifier
+            await setDoc( doc( database , 'customer' , object.user.uid ) , { email : email , denomination : denomination , alphabetic_identifier : identifier , representation : '' , numerical_identifier : object.user.uid , media : [] , media_identifier : [] } );
 
             await mutateDatum(object);  // State maintainance
         } catch (error) {
