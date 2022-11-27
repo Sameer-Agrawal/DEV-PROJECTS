@@ -5,6 +5,7 @@ import Profile from './Component/Profile'
 import Feed from './Component/Feed'
 import Inspection from './Component/HOC/Inspection'
 import Redirection from './Component/HOC/Redirection'
+import Showcase from './Component/Showcase.jsx'
 import { BrowserRouter , Routes , Route } from "react-router-dom";
 import "./App.css";
 import React , { useEffect , useState } from 'react';
@@ -45,6 +46,8 @@ function App() {
                 <Route path='/redirection/signup' element={ <Signup/> }></Route>
                 <Route path='/redirection/login' element={ <Login/> }></Route>
               </Route>
+
+              <Route path='/showcase' element={ <Showcase/> }></Route>
               
           </Routes>
         </context.Provider>

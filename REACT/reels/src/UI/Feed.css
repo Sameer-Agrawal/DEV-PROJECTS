@@ -10,4 +10,7 @@
 .feedContainer{
     height: 100vh;
     width: calc(100vw - 20rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

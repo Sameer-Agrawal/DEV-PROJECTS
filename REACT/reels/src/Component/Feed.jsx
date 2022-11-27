@@ -4,6 +4,7 @@ import { context } from '../App.js'
 import Navigation from './Navigation.jsx';
 import { doc , onSnapshot } from "firebase/firestore";
 import { database } from '../firebase.js';
+import Casing from './Casing.jsx';
 import '../UI/Feed.css'
 
 function Feed() {
@@ -40,7 +41,7 @@ function Feed() {
                 datum == null ? <Process/> :
                 <div className="feedOutmostContainer">
                     <div className="navigationComponent"><Navigation customer={ datum }/></div>
-                    <div className="feedContainer"></div>
+                    <div className="feedContainer"><Casing customer={ datum } authentication={ object }/></div>
                 </div>
             }
         </React.Fragment>
