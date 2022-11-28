@@ -11,6 +11,9 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Button from '@mui/material/Button';
 
+import { doc , updateDoc } from "firebase/firestore";
+import { database } from '../firebase.js';
+
 import '../UI/Metadata.css';
 
 function Metadata( props ) {
@@ -37,29 +40,28 @@ function Metadata( props ) {
             const identifier = props.active.getAttribute('identifier');  // Represent identifier, active media HTML element 
             props.media.map( async ( metadata ) => {  // Looping through, media metadata
                 if( metadata.media_identifier == identifier ){
-                    admirePerceptionMaintainance(metadata);  // Maintainance, admire perception
-                    await mutateDatum(metadata);
+                    admirePerceptionMaintainance(metadata);  // Maintainance, admire perception provided active media metadata
+                    await mutateDatum(metadata);  // Active media, metadata maintainance
                 }
             } )
         }
     } , [ props.active , props.media ] )
 
-    const admirePerceptionHandler = async ( event ) => {
-    //     if( props.customer != null ){
-    //         await mutateAdmirePerception(!admirePerception);
+    const mutationAdmirePerception = async ( event ) => {
+        const customer_identifier = props.customer.numerical_identifier;  // Represent, customer datum identifier
+        const media_identifier = datum.media_identifier;  // Represent, media datum identifier
 
-    //         const customer_identifier = props.customer.numerical_identifier;  // Represent, customer datum identifier
-    //         const media_identifier = props.media.media_identifier;  // Represent, media datum identifier
-
-    //         // Mutate, media database
-    //         const reference = doc( database , 'media' , media_identifier );  // Represent reference, document   
-    //         if( datum.like.includes(customer_identifier) ){  // The includes() method determine, whether an array include a certain value among its children, and inturn return boolean value
-                
-    //         }else{
-
-    //         }
-    //         await updateDoc( reference , {  } );
-    //     }
+        // Mutate, media database
+        
+        let alteration = [];  // Represent transformed, media like attribute 
+        if( datum.like.includes(customer_identifier) ){  // The includes() method determine, whether an array include a certain value among its children, and inturn return boolean value
+            alteration = datum.like.filter( ( identifier ) => { if( identifier != customer_identifier ) return identifier } )
+        }else{
+            alteration = [ ...datum.like , customer_identifier ];  // Admiration maintainance, provided media
+        }
+        
+        const reference = doc( database , 'media' , media_identifier );  // Represent reference, media collection  
+        await updateDoc( reference , { like : [ ...alteration ] } );  // Mutation, media collection
     }
 
     const redirectionHandler = ( path ) => {
@@ -78,7 +80,7 @@ function Metadata( props ) {
                                                                 <div className="perceptionCatalogue"><Catalogue perception={ props.media.comment }/></div>
 
                                                                 <div className="admireContainer">
-                                                                    { admirePerception ? <FavoriteIcon className="admirePortrayalElement admirePortrayalMaintainance" onClick={ ( event ) => { admirePerceptionHandler( event ) } }/> : <FavoriteBorderIcon className="admirePortrayalElement" onClick={ ( event ) => { admirePerceptionHandler( event ) } }/> }
+                                                                    { admirePerception ? <FavoriteIcon className="admirePortrayalElement admirePortrayalMaintainance" onClick={ ( event ) => { mutationAdmirePerception( event ) } }/> : <FavoriteBorderIcon className="admirePortrayalElement" onClick={ ( event ) => { mutationAdmirePerception( event ) } }/> }
                                                                     <div className="admireComputationElement">Admire, count</div>
                                                                 </div>
 
