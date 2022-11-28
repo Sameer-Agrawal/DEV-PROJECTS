@@ -1,4 +1,4 @@
-import React , { useState } from 'react';
+import React , { useState , useEffect } from 'react';
 import Process from './Process.jsx';
 import { onSnapshot , orderBy , query , collection } from "firebase/firestore";
 import { database } from '../firebase.js';
@@ -9,8 +9,9 @@ import '../UI/Casing.css';
 function Casing( props ) {
 
     const [ media , mutateMedia ] = useState(null);
+    const [ active , mutateActive ] = useState(null);
 
-    useState( () => {  // Callback invocation, provided component mount
+    useEffect( () => {  // Callback invocation, provided component mount together with, customer state mutation
         if( props.customer != null ){
 
             const customer = props.customer;  // Represent, customer datum
@@ -29,7 +30,9 @@ function Casing( props ) {
 
             return eradication;  // Method invocation, provided component removal
         }
-    } , [] )
+    } , [ props.customer ] )
+
+    
 
     return (
         <React.Fragment>
@@ -40,12 +43,12 @@ function Casing( props ) {
                     <div className="mediaContainer">
                         {
                             media.map( ( datum ) => {
-                                return <Media media={ datum }/>
+                                return <Media media={ datum } transmute={ mutateActive }/>
                             } ) 
                         }
                     </div>
                     <div className="metadataContainer">
-                        <Metadata media={ media } customer={ props.customer }/>
+                        <Metadata media={ media } customer={ props.customer } active={ active }/>
                     </div>
                 </div>
             }

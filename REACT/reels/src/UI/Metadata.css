@@ -30,6 +30,11 @@
     height: 3.5rem;
     width: 100%;
     background-color: lightyellow;
+    display: flex;
+}
+
+.admirePortrayalMaintainance{
+    color: red;
 }
 
 .stampPortrayalContainer{

@@ -36,7 +36,7 @@ function Profile() {
 
     return (
         <React.Fragment>
-                <div className="outmostContainer">
+                <div className="profileOutmostContainer">
                     {/* <Navigation/> */}
                     <div className="metadataContainer">
                         <div className="portraitContainer">
