@@ -26,6 +26,7 @@ function Metadata( props ) {
 
     const [ admirePerception , mutateAdmirePerception ] = useState(null);
     const [ datum , mutateDatum ] = useState(null);  // Represent, active media datum
+    const [ activeCustomer , mutateActiveCustomer ] = useState(null);  // Represent, active media holder datum
     const [ blunder , mutateBlunder ] = useState(null);
     const [ admireComputation , mutateAdmireComputation ] = useState(null);
 
@@ -45,6 +46,8 @@ function Metadata( props ) {
             const identifier = props.active.getAttribute('identifier');  // Represent identifier, active media HTML element 
             props.media.map( async ( metadata ) => {  // Looping through, media metadata
                 if( metadata.media_identifier == identifier ){
+                    const customer_datum = await customerDatumMaintainance(metadata);  // Maintainance, customer datum, provided mutation active media
+                    if( customer_datum != 'Datum retrieval, fruitless' ){ await mutateActiveCustomer(customer_datum) }
                     admirePerceptionMaintainance(metadata);  // Maintainance, admire perception provided active media metadata
                     const computation = await admireComputationMaintainance(metadata);
                     await mutateAdmireComputation(computation);  // Admire computation, provided active media
@@ -71,11 +74,6 @@ function Metadata( props ) {
         await updateDoc( reference , { like : [ ...alteration ] } );  // Mutation, media collection
     }
 
-    const redirectionHandler = ( path ) => {
-        if( location.pathname == path ) return;
-        navigate(path);  // Navigate, specified path
-    }
-
     const admireComputationMaintainance = async ( metadata ) => {  // Faith --> Return, admiration census
         const admiration = metadata.like;
 
@@ -96,7 +94,7 @@ function Metadata( props ) {
             if( identifier == props.customer.numerical_identifier && admiration.length == 1 ){ return `Admired by, 1` }
             else if( identifier != props.customer.numerical_identifier && admiration.length == 1 ){
                 const customer_identifier = admiration[0];  // Return, customer identifier
-                const customer_datum = retrievalHandler(customer_identifier);  // Customer datum retrieval, provided document identifier
+                const customer_datum = await retrievalHandler(customer_identifier);  // Customer datum retrieval, provided document identifier
 
                 if( customer_datum == 'Datum retrieval, fruitless' ){
                     await mutateBlunder(customer_datum);  // Mutation, blunder
@@ -108,7 +106,7 @@ function Metadata( props ) {
             }
             else if( identifier == props.customer.numerical_identifier && admiration.length > 1 ){
                 const customer_identifier = admiration[1];  // Return, customer identifier
-                const customer_datum = retrievalHandler(customer_identifier);  // Customer datum retrieval, provided document identifier
+                const customer_datum = await retrievalHandler(customer_identifier);  // Customer datum retrieval, provided document identifier
 
                 if( customer_datum == 'Datum retrieval, fruitless' ){
                     await mutateBlunder(customer_datum);  // Mutation, blunder
@@ -120,7 +118,7 @@ function Metadata( props ) {
             }
             else{
                 const customer_identifier = admiration[0];  // Return, customer identifier
-                const customer_datum = retrievalHandler(customer_identifier);  // Customer datum retrieval, provided document identifier
+                const customer_datum = await retrievalHandler(customer_identifier);  // Customer datum retrieval, provided document identifier
 
                 if( customer_datum == 'Datum retrieval, fruitless' ){
                     await mutateBlunder(customer_datum);  // Mutation, blunder
@@ -130,34 +128,63 @@ function Metadata( props ) {
                     return `Admired by, ${ alphabetic_identifier } together with, ${ admiration.length - 1 }`
                 }
             }
-        }else{ return 'Admire by, insignificancy' }
+        }else{ return 'Admired by, insignificancy' }
+    }
+
+    const retrievalHandler = async ( identifier ) => {  // Faith --> Customer datum retrieval, provided identifier
+        const reference = doc( database , "customer" , identifier );
+        const snapshot = await getDoc(reference);
+
+        if ( snapshot.exists() ){
+            const datum = snapshot.data();
+            return datum;
+        }else{
+            return `Datum retrieval, fruitless`
+        }
+    }
+
+    const customerDatumMaintainance = async ( metadata ) => {
+        const identifier = metadata.customer_identifier;  // Represent active media holder, identifier
+        const datum = await retrievalHandler(identifier);  // Customer datum retrieval, provided document identifier
+
+        if( datum == 'Datum retrieval, fruitless' ){
+            await mutateBlunder(datum);  // Mutation, blunder
+            setTimeout( () => { mutateBlunder(null) } , 10000 );  // Blunder maintainance
+        }
+
+        return datum;
     }
 
     return (
         <React.Fragment>
-            { admirePerception != null && datum != null && admireComputation != null ? <div className="metadataOutmostContainer">
-                                                                                            <div className="proprietorContainer">
-                                                                                                <Avatar alt="Visual representation" src={ props.customer.representation } />
-                                                                                                <div className="identifierElement" onClick={ () => { redirectionHandler( '/inspection/profile' ) } } >{ props.customer.alphabetic_identifier }</div>
-                                                                                            </div>
+            { 
+                admirePerception != null && datum != null && admireComputation != null && activeCustomer != null ? 
+                    
+                    <div className="metadataOutmostContainer">
+                        <div className="proprietorContainer">
+                            <Avatar alt="Visual representation" src={ activeCustomer.representation } />
+                            <div className="identifierElement">{ activeCustomer.alphabetic_identifier }</div>
+                        </div>
 
-                                                                                            <div className="perceptionCatalogue"><Catalogue perception={ props.media.comment }/></div>
+                        <div className="perceptionCatalogue"><Catalogue perception={ props.media.comment }/></div>
 
-                                                                                            <div className="admireContainer">
-                                                                                                { admirePerception ? <FavoriteIcon className="admirePortrayalElement admirePortrayalMaintainance" onClick={ ( event ) => { mutationAdmirePerception( event ) } }/> : <FavoriteBorderIcon className="admirePortrayalElement" onClick={ ( event ) => { mutationAdmirePerception( event ) } }/> }
-                                                                                                <div className="admireComputationElement">{ admireComputation }</div>
-                                                                                            </div>
+                        <div className="admireContainer">
+                            { admirePerception ? <FavoriteIcon className="admirePortrayalElement admirePortrayalMaintainance" onClick={ ( event ) => { mutationAdmirePerception( event ) } }/> : <FavoriteBorderIcon className="admirePortrayalElement" onClick={ ( event ) => { mutationAdmirePerception( event ) } }/> }
+                            <div className="admireComputationElement">{ admireComputation }</div>
+                        </div>
 
-                                                                                            <div className="stampPortrayalContainer">Stamp, portrayal</div>
+                        <div className="stampPortrayalContainer">Stamp, portrayal</div>
 
-                                                                                            <div className="perceptionPortrayalContainer">
-                                                                                                <input type="text" className="perceptionPortrayalElement" placeholder='Portray perception, provided media' />
-                                                                                                <Button variant="outlined">Comment</Button>
-                                                                                            </div>
+                        <div className="perceptionPortrayalContainer">
+                            <input type="text" className="perceptionPortrayalElement" placeholder='Portray perception, provided media' />
+                            <Button variant="outlined">Comment</Button>
+                        </div>
 
-                                                                                            { blunder != null && <Showcase word={ blunder } transmute={ () => { mutateBlunder(null) } }/>}
-                                                                                        </div> : <Process/> }
-            
+                        { blunder != null && <Showcase word={ blunder } transmute={ () => { mutateBlunder(null) } }/>}
+                    </div> 
+
+                : <Process/> 
+            }
         </React.Fragment>
     )
 }
