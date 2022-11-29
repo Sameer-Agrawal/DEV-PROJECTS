@@ -14,10 +14,12 @@ import Showcase from './Showcase.jsx'
 
 import Button from '@mui/material/Button';
 
-import { doc , updateDoc , getDoc } from "firebase/firestore";
+import { doc , updateDoc , getDoc , setDoc } from "firebase/firestore";
 import { database } from '../firebase.js';
 
 import '../UI/Metadata.css';
+
+import { v4 as generator } from 'uuid';
 
 function Metadata( props ) {
 
@@ -29,6 +31,7 @@ function Metadata( props ) {
     const [ activeCustomer , mutateActiveCustomer ] = useState(null);  // Represent, active media holder datum
     const [ blunder , mutateBlunder ] = useState(null);
     const [ admireComputation , mutateAdmireComputation ] = useState(null);
+    const [ perception , mutatePerception ] = useState(null);
 
     const admirePerceptionMaintainance = async (metadata) => {
         if( props.customer != null ){
@@ -49,8 +52,13 @@ function Metadata( props ) {
                     const customer_datum = await customerDatumMaintainance(metadata);  // Maintainance, customer datum, provided mutation active media
                     if( customer_datum != 'Datum retrieval, fruitless' ){ await mutateActiveCustomer(customer_datum) }
                     admirePerceptionMaintainance(metadata);  // Maintainance, admire perception provided active media metadata
+
                     const computation = await admireComputationMaintainance(metadata);
                     await mutateAdmireComputation(computation);  // Admire computation, provided active media
+
+                    perceptionPortrayalUIMaintainance(null);
+                    await mutatePerception(null);  // Perception maintainance, provided active media mutation
+
                     await mutateDatum(metadata);  // Active media, metadata maintainance
                 }
             } )
@@ -155,6 +163,27 @@ function Metadata( props ) {
         return datum;
     }
 
+    const perceptionMaintainance = async ( event ) => {  // Faith --> Perception maintainance
+        await mutatePerception(event.target.value);
+    }
+
+    const perceptionPortrayal = async () => {  // Faith --> Perception portrayal
+        perceptionPortrayalUIMaintainance(null);
+        
+        const identifier = generator();  // Faith --> Return perception, document identifier
+
+        // Add a new document, provided document identifier
+        await setDoc( doc( database , 'perception' , identifier ) , { 'perception' : perception , 'customer_identifier' : props.customer.numerical_identifier } );
+        await updateDoc( doc( database , 'media' , datum.media_identifier ) , { comment : [ ...datum.comment , identifier ] } );
+
+        await mutatePerception(null);  // Perception, state maintainance
+    }
+
+    const perceptionPortrayalUIMaintainance = ( value ) => {
+        const perceptionPortrayalElement = document.querySelector('.perceptionPortrayalElement');  // Represent perception portrayal, input HTML element
+        perceptionPortrayalElement.value = value;
+    }
+
     return (
         <React.Fragment>
             { 
@@ -173,11 +202,12 @@ function Metadata( props ) {
                             <div className="admireComputationElement">{ admireComputation }</div>
                         </div>
 
-                        <div className="stampPortrayalContainer">Stamp, portrayal</div>
+                        <div className="stampPortrayalContainer"></div>
 
                         <div className="perceptionPortrayalContainer">
-                            <input type="text" className="perceptionPortrayalElement" placeholder='Portray perception, provided media' />
-                            <Button variant="outlined">Comment</Button>
+                            <input type="text" value={ perception } onChange={ ( event ) => { perceptionMaintainance(event) } } className="perceptionPortrayalElement" placeholder='Portray perception, provided media' />
+                            { console.log(perception) }
+                            <Button variant="outlined" onClick={ perceptionPortrayal }>Comment</Button>
                         </div>
 
                         { blunder != null && <Showcase word={ blunder } transmute={ () => { mutateBlunder(null) } }/>}
