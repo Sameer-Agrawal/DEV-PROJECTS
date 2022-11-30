@@ -5,7 +5,7 @@ import Process from './Process.jsx'
 
 import Avatar from '@mui/material/Avatar';
 
-import Catalogue from './Catalogue.jsx'
+import Perception from './Perception.jsx'
 
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -221,7 +221,13 @@ function Metadata( props ) {
                             <div className="identifierElement">{ activeCustomer.alphabetic_identifier }</div>
                         </div>
 
-                        <div className="perceptionCatalogue"><Catalogue catalogue={ perceptionCatalogue }/></div>
+                        <div className="perceptionCatalogue">
+                            { 
+                                perceptionCatalogue.map( ( datum ) => {
+                                    return <Perception datum={ datum }/>
+                                } ) 
+                            }
+                        </div>
 
                         <div className="admireContainer">
                             { admirePerception ? <FavoriteIcon className="admirePortrayalElement admirePortrayalMaintainance" onClick={ ( event ) => { mutationAdmirePerception( event ) } }/> : <FavoriteBorderIcon className="admirePortrayalElement" onClick={ ( event ) => { mutationAdmirePerception( event ) } }/> }
