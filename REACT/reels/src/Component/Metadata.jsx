@@ -26,12 +26,18 @@ function Metadata( props ) {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [ admirePerception , mutateAdmirePerception ] = useState(null);
-    const [ datum , mutateDatum ] = useState(null);  // Represent, active media datum
-    const [ activeCustomer , mutateActiveCustomer ] = useState(null);  // Represent, active media holder datum
     const [ blunder , mutateBlunder ] = useState(null);
+
+    const [ perceptionCatalogue , mutatePerceptionCatalogue ] = useState(null);
+
+    const [ admirePerception , mutateAdmirePerception ] = useState(null);
     const [ admireComputation , mutateAdmireComputation ] = useState(null);
-    const [ perception , mutatePerception ] = useState(null);
+
+    const [ activeCustomer , mutateActiveCustomer ] = useState(null);  // Represent, active media holder datum
+
+    const [ perception , mutatePerception ] = useState('');
+
+    const [ datum , mutateDatum ] = useState(null);  // Represent, active media datum
 
     const admirePerceptionMaintainance = async (metadata) => {
         if( props.customer != null ){
@@ -51,19 +57,44 @@ function Metadata( props ) {
                 if( metadata.media_identifier == identifier ){
                     const customer_datum = await customerDatumMaintainance(metadata);  // Maintainance, customer datum, provided mutation active media
                     if( customer_datum != 'Datum retrieval, fruitless' ){ await mutateActiveCustomer(customer_datum) }
+                    await perceptionCatalogueMaintainance(metadata);  // Maintainance, perception catalogue provided active media metadata
+
                     admirePerceptionMaintainance(metadata);  // Maintainance, admire perception provided active media metadata
 
                     const computation = await admireComputationMaintainance(metadata);
                     await mutateAdmireComputation(computation);  // Admire computation, provided active media
 
-                    perceptionPortrayalUIMaintainance(null);
-                    await mutatePerception(null);  // Perception maintainance, provided active media mutation
+                    await mutatePerception('');  // Perception maintainance, provided active media mutation
 
                     await mutateDatum(metadata);  // Active media, metadata maintainance
                 }
             } )
         }
     } , [ props.active , props.media ] )
+
+    const perceptionCatalogueMaintainance = async ( metadata ) => {
+        const identifier = metadata.comment;  // Return, active media perception identifier, array
+
+        const perceptionRetrievalClosure = async ( identifier ) => {
+            let accumulator = []
+
+            for( let index = 0 ; index < identifier.length ; index++ ) {
+                const current = identifier[index];
+                const reference = doc( database , "perception" , current );
+                const snapshot = await getDoc(reference);
+    
+                if ( snapshot.exists() ){
+                    const datum = await snapshot.data();  // Faith --> Return perception datum
+                    accumulator.push(datum);
+                }
+            }
+
+            return accumulator;
+        }
+
+        const catalogue = await perceptionRetrievalClosure(identifier);
+        await mutatePerceptionCatalogue(catalogue);  // Perception catalogue maintainance, provided active media datum
+    }
 
     const mutationAdmirePerception = async ( event ) => {
         const customer_identifier = props.customer.numerical_identifier;  // Represent, customer datum identifier
@@ -163,31 +194,26 @@ function Metadata( props ) {
         return datum;
     }
 
-    const perceptionMaintainance = async ( event ) => {  // Faith --> Perception maintainance
+    const perceptionMaintainanceHandler = async ( event ) => {  // Faith --> Perception maintainance
         await mutatePerception(event.target.value);
     }
 
-    const perceptionPortrayal = async () => {  // Faith --> Perception portrayal
-        perceptionPortrayalUIMaintainance(null);
-        
+    const perceptionPortrayalRetention = async () => {  // Faith --> Perception portrayal
+        if( perception == '' ) return;
+
         const identifier = generator();  // Faith --> Return perception, document identifier
 
         // Add a new document, provided document identifier
         await setDoc( doc( database , 'perception' , identifier ) , { 'perception' : perception , 'customer_identifier' : props.customer.numerical_identifier } );
         await updateDoc( doc( database , 'media' , datum.media_identifier ) , { comment : [ ...datum.comment , identifier ] } );
 
-        await mutatePerception(null);  // Perception, state maintainance
-    }
-
-    const perceptionPortrayalUIMaintainance = ( value ) => {
-        const perceptionPortrayalElement = document.querySelector('.perceptionPortrayalElement');  // Represent perception portrayal, input HTML element
-        perceptionPortrayalElement.value = value;
+        await mutatePerception('');  // Perception, state maintainance
     }
 
     return (
         <React.Fragment>
             { 
-                admirePerception != null && datum != null && admireComputation != null && activeCustomer != null ? 
+                admirePerception != null && datum != null && admireComputation != null && activeCustomer != null && perceptionCatalogue != null ? 
                     
                     <div className="metadataOutmostContainer">
                         <div className="proprietorContainer">
@@ -195,19 +221,18 @@ function Metadata( props ) {
                             <div className="identifierElement">{ activeCustomer.alphabetic_identifier }</div>
                         </div>
 
-                        <div className="perceptionCatalogue"><Catalogue perception={ props.media.comment }/></div>
+                        <div className="perceptionCatalogue"><Catalogue catalogue={ perceptionCatalogue }/></div>
 
                         <div className="admireContainer">
                             { admirePerception ? <FavoriteIcon className="admirePortrayalElement admirePortrayalMaintainance" onClick={ ( event ) => { mutationAdmirePerception( event ) } }/> : <FavoriteBorderIcon className="admirePortrayalElement" onClick={ ( event ) => { mutationAdmirePerception( event ) } }/> }
                             <div className="admireComputationElement">{ admireComputation }</div>
                         </div>
 
-                        <div className="stampPortrayalContainer"></div>
+                        <div className="stampPortrayalContainer">{ datum.stamp.toDate().toDateString() }</div>
 
                         <div className="perceptionPortrayalContainer">
-                            <input type="text" value={ perception } onChange={ ( event ) => { perceptionMaintainance(event) } } className="perceptionPortrayalElement" placeholder='Portray perception, provided media' />
-                            { console.log(perception) }
-                            <Button variant="outlined" onClick={ perceptionPortrayal }>Comment</Button>
+                            <input type="text" value={ perception } onChange={ ( event ) => { perceptionMaintainanceHandler(event) } } className="perceptionPortrayalElement" placeholder='Portray perception, provided media' />
+                            <Button variant="outlined" onClick={ perceptionPortrayalRetention }>Comment</Button>
                         </div>
 
                         { blunder != null && <Showcase word={ blunder } transmute={ () => { mutateBlunder(null) } }/>}

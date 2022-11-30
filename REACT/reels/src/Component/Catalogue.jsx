@@ -1,9 +1,10 @@
-import React from 'react'
+import React , { useEffect , useState } from 'react';
+import Process from './Process';
 
-function Catalogue( { perception } ) {
+function Catalogue( { catalogue } ) {
     return (
         <React.Fragment>
-            {/* { console.log(perception) } */}
+            { catalogue != null ? catalogue.forEach( ( datum ) => { return <Perception datum={ datum }/> } ) : <Process/> }
         </React.Fragment>
     )
 }
