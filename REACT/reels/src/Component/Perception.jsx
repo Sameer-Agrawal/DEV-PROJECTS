@@ -51,8 +51,8 @@ function Perception( { datum } ) {
                 datum != null && identifier != null ? 
 
                     <div className="customerPerceptionContainer">
-                        <div className="customerIdentifierElement">{ identifier }</div>
-                        <div className="customerPerceptionPortrayalElement">{ datum.perception }</div>
+                        <div className="customerIdentifierElement"><h1>{ identifier }</h1></div>
+                        <div className="customerPerceptionPortrayalElement"><h1>{ datum.perception }</h1></div>
 
                         { blunder != null && <Showcase word={ blunder } transmute={ () => { mutateBlunder(null) } }/> }
                     </div>

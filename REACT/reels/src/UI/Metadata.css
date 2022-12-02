@@ -1,7 +1,8 @@
 .metadataOutmostContainer{
     height: 100%;
     width: 100%;
-    background-color: lightcoral;
+
+    background-color: black;
 }
 
 .proprietorContainer{
@@ -10,41 +11,102 @@
 
     display: flex;
     align-items: center;
-    
-    background-color: lightpink;
-    padding-left: 0.75rem;
 }
 
 .identifierElement{
-    margin: 0rem 1rem;
+    margin: 0rem 1.5rem;
+
+    color: white;
 }
 
 .perceptionCatalogue{
     height: calc(100% - 12.5rem);
     width: 100%;
-    
-    background-color: lightgreen;
+
+    overflow: auto;
+
+    padding: 1rem 0rem;
 }
 
 .admireContainer{
     height: 3.5rem;
     width: 100%;
-    background-color: lightyellow;
+
     display: flex;
+    align-items: center;
+}
+
+.admirePortrayalElement{
+    color: white;
 }
 
 .admirePortrayalMaintainance{
     color: red;
 }
 
+.admireComputationElement{
+    color: white;
+
+    margin: 0rem 1.5rem;
+}
+
 .stampPortrayalContainer{
     height: 2rem;
     width: 100%;
-    background-color: lightskyblue;
+
+    display: flex;
+    align-items: center;
+
+    color: white;
 }
 
 .perceptionPortrayalContainer{
     height: 3.5rem;
     width: 100%;
-    background-color: lightsalmon;
+
+    display: flex;
+}
+
+.perceptionPortrayalElement{
+    outline: none;
+    border: none;
+
+    background-color: black;
+    color: white;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0rem 0.2rem;
+
+    height: 100%;
+    width: 70%;
+}
+
+.perceptionPortrayalRetention{
+    height: 100%;
+    width: 30%;
+
+    border-radius: 0rem !important;
+
+    background-color: white !important;
+    color: black !important;
+
+    border-right: 0.025rem solid black !important;
+    border-bottom: 0.025rem solid black !important;
+}
+
+/* In most browsers, the placeholder text color is grey. To mutate this, design the placeholder with the unusual ( ::placeholder selector --> Represent, input HTML element, placeholder ). Note that, Firefox add a lower opacity to the placeholder, so we use ( opacity : 1 ) to fix opacity issue */
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    opacity: 1; /* Firefox */
+}
+    
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: white;
+}
+    
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: white;
 }

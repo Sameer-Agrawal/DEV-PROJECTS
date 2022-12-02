@@ -238,7 +238,7 @@ function Metadata( props ) {
 
                         <div className="perceptionPortrayalContainer">
                             <input type="text" value={ perception } onChange={ ( event ) => { perceptionMaintainanceHandler(event) } } className="perceptionPortrayalElement" placeholder='Portray perception, provided media' />
-                            <Button variant="outlined" onClick={ perceptionPortrayalRetention }>Comment</Button>
+                            <Button variant="text" className="perceptionPortrayalRetention" onClick={ perceptionPortrayalRetention }>Portray</Button>
                         </div>
 
                         { blunder != null && <Showcase word={ blunder } transmute={ () => { mutateBlunder(null) } }/>}

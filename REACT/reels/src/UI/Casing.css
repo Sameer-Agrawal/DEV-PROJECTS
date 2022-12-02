@@ -1,15 +1,19 @@
 .casingOutmostContainer{
     height: 50rem;
     width: 60rem;
+
     display: flex;
 }
 
 .mediaContainer{
     height: 100%;
     width: 35rem;
+
     overflow: scroll;
     scroll-snap-type: y mandatory;
     scrollbar-width: none;
+
+    background-color: black;
 }
 
 /* The CSS Scroll Snap(to break or be broken suddenly) functionality gives us a way to snap scrolling to certain points as the customer scrolls through a document. This can be helpful in creating a more app-like experience on mobile or even on the desktop for some types of applications */
