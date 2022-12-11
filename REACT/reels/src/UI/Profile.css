@@ -1,8 +1,19 @@
-.profileOutmostContainer .metadataContainer{
-    width: 50vw;
-    height: 25rem;
+.profileOutmostContainer{
+    height: 100vh;
+    width: 100vw;
+    
     display: flex;
-    margin: 0rem auto;
+}
+
+.profileOutmostContainer .metadataContainer{
+    height: 100vh;
+    width: calc(100vw - 20rem);
+
+    position: absolute;
+    left: 20rem;
+
+    display: flex;
+    justify-content: center;
 }
 
 .portraitContainer{
@@ -31,7 +42,7 @@
     justify-content: space-around;
 }
 
-.identifierElement h1{
+.profileIdentifierElement h1{
     font-size: 1.75rem;
     padding-top: 0.3rem
 }
