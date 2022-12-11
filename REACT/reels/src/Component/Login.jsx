@@ -64,7 +64,7 @@ function Login() {
                         </div>
                         <div className="surrenderContainer"> <button className="surrenderElement" onClick = { surrenderHandler }>LOG IN</button> </div>
                     </div>
-                    <div className="signupContainer"> <h1 className="quotationElement">rudimentary,</h1> <Link to="/signup"><button className="transferElement">SIGN UP</button></Link> </div>
+                    <div className="signupContainer"> <h1 className="quotationElement">rudimentary,</h1> <Link to="/redirection/signup"><button className="transferElement">SIGN UP</button></Link> </div>
                 </div>
             }
         </React.Fragment>

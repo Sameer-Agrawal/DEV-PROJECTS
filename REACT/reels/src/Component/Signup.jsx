@@ -62,7 +62,7 @@ function Signup() {
 
     return (
         <React.Fragment>
-            { flag != false ? <Process/> : datum != null ? <h3>Successful, registration</h3> : 
+            { flag != false && datum == null ? <Process/> :  
                 <div className="parentContainer">
                     {/* Blunder showcase, provided blunder */}
                     <div className="blunderShowcaseContainer"> { blunder != null ? <h1>{`${blunder}`}</h1> : <h1>`blundersome, more blundersome, most blundersome`</h1> } </div>
@@ -78,7 +78,7 @@ function Signup() {
 
                         <div className="surrenderContainer"> <button className="surrenderElement" onClick = { surrenderHandler }>SIGN UP</button> </div>
                     </div>
-                    <div className="signupContainer"> <h1 className="quotationElement">established, account</h1> <Link to="/login"><button className="transferElement">LOG IN</button></Link> </div>
+                    <div className="signupContainer"> <h1 className="quotationElement">established, account</h1> <Link to="/redirection/signup"><button className="transferElement">LOG IN</button></Link> </div>
                 </div>
             }
         </React.Fragment>
