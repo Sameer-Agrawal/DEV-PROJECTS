@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer')
 let mail = "rofaka4475@lenfly.com";
 let pass = "1234567890";
-const code = require('./code');
+const code = require('../code');
 
 (async function(){ 
     // Isko async banadiya so ye node api par jakar run hoga
