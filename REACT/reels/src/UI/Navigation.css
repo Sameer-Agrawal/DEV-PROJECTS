@@ -2,7 +2,7 @@
     position: absolute;
     top: 0rem;
     left: 0rem;
-    background-color: black;
+    background-color: #9ED5C5;
     height: 100%;
     width: 20rem;
 }
@@ -13,7 +13,7 @@
 }
 
 .brandingContainer h1{
-    color: white;
+    color: black;
     font-family: 'Lobster', cursive;
     font-size: 2rem;
     text-align: center;
@@ -30,7 +30,7 @@
 .navigationElement .buttonElement{
     width: 85%;
     border-radius: 0rem;
-    color: white;
+    color: black;
     display: flex;
     justify-content: start;
     align-items: center;
@@ -39,7 +39,7 @@
 }
 
 .buttonElement .iconElement{
-    color: white;
+    color: black;
 }
 
 .buttonElement .labelElement{

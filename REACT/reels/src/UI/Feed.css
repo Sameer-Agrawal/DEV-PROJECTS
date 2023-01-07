@@ -1,5 +1,6 @@
 .feedOutmostContainer{
     display: flex;
+    background-color: #DEF5E5;
 }
 
 .navigationComponent{

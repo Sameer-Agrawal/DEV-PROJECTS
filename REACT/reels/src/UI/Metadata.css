@@ -2,7 +2,7 @@
     height: 100%;
     width: 100%;
 
-    background-color: black;
+    background-color: #9ED5C5;
 }
 
 .proprietorContainer{
@@ -16,7 +16,7 @@
 .identifierElement{
     margin: 0rem 1.5rem;
 
-    color: white;
+    color: black;
 }
 
 .perceptionCatalogue{
@@ -45,7 +45,7 @@
 }
 
 .admireComputationElement{
-    color: white;
+    color: black;
 
     margin: 0rem 1.5rem;
 }
@@ -57,7 +57,7 @@
     display: flex;
     align-items: center;
 
-    color: white;
+    color: black;
 }
 
 .perceptionPortrayalContainer{
@@ -71,8 +71,8 @@
     outline: none;
     border: none;
 
-    background-color: black;
-    color: white;
+    background-color: #9ED5C5;
+    color: black;
 
     display: flex;
     align-items: center;
@@ -89,8 +89,8 @@
 
     border-radius: 0rem !important;
 
-    background-color: black !important;
-    color: white !important;
+    background-color: #8EC3B0 !important;
+    color: black !important;
 }
 
 /* In most browsers, the placeholder text color is grey. To mutate this, design the placeholder with the unusual ( ::placeholder selector --> Represent, input HTML element, placeholder ). Note that, Firefox add a lower opacity to the placeholder, so we use ( opacity : 1 ) to fix opacity issue */
