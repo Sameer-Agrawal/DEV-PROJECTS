@@ -21,6 +21,9 @@ const server = http.createServer( ( request , response ) => {
             if( blunder ){ console.log( 'Blunder' ) }
             else{ response.end( datum ) }
         } );
+    }else{  // Client undesirable route specification
+        response.statusCode = 404;  // 404 status code represent, desired route doesn't exist
+        response.end('<h1>Undesirable route specification</h1>')
     }
 
 } );  // createServer() method turn system into an HTTP server

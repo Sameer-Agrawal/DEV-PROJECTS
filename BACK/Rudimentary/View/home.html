@@ -1,12 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-</head>
-<body>
-    <h1>Hey there, HTML snippet represent HOME!</h1>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home</title>
+    </head>
+    <body>
+        <h1>Hey there, HTML snippet represent HOME!</h1>
+
+        <div class="outmost-container">
+            <input class="identifier-element" type="text" placeholder="Provide identifier">
+            <input class="credential-element" type="text" placeholder="Provide credential">
+            <button class="login-element">LOG IN</button>
+        </div>
+    </body>
+    <!-- LINKAGE, AXIOS CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
+
+    <script>
+        // import axios from 'axios';  // Axios is promisified HTTP library that make request to a server, to fetch data
+
+        const loginElement = document.querySelector('.login-element');  // Represent, login element
+
+        loginElement.addEventListener( 'click' , async () => {  // Callback invocation provided click, HTML element
+            
+            const identifier = document.querySelector('.identifier-element').value;  // Represent identifier, corresponding identifier element 
+            const credential = document.querySelector('.credential-element').value;  // Represent credential, corresponding credential element
+
+            const response = await axios.post( '/' , { identifier : identifier , credential : credential } );
+            
+            if( response.status == 200 ){
+                window.location.pathname = `/${identifier}`;  // Endpoint request
+            }
+
+        } )
+    </script>
 </html>
