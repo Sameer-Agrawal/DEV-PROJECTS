@@ -90,6 +90,11 @@
     color : #EEEEEE;
 }
 
+.surrenderElement:hover{
+    background-color : #00ADB5;
+    color : #222831;
+}
+
 .redirectionContainer{
     width : 100%;
     height : 7rem;
@@ -104,6 +109,11 @@
     width : 7.5rem;
 
     margin : 0rem 0.25rem;
+}
+
+.redirectionChildrenContainer :hover{
+    background-color : #00ADB5;
+    color : #222831
 }
 
 .redirectionElement{
