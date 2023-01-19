@@ -1,0 +1,123 @@
+.loginOutmostContainer{
+    height : calc(100vh - 5rem);
+    width : 100vw;
+
+    display : flex;
+    justify-content : center;
+    align-items : center;
+}
+
+.loginChildrenContainer{
+    height : 30rem;
+    width : 30rem;
+
+    background-color : #222831;
+}
+
+.headlineContainer{
+    height : 8rem;
+    width : 30rem;
+
+    display : flex;
+    justify-content : center;
+    align-items : center;
+}
+
+.headlineElement{
+    font-size : 3rem;
+    
+    color : #EEEEEE;
+}
+
+.metadataContainer{
+    height : 10rem;
+    width : 30rem;
+}
+
+.metadataChildrenContainer{
+    height : 5rem;
+    width : 30rem;
+
+    display : flex;
+    justify-content : space-around;
+    align-items : center;
+}
+
+.metadataIdentifierElement{
+    height : 5rem;
+    width : 7.5rem;
+
+    font-size : 1.5rem;
+    color : #EEEEEE;
+
+    display : flex;
+    align-items : center;
+    justify-content : center;
+}
+
+.metadataElement{
+    height : 2.5rem;
+    width : 20rem;
+
+    outline : none;
+    border : none;
+    border-radius : 0.25rem;
+
+    padding : 0rem 0.3rem;
+}
+
+.surrenderContainer{
+    height : 5rem;
+    width : 30rem;
+
+    display : flex;
+    justify-content : center;
+    align-items : center;
+}
+
+.surrenderElement{
+    height : 2.5rem;
+    width : 7.5rem;
+
+    text-align : center;
+    font-size : 1rem;
+
+    outline : none;
+    border : none;
+    border-radius : 0.25rem;
+
+    background-color : #393E46;
+    color : #EEEEEE;
+}
+
+.redirectionContainer{
+    width : 100%;
+    height : 7rem;
+
+    display : flex;
+    justify-content : flex-end;
+    align-items : center;
+}
+
+.redirectionChildrenContainer{
+    height : 2.5rem;
+    width : 7.5rem;
+
+    margin : 0rem 0.25rem;
+}
+
+.redirectionElement{
+    height : 100%;
+    width : 100%;
+
+    font-size : 1rem;
+
+    outline : none;
+    border : none;
+    border-radius : 0.25rem;
+
+    background-color : #393E46;
+    color : #EEEEEE;
+}
+
+

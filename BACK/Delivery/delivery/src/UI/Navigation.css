@@ -1,0 +1,46 @@
+.navigationOutmostContainer{
+    height : 5rem;
+    width : 100vw;
+
+    background-color : #222831;
+    color : #EEEEEE;
+
+    display : flex;
+    justify-content : space-between;
+    align-items : center;
+}
+
+.childrenContainer{
+    height : 3.5rem;
+
+    margin : 0rem 3rem;
+}
+
+.navigationLeftmostContainer{
+    width : 3.5rem;
+
+    display : flex;
+    justify-content : center;
+    align-items : center;
+}
+
+.baseRedirectionElement{
+    color : #EEEEEE;
+    font-size : 2.5rem !important;
+}
+
+.navigationRightmostContainer{
+    width : 12.5rem;
+    font-size : 1.25rem;
+
+    display : flex;
+    align-items : center;
+    justify-content : space-around;
+}
+
+.loginRedirectionElement{
+    /* text-decoration property specify, decoration to text */
+    text-decoration : none;
+
+    color : #EEEEEE;
+}
