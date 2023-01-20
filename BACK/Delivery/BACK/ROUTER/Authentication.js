@@ -10,7 +10,7 @@ authentication.route( '/login' ).post( ( request , response ) => {
 
 authentication.route( '/registration' ).post( async ( request , response ) => {
     try{
-        const customer = require('../Schema/Customer.js').customer;  // Represent, customer collection
+        const customer = require('../Model/Customer.js').customer;  // Represent, customer collection
     
         const datum = request.body;  // Represent, specified datum
         const database_response = await customer.create( datum );  // Fabrication, single/multiple document in collection
