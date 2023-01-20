@@ -9,12 +9,17 @@ authentication.route( '/login' ).post( ( request , response ) => {
 } )
 
 authentication.route( '/registration' ).post( async ( request , response ) => {
-    const customer = require('../Schema/Customer.js').customer;  // Represent, customer collection
-
-    const datum = request.body;  // Represent, specified datum
-    const database_response = await customer.create( datum );  // Fabrication, single/multiple document in collection
+    try{
+        const customer = require('../Schema/Customer.js').customer;  // Represent, customer collection
     
-    response.json( { metadata : 'Document fabrication, successful' , response : database_response } );
+        const datum = request.body;  // Represent, specified datum
+        const database_response = await customer.create( datum );  // Fabrication, single/multiple document in collection
+        
+        response.json( { metadata : 'Document fabrication, successful' , response : database_response } );
+    }catch( blunder ){
+        response.status( 401 );  // Represent, invalid credential
+        response.json( { metadata : blunder.message } );
+    }
 } )
 
 module.exports = { authentication };
