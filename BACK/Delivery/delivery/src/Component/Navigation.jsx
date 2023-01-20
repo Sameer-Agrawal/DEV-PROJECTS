@@ -12,7 +12,7 @@ function Navigation() {
                 <div className="navigationRightmostContainer childrenContainer">
                     <div className="planRedirectionElement">PLAN</div>
                     {/* A Link component allow customer to navigate to specific URL */}
-                    <div className="loginRedirectionContainer"><Link className="loginRedirectionElement" to="/login">LOGIN</Link></div>
+                    <div className="loginRedirectionContainer"><Link className="loginRedirectionElement" to="/authentication/login">LOGIN</Link></div>
                 </div>
             </div>
         </React.Fragment>
