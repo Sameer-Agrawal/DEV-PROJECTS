@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 const bcrypt = require('bcrypt');  // Faith --> Credential hashing
 const validator = require('email-validator');  // Faith --> Validate identifier
 
-const schema = { denomination : { type : String , required : [ true , 'Provide denomination' ] } , identifier : { type : String , required : [ true , 'Provide identifier' ] , unique : [ true , 'Identical identifier exist, provide distinct' ] , validate : function(){ return validator.validate( this.identifier ) } } , credential : { type : String , required : [ true , 'Provide credential' ] , minLength : [ 10 , 'Atleast, 10 character' ] } , verification : { type : String , required : [ true , 'Provide verification' ] , minLength : 10 , validate : function(){ return this.verification == this.credential } } };  // Schema definition
+const schema = { denomination : { type : String , required : [ true , 'Provide denomination' ] } , identifier : { type : String , required : [ true , 'Provide identifier' ] , unique : [ true , 'Identical identifier exist, provide distinct' ] , validate : function(){ return validator.validate( this.identifier ) } } , credential : { type : String , required : [ true , 'Provide credential' ] , minLength : [ 10 , 'Atleast, 10 character' ] } , verification : { type : String , required : [ true , 'Provide verification' ] , minLength : 10 , validate : function(){ return this.verification == this.credential } } , responsibility : { type : String , enum : [ 'Administrator' , 'Rudimentary' , 'Possessor' , 'Conveyor' ] , default : 'Rudimentary' } };  // Schema definition
 
 const instance = new Schema( schema );  // Schema Instantiation
 
