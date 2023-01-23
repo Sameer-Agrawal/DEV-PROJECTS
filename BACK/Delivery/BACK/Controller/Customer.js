@@ -1,5 +1,8 @@
 const customer = require('../Model/Customer.js').customer;
 
+const JWT = require('jsonwebtoken');
+const mystery = require('../Confidential/JWT.js').mystery;  // Confidential key
+
 const extraction = async ( request , response ) => {  // Faith --> Datum extraction provided, customer unique identifier
     try{
         const identifier = request.params.identifier;
@@ -49,8 +52,57 @@ const mutation = async ( request , response ) => {  // Faith --> Mutate datum
     }
 }
 
-const eradication = ( request , response ) => {  // Faith --> Resource eradication
+const eradication = async ( request , response ) => {  // Faith --> Resource eradication
+    try{
+        const identifier = request.params.identifier;
+        const database_response = await customer.findByIdAndDelete( identifier );  // Document eradication
 
+        if( database_response != null ){  // Authentic, customer identifier
+            response.json( { essence : 'Successful, document eradication' , metadata : database_response } )
+        }else{
+            response.status( 401 );  // Represent, corrupt credential
+            response.json( { essence : 'Corrupt credential' } );
+        }
+    }
+    catch( blunder ){
+        response.status( 500 );  // Server blunder
+        response.json( { essence : blunder.message } )
+    }
 }
 
-module.exports = { extraction , mutation , eradication };
+const validation = async ( request , response , future ) => {
+    try {
+        const cookie = request.cookies;  // Represent cookie, holding up JWT
+    
+        if( cookie.Authentication ){  // Represent existence, Authentication cookie
+            const payload = JWT.verify( cookie.Authentication , mystery );  // Represent, customer identifier
+            
+            if( payload ){
+                if( request.params.identifier == payload ){  // Access modification
+                    const database_metadata = await customer.findById( payload.payload );
+
+                    if( database_metadata ){  // Represent, authentic customer
+                        future();
+                    }else{
+                        response.status( 401 );  // Represent, corrupt credential
+                        response.json( { essence : 'Authenticate' } );
+                    }
+                }else{
+                    response.status( 401 );  // Represent, corrupt credential
+                    response.json( { essence : 'Authenticate' } );
+                }
+            }else{
+                response.status( 500 );  // Server blunder
+                response.json( { essence : 'Server blunder' } )
+            }
+        }else{
+            response.status( 401 );  // Represent, corrupt credential
+            response.json( { essence : 'Authenticate' } );
+        }
+    } catch ( blunder ) {
+        response.status( 500 );  // Server blunder
+        response.json( { essence : blunder.message } )
+    }
+}
+
+module.exports = { extraction , mutation , eradication , validation };

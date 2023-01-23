@@ -3,8 +3,8 @@ const express = require('Express');
 // Mounting --> Gradually increasing
 const customer = express.Router();  // Provide, object instance
 
-const { extraction , mutation , eradication } = require('../Controller/Customer.js');
+const { extraction , mutation , eradication , validation } = require('../Controller/Customer.js');
 
-customer.route( '/:identifier' ).get( extraction ).patch( mutation ).delete( eradication );  
+customer.route( '/:identifier' ).get( validation , extraction ).patch( validation , mutation ).delete( validation , eradication );  
 
 module.exports = { customer };
