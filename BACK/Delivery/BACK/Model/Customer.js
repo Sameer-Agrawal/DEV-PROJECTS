@@ -11,6 +11,7 @@ const instance = new Schema( schema );  // Schema Instantiation
 
 // Definition, custom middleware method corresponding schema level, using mongoose hook
 instance.pre( 'save' , function(){ this.verification = undefined } )  // Eradication, verification attribute
+
 // instance.pre( 'save' , async function(){  // Credential hashing
 //     const salt = await bcrypt.genSalt();  // Salt fabrication, corresponding credential
 //     const encryption = await bcrypt.hash( this.credential , salt );
