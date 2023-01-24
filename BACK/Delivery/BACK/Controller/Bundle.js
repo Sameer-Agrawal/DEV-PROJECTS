@@ -32,9 +32,25 @@ const fabrication = async ( request , response ) => {  // Faith --> Bundle fabri
             response.json( { 'essence' : 'Access prohibited' } );
         }
     }catch( blunder ){
-        response.status( 400 );  // Bad request, client blunder
+        response.status( 502 );  // Bad gate-way
         response.json( { 'essence' : blunder.message } );
     }
 }
 
-module.exports = { retrieval , fabrication }
+const extraction = async ( request, response ) => {  // Faith --> Datum retrieval, provided bundle identifier
+    try{
+        
+        const identifier = request.params.identifier;  // Represent, bundle identifier
+        const database_response = await bundle.findById( identifier );  // Datum retrieval, provided bundle identifier
+
+        if( database_response ){  // Authenticate, bundle identifier
+            response.json( { 'essence' : 'Successful datum retrieval, provided bundle identifier' , 'metadata' : database_response } )
+        }
+
+    }catch( blunder ){
+        response.status( 500 ); 
+        response.json( { essence : 'Blunder, bad gate-way' } );
+    }
+}
+
+module.exports = { retrieval , fabrication , extraction }
