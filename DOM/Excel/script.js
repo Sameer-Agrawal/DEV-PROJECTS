@@ -16,7 +16,7 @@ class database{  // Database class
     databaseMaintainance(cellElement){  // Faith --> Maintain, database
         cellElement.addEventListener("blur", function(){  // Callback, trigger with a cell element, loosing focus!
             // console.log(sheetDatabase);
-            precedingCellElement = cellElement;
+            precedingCellElement = cellElement;  // Preceding cell element, maintenance
             // console.log(precedingCellElement);  // Faith --> Compute, cell datum, provided formula
             // console.log(cellElement);  
             let cellElementDatum = cellElement.innerText;  // Represent, cell element datum
@@ -26,7 +26,7 @@ class database{  // Database class
             // console.log(typeof(rowIdentifier));  // typeof --> Return, data type, of provided argument!
             // In JavaScript parseInt() function (or a method) is used to convert the provided string parameter or variable declaration value, to an integer value.
             const rowReservoir = sheetDatabase[rowReservoirIndex];  // Represent, row reservoir, of row specified 
-            const cellReservoir = rowReservoir[cellReservoirIndex];  // Represent, cell reservoir, provided cell reservoir index
+            const cellReservoir = rowReservoir[cellReservoirIndex];  // Represent, cell reservoir provided, cell reservoir index
 
             if(cellElementDatum == "\n") cellElementDatum = "";  // Mutation, cell element datum
 
@@ -79,9 +79,9 @@ class database{  // Database class
                 const cellIdentifier = String.fromCharCode(64+column) + row;  // Stringify, cell identifier
                 // console.log(cellIdentifier);
                 const datum = {cellIdentifier : cellIdentifier , cellDatum : "" , formulaDatum : "" , childrenDatum : [] , parentDatum : [] , cellRelevant : false , fontDecoration : {boldElement : false , italicElement : false , underlineElement : false}};  // Represent, cell identifier accompanying, cell datum 
-                rowArray.push(datum);  // Append, cell datum, to a row
+                rowArray.push(datum);  // Append cell datum, to row
             }
-            sheetArray.push(rowArray);  // Append, row datum, to sheet
+            sheetArray.push(rowArray);  // Append row datum, to sheet
         }
         sheetClosure.sheetDatabase = sheetArray;  // Represent, sheet database
         sheetClosure.cellElementRelevant = [];  // Represent, cell element holding up value, provided active sheet
@@ -90,9 +90,9 @@ class database{  // Database class
     }
 }
 
-// Abstract --> Classes are a template for creating objects. They encapsulate/enclose data with method's to work on that data
+// Abstract --> Class is template for fabricating object. They encapsulate/enclose data with method's to work on that data
 
-// A constructor is a special function that creates and initializes(Add attributes, methods) an object instance of a class. In JavaScript, a constructor gets called when an object is created using the new keyword. 
+// A constructor is a special function that creates and initializes(Add attributes, methods) an object instance of a class. In JavaScript, a constructor gets called when an object is fabricated using the new keyword. 
 // The purpose of a constructor is to create a new object and set values for any existing object properties
 
 const databaseInstance = new database();  // Represent, database instance
@@ -112,23 +112,23 @@ function cellConstructor(databaseInstance){  // Faith --> Construct cell!
 
     // Dynamic creation, top left cell container
 
-    const topLeftCellElement = document.createElement("div");  // Dynamic creation, div, representing top left cell
+    const topLeftCellElement = document.createElement("div");  // Dynamic div fabrication, representing top left cell
     topLeftCellElement.classList.add("top-left-cell");  // add() method, to addjoin class to class list
     cellContainer.appendChild(topLeftCellElement);  // Append top left cell, cell container
 
 
     // Dynamic creation, column identifier
 
-    const columnIdentifierElement = document.createElement("div"); // Represent, column identifier
+    const columnIdentifierElement = document.createElement("div");  // Represent, column identifier container
     columnIdentifierElement.classList.add("column-identifier-row", "rowElement");  // add() method, to addjoin class to class list
-    for(let cell = 1 ; cell <= 26 ; cell++) {  // Dynamic creation, column identifier
+    for(let cell = 1 ; cell <= 26 ; cell++) {  // Dynamic creation, column identifier element
         const cellElement = document.createElement("div");  // createElement() is used to dynamically create an HTML element node
         // console.log(cellElement);  // Represent, cell element
         cellElement.classList.add("column-identifier-element" , "cellElement");  // To add one or more CSS classes to the class list of an element, you use the add() method of the classList
         cellElement.innerText = String.fromCharCode(64+cell);  // Dynamic adjoin, identifier to column
         columnIdentifierElement.appendChild(cellElement);  // Append element node, to an element
     }
-    cellContainer.appendChild(columnIdentifierElement);  // Append, column identifier element(row), to cell container
+    cellContainer.appendChild(columnIdentifierElement);  // Append, column identifier element(row), to cell container element
     // The innerText property sets or returns the text content of an element.
     // The String.fromCharCode() method converts Unicode values to characters.
     // Representation, of character in terms of value --> Unicode values
@@ -156,15 +156,16 @@ function cellConstructor(databaseInstance){  // Faith --> Construct cell!
         const rowElement = document.createElement("div");  // Represent, row element
         rowElement.classList.add("rowElement");  // add() method, to addjoin class to class list
         for(let column = 1 ; column <= 26 ; column++){  // Represent, 100 static column
-            const cellElement = document.createElement("div");  // createElement() is used to dynamically create an HTML element node
+            const cellElement = document.createElement("div");  // createElement() is used to dynamically create an HTML cell element node
             // console.log(cellElement);  // Represent, cell element
             cellElement.classList.add("cellElement");  // To add one or more CSS classes to the class list of an element, you use the add() method of the classList
             cellElement.setAttribute("contentEditable", "true");  // The contenteditable attribute specifies whether the content of an element is editable or not
             // The setAttribute() method is used to set or add an attribute to a particular element and provides a value to it
-            cellElement.setAttribute("columnIdentifier", String.fromCharCode(64+column));  // Represent, column identifier, cell element
-            cellElement.setAttribute("rowIdentifier", row);  // Represent, row identifier, cell element
+            cellElement.setAttribute("columnIdentifier", String.fromCharCode(64+column));  // Represent column identifier, corresponding cell element
+            cellElement.setAttribute("rowIdentifier", row);  // Represent row identifier, corresponding cell element
             cellIdentifier(cellElement); // Pin-point cell
             mutationCellDatum(cellElement);  // Maintainance, with mutation in cell datum, provided formula
+            fabricateSUM(cellElement);
             databaseInstance.databaseMaintainance(cellElement);  // Maintain, database
             rowElement.appendChild(cellElement); // The appendChild() method appends a node (element) as the last child of an element.
         }
@@ -176,6 +177,9 @@ function cellConstructor(databaseInstance){  // Faith --> Construct cell!
 }
 
 cellConstructor(databaseInstance);  
+
+
+
 
 
 // Faith --> Dynamic, font decoration
@@ -244,25 +248,25 @@ const topLeftCellElement = document.querySelector(".top-left-cell");  // Represe
 function maintainElement(){  // Faith --> Maintain top, side panel through scrolling
     cellContainer.addEventListener("scroll", function(event){  // Callback invoke, with scroll on cell container element
         // console.log(event);  // Represent, scroll event
-        const scrollTop = cellContainer.scrollTop;  // Event, maintain scrollTop attribute, which inturn represent, content scroll in px
-        const scrollLeft = cellContainer.scrollLeft;  // Event, maintain scrollTop attribute, which inturn represent, content scroll in px 
-        columnIdentifierElement.style.top = scrollTop + "px";  // With a scroll, column identifier element, maintainance with slide down
-        topLeftCellElement.style.top = scrollTop + "px";  // With a scroll, top left cell element, maintainance with slide down
-        topLeftCellElement.style.left = scrollLeft + "px";  // With a scroll, top left cell element, maintainance with slide left
-        rowIdentifierElement.style.left = scrollLeft + "px";  // With a scroll, row identifier element, maintainance with slide left
+        const scrollTop = cellContainer.scrollTop;  // HTML element maintain scrollTop attribute, which inturn represent, content scroll in px
+        const scrollLeft = cellContainer.scrollLeft;  // HTML element maintain scrollTop attribute, which inturn represent, content scroll in px 
+        columnIdentifierElement.style.top = scrollTop + "px";  // With a scroll, column identifier element maintainance with slide upward
+        topLeftCellElement.style.top = scrollTop + "px";  // With a scroll, top left cell element maintainance with slide upward
+        topLeftCellElement.style.left = scrollLeft + "px";  // With a scroll, top left cell element maintainance with slide left
+        rowIdentifierElement.style.left = scrollLeft + "px";  // With a scroll, row identifier element maintainance with slide left
     })
 }
 
 maintainElement();
 
 
-
+// Abstract --> UI maintenance provided click, cell element
 function cellIdentifier(cellElement){  // Faith --> Pin-point cell
     const labelElement = document.querySelector(".labelElement");  // Represent, label element, which inturn unveil cell element identity
     const formulaElement = document.querySelector(".formulaElement");  // Represent, formula element
     cellElement.addEventListener('click', function(){  // Callback, invoke with click on cell element
         const rowIdentifier = cellElement.getAttribute("rowIdentifier");  // The getAttribute() method returns the value of an element's attribute
-        const columnIdentifier = cellElement.getAttribute("columnIdentifier");  // Represent, column identifier, of a cell element clicked!
+        const columnIdentifier = cellElement.getAttribute("columnIdentifier");  // Represent, column identifier of a cell element clicked!
         const cellIdentifier = columnIdentifier + rowIdentifier;  // Represent, cell identity
         labelElement.innerText = cellIdentifier;  // Unveil cell element identity
         const cellReservoir = getCellReservoir(cellIdentifier);  // Return, cell reservoir, provided cell identifier
@@ -278,7 +282,7 @@ function cellIdentifier(cellElement){  // Faith --> Pin-point cell
             console.log(fontDecoration);
 
             // The ternary operator is a simplified conditional operator like if / else.
-            // Syntax: condition ? <expression if true> : <expression if false></expression>
+            // Syntax: condition ? <expression if true> : <expression if false>
 
             const boldElement = document.querySelector(".boldElement");  // Represent, bold element
             const italicElement = document.querySelector(".italicElement");  // Represent, italic element
@@ -325,13 +329,13 @@ function cellIdentifier(cellElement){  // Faith --> Pin-point cell
 }
 
 
-// Faith --> Return, column identifier, row identifier, row reservoir index provided row identifier, cell reservoir index provided column identifier
+// Faith --> Return, column identifier, row identifier, row reservoir/metadata index provided row identifier, cell reservoir index provided column identifier
 function workmate(cellElement){ 
-    const columnIdentifier = cellElement.getAttribute("columnIdentifier");  // Represent, column identifier, cell element
-    const rowIdentifier = parseInt(cellElement.getAttribute("rowIdentifier")); // Represent, row identifier, cell element
+    const columnIdentifier = cellElement.getAttribute("columnIdentifier");  // Represent, column identifier corresponding cell element
+    const rowIdentifier = parseInt(cellElement.getAttribute("rowIdentifier")); // Represent, row identifier corresponding cell element
     // In JavaScript parseInt() function (or a method) is used to convert the provided string parameter or variable declaration value, to an integer value.
     const rowReservoirIndex = rowIdentifier-1;  // Represent, row reservoir index, of row specified 
-    const cellReservoirIndex = columnIdentifier.charCodeAt(0) - 65;  // Represent, cell reservoir index, provided column identifier
+    const cellReservoirIndex = columnIdentifier.charCodeAt(0) - 65;  // Represent, cell reservoir index provided, column identifier
     return {columnIdentifier, rowIdentifier, rowReservoirIndex, cellReservoirIndex};
 }
 
@@ -340,7 +344,7 @@ function workmate(cellElement){
 // Faith --> Compute cell datum, provided formula
 function computeCellDatum(){  // Faith --> cell element is provided as an argument
     const formulaElement = document.querySelector(".formulaElement");  // Represent, formula element
-    formulaElement.addEventListener("blur", function(event){
+    formulaElement.addEventListener("blur", function(event){  // Callback invocation provided, focus shift
         let formula = formulaElement.innerText;  // Represent, formula
         // Check, formula disparate, formula datum
         if(formula == "\n") formula = "";  // Corner case
@@ -349,9 +353,9 @@ function computeCellDatum(){  // Faith --> cell element is provided as an argume
         
         // Active, sheet database
         const rowReservoir = sheetDatabase[rowReservoirIndex];  // Represent, row reservoir, of row specified 
-        const cellReservoir = rowReservoir[cellReservoirIndex];  // Represent, cell reservoir, provided cell reservoir index
+        const cellReservoir = rowReservoir[cellReservoirIndex];  // Represent, cell reservoir provided, cell reservoir index
         
-        // Unconcious, touch, formula element
+        // Unconcious touch, formula element
         if(formula == "" && cellReservoir.cellRelevant == false) return;
         // console.log("I am here!");
         const cellIdentifier = columnIdentifier + rowIdentifier;  // Represent, cell identifier
@@ -382,8 +386,8 @@ function computeCellDatum(){  // Faith --> cell element is provided as an argume
         cellReservoir.formulaDatum = formula;
         precedingCellElement.innerText = cellDatum;  // UI maintainance
 
-        console.log(cellReservoir);
-        console.log(sheetClosure.cellElementRelevant);
+        // console.log(cellReservoir);
+        // console.log(sheetClosure.cellElementRelevant);
 
         maintainChildrenDatum(cellReservoir);  // Maintain, children datum, with mutation in formula!
     })
@@ -418,7 +422,7 @@ function computeCellDatum(){  // Faith --> cell element is provided as an argume
                     children.parentDatum.push(current);  // Maintain, parent datum
                 } 
                 // console.log(cellReservoir);
-                return cellReservoir.cellDatum;  // Append, cell datum, provided cell identifier
+                return cellReservoir.cellDatum;  // Append, cell datum provided, cell identifier
             }
             return current;
         }
@@ -446,7 +450,7 @@ const compute = computeCellDatum();
 // Faith --> Maintain, children datum, with mutation in parent datum
 function maintainChildrenDatum(cellReservoir){
     // console.log(cellReservoir);
-    // Compute, children datum, provided mutation in children datum
+    // Compute, children datum, provided mutation in parent datum
     const childrenDatum = cellReservoir.childrenDatum;  // Represent, children datum
     // console.log(childrenDatum);
     for(let index = 0 ; index < childrenDatum.length ; index++){  // Looping through, children datum!
@@ -465,15 +469,15 @@ function maintainChildrenDatum(cellReservoir){
 }
 
 
-// Faith --> Return, cell reservoir, provided cell identifier
+// Faith --> Return, cell reservoir provided, cell identifier
 function getCellReservoir(cellIdentifier) {
-    const columnIdentifier = cellIdentifier[0];  // Represent, column identifier, cell element
-    const rowIdentifier = parseInt(cellIdentifier[1]); // Represent, row identifier, cell element
-    const rowReservoirIndex = rowIdentifier-1;  // Represent, row reservoir index, of row specified 
-    const cellReservoirIndex = columnIdentifier.charCodeAt(0) - 65;  // Represent, cell reservoir index, provided column identifier
+    const columnIdentifier = cellIdentifier[0];  // Represent, column identifier corresponding cell element
+    const rowIdentifier = parseInt(cellIdentifier[1]);  // Represent, row identifier corresponding cell element
+    const rowReservoirIndex = rowIdentifier-1;  // Represent, row reservoir index corresponding, row specified 
+    const cellReservoirIndex = columnIdentifier.charCodeAt(0) - 65;  // Represent, cell reservoir/metadata index provided, column identifier
     // Mutation, provided active sheet database
-    const rowReservoir = sheetDatabase[rowReservoirIndex];  // Represent, row reservoir, of row specified 
-    const cellReservoir = rowReservoir[cellReservoirIndex];  // Represent, cell reservoir, provided cell reservoir index
+    const rowReservoir = sheetDatabase[rowReservoirIndex];  // Represent, row reservoir of row specified 
+    const cellReservoir = rowReservoir[cellReservoirIndex];  // Represent, cell reservoir provided, cell reservoir index
     return cellReservoir;
 }
 
@@ -487,43 +491,43 @@ function mutationCellDatum(cellElement){  // Maintainance, with mutation in cell
     function callbackFunction(event){
         const key = event.key;  // Represent, preceding key down
         const cellIdentifier = cellElement.getAttribute("columnIdentifier") + cellElement.getAttribute("rowIdentifier");  // Represent, cell identifier
-        const cellReservoir = getCellReservoir(cellIdentifier);  // Return, cell reservoir, provided cell identifier
-        const formulaDatum = cellReservoir.formulaDatum;  // Represent, formula datum, cell element
-        if((formulaDatum != "") && (key == "Backspace")){  // Represent, mutation cell datum, provided formula
+        const cellReservoir = getCellReservoir(cellIdentifier);  // Return, cell reservoir/metadata provided, cell identifier
+        const formulaDatum = cellReservoir.formulaDatum;  // Represent, formula datum corresponding cell element
+        if((formulaDatum != "") && (key == "Backspace")){  // Represent, mutation cell datum provided, formula
             const formulaElement = document.querySelector(".formulaElement");  // Represent, formula element
-            formulaElement.innerText = "";  // Maintainance, UI, formula element
-            cellElement.innerText = "";  // Maintainance, UI, cell element
-            cellReservoir.formulaDatum = "";  // Maintain, formula datum
-            cellReservoir.cellDatum = "";  // Maintain, cell datum
+            formulaElement.innerText = "";  // Database Maintenance, formula element
+            cellElement.innerText = "";  // Database Maintenance, cell element
+            cellReservoir.formulaDatum = "";  // Database maintenance, formula datum
+            cellReservoir.cellDatum = "";  // Database maintenance, cell datum
 
-            cellReservoir.cellRelevant = false;  // Represent, cell element, irrelevant
+            cellReservoir.cellRelevant = false;  // Represent, cell element irrelevant
 
-            // Maintainance, cell element relevant array
+            // Maintenance, cell element relevant array
             const cellElementRelevant = sheetClosure.cellElementRelevant;  // Represent, relevant cell element
             const refurbishCellElementRelevant = cellElementRelevant.filter(function(cellIdentifier){  // Return, relevant cell element, except active cell element
                                                                                 return cellIdentifier != cellReservoir.cellIdentifier;
                                                                             })
 
             sheetClosure.cellElementRelevant = refurbishCellElementRelevant;  // Maintainance, relevant cell element
-            console.log(cellReservoir);
-            console.log(sheetClosure.cellElementRelevant);
+            // console.log(cellReservoir);
+            // console.log(sheetClosure.cellElementRelevant);
 
-            maintainParentDatum(cellReservoir);  // Faith --> Removal, children cell identifier, parent's cell reservoir, children datum
+            maintainParentDatum(cellReservoir);  // Faith --> Removal, children cell identifier, parent's cell reservoir corresponding children datum
         }
     }
 }
 
 
-function maintainParentDatum(children){  // Faith --> Removal, children cell identifier, parent's cell reservoir, children datum
+function maintainParentDatum(children){  // Faith --> Removal, children cell identifier, corresponding parent's cell reservoir, children datum
     const parentDatum = children.parentDatum;  // Represent, children's, parent datum
     for(let index = 0 ; index < parentDatum.length ; index++){  // Looping through, parent datum
         const parentIdentifier = parentDatum[index];  // Represent, parent identifier
-        const parentReservoir = getCellReservoir(parentIdentifier);  // Represent, parent reservoir, provided parent identifier
+        const parentReservoir = getCellReservoir(parentIdentifier);  // Represent, parent reservoir provided, parent identifier
         const childrenDatum = parentReservoir.childrenDatum; // Represent, children datum provided parent reservoir
         const refurbishChildrenDatum = childrenDatum.filter(filterCallbackFunction);  // Represent, refurbished children datum 
-        console.log(refurbishChildrenDatum);
+        // console.log(refurbishChildrenDatum);
         parentReservoir.childrenDatum = refurbishChildrenDatum;  // Children datum, maintainance
-        console.log(parentReservoir);
+        // console.log(parentReservoir);
     }
     children.parentDatum = [];  // Maintainance, children's, parent datum
 
@@ -571,7 +575,7 @@ function sheetConstruction(databaseInstance){
 sheetConstruction(databaseInstance);
 
 
-// Faith --> UI, database maintainance, with sheet click
+// Faith --> UI, database maintainance provided sheet click
 function sheetListener(sheetElement){
     sheetElement.addEventListener("click", function(){  // Callback trigger with click, sheet element
         sheetIdentifier = sheetElement.getAttribute("sheetIdentifier");  // Represent, sheet identifier
